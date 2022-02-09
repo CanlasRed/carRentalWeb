@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  padding-top: 65px !important;
+}
+
+@media (max-width: 768px) {
+  html, body {
+  width: auto !important;
+  overflow-x: hidden !important;
+  }
+}
+
+    /*REUSABLE VERTIICAL ALIGN*/
+    .align-middle{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .navbar{
+      transition: 0.3s ease;
+    }
+
+    /*MULTI ITEM SLIDER*/
+    #showroom-car{
+      height:  70vh;
+    }
+    #showroom-car img{
+      max-height: 100%;
+    }
+
+    .items {
+        width: 90%;
+        margin: 0px auto;
+    }
+    .items div{
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .slick-slide {
+        margin: 0;
+        padding: 0 50px;
+        cursor: pointer;
+        transition: 0.1.5s ease;
+    }
+    .slick-slide:hover{
+      background: #ccc;
+    }
+
+    .slick-slide img {
+        width: 100%;
+        border: 0px solid #fff;
+        opacity: 0.8;
+    }
