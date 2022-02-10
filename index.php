@@ -14,7 +14,7 @@
 	<div class="container">
 		<section id="showroom">
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-6 slide-right" hidden>
 					<div class="align-middle">
 						<div>
 							<h1 style="font-size: 5vmin; font-weight: bold; font-family: poppins;">Start Your Hassle Free Travel Now With Speedy</h1>
@@ -59,35 +59,68 @@
 		</section>
 
 
-		<section id="mobile_app">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="align-middle">
-						<div>
-							<h1 style="font-size: 5vmin; font-weight: bold; font-family: poppins;">Start Your Hassle Free Travel Now With Speedy</h1>
-						</div>
-						<br>
-						<div>
-							<p style="font-size:1.5rem">Rent a car? with or without driver? want driver only? do you own a car for rent? With Speedy we make all that possible speed and sound</p>
-						</div>
-						<br>
-						<div class="ui vertical animated black button rounded-pill" tabindex="0">
-				            <div class="hidden content">Book Now</div>
-				            <div class="visible content">
-				              Book Now
-				            </div>
-				         </div>
-					</div>
+		<section id="features">
+			<div class="row pb-5">
+				<div class="col-12" style="text-align: center;"><h4>Available Features</h4></div>
+			</div>
+			<div class="row" >
+				<div class="col-md-4 my-4">
+					<box-icon name='car' size="lg" type='solid' color='#ffffff' ></box-icon>
+					<h6>Rent A Car</h6>
+					<p>Choose and rent various cars of different types and brands from different of car owners</p>
 				</div>
-
-				<div class="col-lg-6" id="showroom-car">
-					<img class="car-display" src="assets/car-types/hatchback.png" height="600" hidden>
+				<div class="col-md-4 my-4">
+					<box-icon name='user-detail' size="lg" type='solid' color='#ffffff' ></box-icon>
+					<h6>Rent A Driver</h6>
+					<p>Already have a car but in need of driver? don't worry, wwe got you covered</p>
+				</div>
+				<div class="col-md-4 my-4">
+					<box-icon name='car-garage' size="lg" type='solid' color='#ffffff' ></box-icon>
+					<h6>Start Your Rentals</h6>
+					<p>Start or move your own car rental business online with us</p>
 				</div>
 			</div>
 		</section>
 
 
-	</div>
+		<section id="mobile-app">
+			<div class="row">
+
+				<div class="col-lg-6">
+					<img src="assets/mockup.png" height="600">
+				</div>
+
+
+				<div class="col-lg-6">
+					<div class="align-middle">
+						<div>
+							<h1 style="font-size: 5vmin; font-weight: bold; font-family: poppins;">Download Your New Travel Buddy</h1>
+						</div>
+						<br>
+						<div>
+							<p style="font-size:1.5rem">Renting cars made easier and convinient now all at your fingertips</p>
+						</div>
+						<br>
+						<div class="ui vertical animated black button rounded-pill" tabindex="0">
+				            <div class="hidden content"><i class="google play icon"></i>Download App</div>
+				            <div class="visible content">
+				              <i class="google play icon"></i>Download App
+				            </div>
+
+				         </div>
+
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+
+
+
+	</div><!--  END OF CONTAINER -->
+
+			<?php include 'footer.php' ?>
 
 	<style type="text/css">
 		.slick-prev:before {
@@ -109,40 +142,48 @@
 				function ()
 				{
 					$('.car-display').transition('fade left');
+					$('.slide-right').transition('fade right');
 				}, 100);
+		
+
+			$('.items').slick({
+				  infinite: true,
+				  speed: 300,
+				  slidesToShow: 6,
+				  slidesToScroll: 1,
+				  autoplay: true,
+	  			  autoplaySpeed: 3000,
+				  responsive: [
+				    {
+				      breakpoint: 992,
+				      settings: {
+				        slidesToShow: 4,
+				        slidesToScroll: 1,
+				        infinite: true,
+				        dots: true
+				      }
+				    },
+				    {
+				      breakpoint: 768,
+				      settings: {
+				        slidesToShow: 3,
+				        slidesToScroll: 1
+				      }
+				    },
+				    {
+				      breakpoint: 576,
+				      settings: {
+				        slidesToShow: 3,
+				        slidesToScroll: 1,
+				        autoplay: true,
+	  					autoplaySpeed: 3000,
+				      }
+				    }
+				  ]
+			});
+
 		});
 
-		$('.items').slick({
-			  infinite: true,
-			  speed: 300,
-			  slidesToShow: 5,
-			  slidesToScroll: 1,
-			  responsive: [
-			    {
-			      breakpoint: 1024,
-			      settings: {
-			        slidesToShow: 3,
-			        slidesToScroll: 1,
-			        infinite: true,
-			        dots: true
-			      }
-			    },
-			    {
-			      breakpoint: 600,
-			      settings: {
-			        slidesToShow: 2,
-			        slidesToScroll: 1
-			      }
-			    },
-			    {
-			      breakpoint: 480,
-			      settings: {
-			        slidesToShow: 1,
-			        slidesToScroll: 1
-			      }
-			    }
-			  ]
-		});
 
 		$(window).scroll(function(){
 	        if($(window).scrollTop() <= 50){
