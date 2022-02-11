@@ -111,21 +111,39 @@ footer ul li a:hover{
       font-weight: 600;
     }
 
-    .slick-slide {
+    #car-types .slick-slide {
         margin: 0;
         padding: 0 50px;
         cursor: pointer;
         transition: 0.2s ease;
+        opacity: 0.4;
     }
-    .slick-slide:hover{
-      background: #ccc;
+    #car-types .slick-slide:hover{
+      opacity: 0.9;
     }
 
-    .slick-slide img {
+    #car-types .slick-slide img {
         width: 100%;
         border: 0px solid #fff;
-        opacity: 0.9;
+        
     }
+
+    #nearby .card-deck{
+      width: 80%;
+    }
+
+    #nearby .slick-slide{
+      margin: 0 1.5%;
+    }
+
+    #nearby .card{
+      border-radius: 25px;
+      background-color: #1b1b1b;
+      color: #fff;
+      padding: 10px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    }
+
 
 
 #mobile-app img{
