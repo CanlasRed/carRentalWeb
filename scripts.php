@@ -15,3 +15,21 @@
  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
  <script type="text/javascript" src="js/login_validation.js"></script>
+
+     <script type="text/javascript">
+        $('.ui.dropdown')
+        .dropdown();
+
+        
+
+        $(window).scroll(function(){
+            if($(window).scrollTop() <= 50){
+                $(".navbar").css({"background-color":"transparent"});   
+            }
+            else{
+                $(".navbar").css({"background-color":"#fff"});
+            }
+
+        })
+    </script>
+

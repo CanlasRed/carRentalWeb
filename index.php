@@ -54,7 +54,14 @@
 
 		<section id="car-types" class="mb-5">
 			<div class="row">
-				<!-- <h6><a href="">Categories</a></h6> -->
+				<div class="col-6">
+					<h6 class="bold-text">Categories</h6>
+				</div>
+				<div class="col-6">
+					<h6 class="float-end bold-text"><a class="link-text" href="">View All <i class="arrow right icon"></i></a></h6>
+				</div>
+			</div>
+			<div class="row">
 			 <div class="items">
 			 	<?php foreach($result as $row) { ?>
 			     <div class="car-type" data-img="<?php echo $row['image'];?>" data-id="<?php echo $row['typeID'] ?>">
@@ -68,13 +75,30 @@
 
 		<section id="nearby" class="mt-5 py-5">
 			<div class="row">
-				<div class="col-lg-6">
-					<div class="card-deck" style="position: relative; left: 50%; transform: translateX(-50%);">
+				<div class="col-lg-12 py-5 text-center">
+						<div class="align-middle">
+							<div>
+								<h3 style="font-weight: bold; font-family: poppins;">Rent Cars Nearby</h3>
+							</div>
+							<br>
+							<div>
+								<div class="ui fluid huge left icon input">
+								  <input type="text" placeholder="Enter your street and house number">
+								  <i class="map marker alternate icon"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card-deck">
 					 <div class="nearby-slick">
+					 	<?php for ($i=0;$i<=5;$i++){ ?>
 						  <div class="card">
 						  	<div class="card-header">
-						  		<div class="container-fluid">
-							  		<div class="row" style="display: flex;">
+						  		<div class="container-fluid" style="padding: 0;">
+							  		<div class="row" style="display: flex; padding: 0;">
 								    	<div class="col-sm-6">
 								    		<div class="card-title">Kia Picanto</div>
 								    	</div>
@@ -98,54 +122,11 @@
 						      <small class="text-muted"> <i class="map marker alternate icon"></i> Olongapo City, Zambales</small>
 						    </div>
 						  </div>
-
-						   <div class="card">
-						  	<div class="card-header">
-						  		<div class="container-fluid">
-							  		<div class="row" style="display: flex;">
-								    	<div class="col-sm-6">
-								    		<div class="card-title">Kia Picanto</div>
-								    	</div>
-								    	<div class="col-sm-6">
-								    		<div class="float-end">Kia Logo</div>
-								    	</div>
-									</div>
-								</div>
-							 </div>
-						    <img class="card-img-top" src="assets/car-types/hatchback.png" alt="Card image cap">
-						    <div class="card-body">
-						      <h5 class="card-title">7,000/<small>day</small></h5>
-						      <ul>
-						      	<li>120kph</li>
-						      	<li>4 seater</li>
-						      	<li>Cool AC</li>
-						      	<li>100L compartment</li>
-						      </ul>
-						    </div>
-						    <div class="card-footer">
-						      <small class="text-muted"> <i class="map marker alternate icon"></i> Olongapo City, Zambales</small>
-						    </div>
-						  </div>
+						<?php } ?>
 
 
 						</div>
 					 </div>
-				</div>
-
-
-				<div class="col-lg-6 py-5">
-					<div class="align-middle">
-						<div>
-							<h1 style="font-size: 5vmin; font-weight: bold; font-family: poppins;">Rent Cars Nearby</h1>
-						</div>
-						<br>
-						<div>
-							<div class="ui fluid huge left icon input">
-							  <input type="text" placeholder="Enter your street and house number">
-							  <i class="map marker alternate icon"></i>
-							</div>
-						</div>
-					</div>
 				</div>
 
 			</div>
@@ -278,24 +259,41 @@
 			$('.nearby-slick').slick({
 				  infinite: true,
 				  speed: 300,
-				  slidesToShow: 1,
-				  slidesToScroll: 1,
+				  slidesToShow: 4,
+				  slidesToScroll: 2,
 				  autoplay: true,
-	  			  autoplaySpeed: 3000,
+	  			  autoplaySpeed: 5000,
+	  			  responsive: [
+	  			  	{
+				      breakpoint: 1200,
+				      settings: {
+				        slidesToShow: 3,
+				        slidesToScroll: 1,
+				        infinite: true,
+				        dots: true
+				      }
+				    },
+				    {
+				      breakpoint: 992,
+				      settings: {
+				        slidesToShow: 2,
+				        slidesToScroll: 1,
+				        infinite: true,
+				        dots: true
+				      }
+				    },
+				    {
+				      breakpoint: 768,
+				      settings: {
+				        slidesToShow: 1,
+				        slidesToScroll: 1
+				      }
+				    }
+				  ]
 			});
 
 		});
 
-
-		$(window).scroll(function(){
-	        if($(window).scrollTop() <= 50){
-	            $(".navbar").css({"background-color":"transparent"});   
-	        }
-	        else{
-	            $(".navbar").css({"background-color":"#fff"});
-	        }
-
-    	})
 
 	</script>
 </body>

@@ -29,7 +29,7 @@
     </form>
 
     <div class="ui message">
-      New to us? <a href="https://s.codepen.io/voltron2112/debug/PqrEPM?">Register</a>
+      New to us? <a href="#">Register</a>
     </div>
   </div>
 </div>

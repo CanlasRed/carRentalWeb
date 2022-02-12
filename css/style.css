@@ -129,16 +129,16 @@ footer ul li a:hover{
     }
 
     #nearby .card-deck{
-      width: 80%;
+      width: 100%;
     }
 
     #nearby .slick-slide{
-      margin: 0 1.5%;
+      margin: 0 10px;
     }
 
     #nearby .card{
       border-radius: 25px;
-      background-color: #1b1b1b;
+      background-color: #1b1c1d;
       color: #fff;
       padding: 10px;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
@@ -148,4 +148,13 @@ footer ul li a:hover{
 
 #mobile-app img{
 
+}
+
+.bold-text{
+  font-weight: bold;
+}
+
+.link-text{
+  text-decoration: none;
+  color: #1b1c1d;
 }
