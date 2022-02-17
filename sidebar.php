@@ -135,8 +135,8 @@
         </div>
       </div>
       <div class="right menu">
-          <div class="ui floating labeled icon dropdown button">
-            <i class="filter icon"></i>
+          <div class="ui floating dropdown labeled icon button">
+            <i class="filter icon pt-4"></i>
             <span class="text mt-1">Sort</span>
             <div class="menu">
               <div class="header">

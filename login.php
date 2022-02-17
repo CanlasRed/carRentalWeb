@@ -1,7 +1,7 @@
 <?php include 'header.php'; ?>
 <div class="ui middle aligned center aligned grid">
 
-  <div class="column ui secondary segment px-4">
+  <div class="column ui segment px-4">
     <h5 class="ui my-4">
       <div class="content">
         <center><img src="assets/logo/Speedy_Full_Logo_Black.png" style="height: 80px;"></center>
