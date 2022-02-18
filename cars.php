@@ -12,7 +12,7 @@
     
     <div class="container mt-4">
 
-        <div class="row ui inverted raised segment p-3">
+        <div class="row ui inverted raised segment p-3 m-0">
             <div class="ui medium header p-3">
                 Car Details
             </div>
@@ -20,7 +20,10 @@
 
         <div class="row m-0">
 
-            <div class="col-lg-9">
+            <!-- LEFT COLUMN -->
+            <div class="col-lg-9 mt-3">
+
+                <!-- CAR DETAILS SEGMENT -->
                 <div class=" ui raised segment">
                     <div class="row m-0">
                         <div class="col-12 py-3">
@@ -41,27 +44,27 @@
 
                             <div class="row">
                                 <div class="col-10 py-1">
-                                    <div class="ui inverted black label my-1">
+                                    <div class="ui inverted black label my-1" data-tooltip="Top Speed" data-inverted="" data-variation="tiny">
                                       <i class="tachometer alternate icon"></i>
                                       140kph
                                     </div>
-                                    <div class="ui inverted black label my-1">
+                                    <div class="ui inverted black label my-1" data-tooltip="Seating Capacity" data-inverted="" data-variation="tiny">
                                       <i class="user icon"></i>
                                       4
                                     </div>
-                                    <div class="ui inverted black label my-1">
+                                    <div class="ui inverted black label my-1" data-tooltip="Gear Transmission" data-inverted="" data-variation="tiny">
                                       <i class="cogs icon"></i>
                                       Automatic
                                     </div>
-                                    <div class="ui inverted black label my-1">
-                                      <i class="fire icon"></i>
+                                    <div class="ui inverted black label my-1" data-tooltip="Gasoline" data-inverted="" data-variation="tiny">
+                                      <i class="gas pump icon"></i>
                                       Unleaded
                                     </div>
-                                    <div class="ui inverted black label my-1">
+                                    <div class="ui inverted black label my-1" data-tooltip="Compartment Size" data-inverted="" data-variation="tiny">
                                       <i class="suitcase icon"></i>
                                       Small
                                     </div>
-                                    <div class="ui inverted black label my-1">
+                                    <div class="ui inverted black label my-1" data-tooltip="Aircondition" data-inverted="" data-variation="tiny">
                                       <i class="snowflake icon"></i>
                                       A/C
                                     </div>
@@ -115,7 +118,7 @@
                     </div>
                 </div>
 
-
+                <!-- RENTAL DATE SEGMENT -->
                 <div class=" ui raised segment">
                     <div class="row m-0">
                         <div class="col-12 py-3">
@@ -183,18 +186,74 @@
                        
                 </div>
 
-            </div>
+                <!-- DRIVER SEGMENT -->
+                 <div class=" ui raised segment mb-3">
+                    <div class="row m-0">
+                        <div class="col-12 py-3">
+                            <div class="ui header medium">
+                                <label>Driver</label>
+                                  <div class="ui toggle checkbox">
+                                    <input type="checkbox" checked="checked">
+                                    <label></label>
+                                  </div>
+                            </div>
 
-            <div class="col-lg-3">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 px-3 my-1 mx-2">
+
+                          <div class="ui horizontal card" style="width:100%">
+
+                            <div style="height: 100%; max-width: 210px;">
+                              <img class="img-fluid"  src="https://cdn.pixabay.com/photo/2017/08/01/01/33/beanie-2562646_960_720.jpg">
+                            </div>
+
+                            <div class="content">
+                              <div class="header">Juan Dela Driver</div>
+                              <div class="meta">
+                                <a>Professional</a>
+                              </div>
+                              <div class="description">
+                                <div>
+                                    <i class="mars icon"></i>
+                                    Male
+                                </div>
+                                <div>
+                                    <i class="sort numeric up icon"></i>
+                                    23
+                                </div>
+                                <div>
+                                    <i class="map marker alternate icon"></i>
+                                    Olongapo City
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        
+                    </div>
+                       
+                </div>
+
+            </div>
+            <!-- END OF LEFT COLUMN -->
+
+
+            <!-- RIGHT COLUMN -->
+            <div class="col-lg-3 mt-3">
                 <div class="ui inverted raised clearing segment">
                     <h4 class="ui header">Owner Info</h4>
                     <div>
                         <img class="ui avatar image" src="assets/car-types/hatchback.png">
-                        <span>Juan Dela Cruz</span>
+                        <span><a href="" style="text-decoration: none; color: #fff; font-weight: bold;">Juan Dela Cruz</a></span>
 
-                        <button class="circular ui right floated icon button">
+ <!--                        <button class="circular ui right floated icon button">
                           <i class="icon comments"></i>
-                        </button>
+                        </button> -->
                     </div>
                     <div>
                         <i class="mars icon"></i>

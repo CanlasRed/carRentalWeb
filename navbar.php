@@ -18,7 +18,7 @@
           <a class="nav-link" href="car-list.php">Cars</a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="#">Drivers</a>
         </li>
         <li class="nav-item dropdown px-3">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -2,7 +2,7 @@
     <div class="ui dividing header">
       <i class="filter icon"></i>
       <div class="content">
-        Cars
+        Drivers
       </div>
     </div>
   <div class="accordion" id="accordion-filter">
@@ -11,21 +11,15 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading-car-type">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-car-type" aria-expanded="true" aria-controls="panel-car-type">
-        Car Type
+        Age Group
       </button>
     </h2>
     <div id="panel-car-type" class="accordion-collapse collapse show" aria-labelledby="heading-car-type">
       <div class="accordion-body">
-        <ul>
-          <?php for ($i=0;$i<6;$i++) { ?>
-            <li>
-              <div class="ui checkbox">
-                <input type="checkbox" name="example" id="<?php echo $i; ?>">
-                <label for="<?php echo $i; ?>">Car Type</label>
-              </div>
-            </li>
-          <?php } ?>
-        </ul>
+        <label id="ageMin">18</label>
+        <label id="ageMax" class="float-end">100</label>
+        <div class="ui range slider" id="slider-range"></div>
+
       </div>
     </div>
   </div>
@@ -55,7 +49,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading-transmission">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-transmission" aria-expanded="false" aria-controls="panel-transmission">
-        Transmission
+        Gender
       </button>
     </h2>
     <div id="panel-transmission" class="accordion-collapse collapse show" aria-labelledby="heading-transmission">
@@ -65,7 +59,7 @@
             <li>
             <div class="ui checkbox">
               <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Automatic</label>
+              <label for="<?php echo $i; ?>">Male</label>
             </div>
             </li>
           <?php } ?>
@@ -100,27 +94,7 @@
     </div>
   </div>
 
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="heading-color">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-color" aria-expanded="false" aria-controls="panel-color">
-        Color
-      </button>
-    </h2>
-    <div id="panel-color" class="accordion-collapse collapse show" aria-labelledby="heading-color">
-      <div class="accordion-body">
-        <ul>
-          <?php for ($i=0;$i<2;$i++) { ?>
-            <li>
-            <div class="ui checkbox">
-              <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Red</label>
-            </div>
-            </li>
-          <?php } ?>
-        </ul>
-      </div>
-    </div>
-  </div>
+
 
 </div>
 </div>

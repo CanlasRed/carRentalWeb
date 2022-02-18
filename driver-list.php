@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cars | Speedy</title>
+    <title>Drivers | Speedy</title>
     <link rel="icon" type="icon" href="favicon.ico">
     <?php include 'header.php'; ?>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
     <div class="container">
-        <?php include 'sidebar.php'; ?>
+        <?php include 'driver-sidebar.php'; ?>
         
 <div class="pt-5 col-lg-9 col-md-8 col-sm-12 col-xs-12" style="display: block; width: 100%;">
 
@@ -59,33 +59,49 @@
 
       <div class="ui card m-2">
         <div class="content">
-          <div class="right floated meta">14h</div>
-            Kia Picanto
-        </div>
-        <div class="image">
-          <img src="assets/car-types/hatchback.png">
+          <a href=""><img class="right floated mini ui image" src="assets/avatar_2.png"></a>
+          <div class="header">
+            Elliot Fu
+          </div>
+          <div class="meta">
+            Professional
+          </div>
         </div>
         <div class="content">
-          <div class="row">
-            <div class="col-6">
-              4 Seater
+          <div class="description">
+            2 years driving experience of Victory Line bus. Knowledgeable on locations around Luzon
+          </div>
+          <div class="ui list">
+            <div class="item">
+              <i class="user icon"></i>
+              <div class="content">
+                29 years old
+              </div>
             </div>
-            <div class="col-6">
-              Auto
+            <div class="item">
+              <i class="venus mars icon"></i>
+              <div class="content">
+                Male
+              </div>
+            </div>
+            <div class="item">
+              <i class="syringe icon"></i>
+              <div class="content">
+                Fully vaccinated + booster
+              </div>
+            </div>
+            <div class="item">
+              <i class="map marker alternate icon"></i>
+              <div class="content">
+                Olongapo City
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-6">
-              Engine: Gas
-            </div>
-            <div class="col-6">
-              Type: Hatchback
-            </div>
-          </div>
+
         </div>
         <div class="content">
           <span class="float-start mt-2">
-              <h5 style="font-weight: bold;">₱4,000</h5>
+              <h5 style="font-weight: bold;">₱100/hr</h5>
           </span>
           <span class="float-end">
             <a href="">

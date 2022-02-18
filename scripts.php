@@ -50,5 +50,20 @@
         $('#rangeend').calendar({
           startCalendar: $('#rangestart')
         });
+
+        $('.ui.range.slider')
+          .slider({
+            min: 18,
+            max: 100,
+            start: 18,
+            end: 100,
+            step: 1,
+            smooth: true,
+            onMove: function(value, min, max) {
+                $('#ageMin').html(min);
+                $('#ageMax').html(max);
+            }
+          })
+        ;
     </script>
 
