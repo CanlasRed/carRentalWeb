@@ -8,7 +8,11 @@
     <?php include 'header.php'; ?>
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'navbar.php'; 
+    $sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1 AND i.displayImage = 1 AND c.carID = ".$_GET['carID']."";
+    $result = mysqli_query($dbconn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    ?>
     
     <div class="container mt-4">
 
@@ -28,16 +32,32 @@
                     <div class="row m-0">
                         <div class="col-12 py-3">
                             <div class="ui header large">
-                                Kia Picanto
-                                2021 Model 
+                                <?php echo $row['name'];?>
                             </div>
                         </div>
                     </div>
 
                     <div class="row m-0">
                         <div class="col-md-5">
-                            <div>
-                                <img class="img-fluid" src="assets/car-types/hatchback.png">
+                            <div class="row image-preview-slider">
+                                <?php 
+                                    $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$_GET['carID']." ";
+                                    $result = mysqli_query($dbconn, $sql);
+                                    foreach($result as $carImage) { ?>
+                                        <img width="50px" src="assets/cars/<?php echo $carImage['image'];?>">
+                                <?php } ?>
+                            </div>
+                             <div class="row">
+                                 <div class="car-images-slider">
+                                    <?php 
+                                    foreach($result as $carImage) { ?>
+                                        <div class="card" style="width:100px; height:100px">
+                                            <div class="ui bordered image" style="height:auto; object-fit: cover;">
+                                                <img height="100%" src="assets/cars/<?php echo $carImage['image'];?>">
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                 </div>
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -46,28 +66,30 @@
                                 <div class="col-10 py-1">
                                     <div class="ui inverted black label my-1" data-tooltip="Top Speed" data-inverted="" data-variation="tiny">
                                       <i class="tachometer alternate icon"></i>
-                                      140kph
+                                      <?php echo $row['speed']; ?>kph
                                     </div>
                                     <div class="ui inverted black label my-1" data-tooltip="Seating Capacity" data-inverted="" data-variation="tiny">
                                       <i class="user icon"></i>
-                                      4
+                                      <?php echo $row['capacity']; ?>
                                     </div>
                                     <div class="ui inverted black label my-1" data-tooltip="Gear Transmission" data-inverted="" data-variation="tiny">
                                       <i class="cogs icon"></i>
-                                      Automatic
+                                      <?php echo $row['transmission']; ?>
                                     </div>
                                     <div class="ui inverted black label my-1" data-tooltip="Gasoline" data-inverted="" data-variation="tiny">
                                       <i class="gas pump icon"></i>
-                                      Unleaded
+                                      <?php echo $row['engine']; ?>
                                     </div>
                                     <div class="ui inverted black label my-1" data-tooltip="Compartment Size" data-inverted="" data-variation="tiny">
                                       <i class="suitcase icon"></i>
-                                      Small
+                                      <?php echo $row['compartment']; ?>
                                     </div>
-                                    <div class="ui inverted black label my-1" data-tooltip="Aircondition" data-inverted="" data-variation="tiny">
-                                      <i class="snowflake icon"></i>
-                                      A/C
-                                    </div>
+                                    <?php if ($row['AC'] == 1){ ?>
+                                        <div class="ui inverted black label my-1" data-tooltip="Aircondition" data-inverted="" data-variation="tiny">
+                                          <i class="snowflake icon"></i>
+                                          A/C
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
 
@@ -311,6 +333,26 @@
    <!--  <?php include 'footer.php' ?> -->
     <?php include 'scripts.php'; ?>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+             $('.image-preview-slider').slick({
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: false,
+              fade: true,
+              asNavFor: '.car-images-slider'
+            });
+            $('.car-images-slider').slick({
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              asNavFor: '.image-preview-slider',
+              dots: false,
+              centerMode: false,
+              focusOnSelect: true,
+              infinite: false
+            });
+        });
+    </script>
 
 </body>
 </html>

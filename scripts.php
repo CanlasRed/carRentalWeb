@@ -21,6 +21,7 @@
 <!-- IMAGE ZOOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/2.2.3/jquery.elevatezoom.min.js" integrity="sha512-UH428GPLVbCa8xDVooDWXytY8WASfzVv3kxCvTAFkxD2vPjouf1I3+RJ2QcSckESsb7sI+gv3yhsgw9ZhM7sDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
      <script type="text/javascript">
         $('.ui.dropdown')
         .dropdown();
@@ -51,7 +52,7 @@
           startCalendar: $('#rangestart')
         });
 
-        $('.ui.range.slider')
+        $('#slider-age')
           .slider({
             min: 18,
             max: 100,
@@ -65,5 +66,22 @@
             }
           })
         ;
+
+        $('#slider-price')
+          .slider({
+            min: 50,
+            max: 10000,
+            start: 50,
+            end: 10000,
+            step: 1,
+            smooth: true,
+            onMove: function(value, min, max) {
+                $('#priceMin').val(min);
+
+                $('#priceMax').val(max);
+            }
+          })
+        ;
+
     </script>
 

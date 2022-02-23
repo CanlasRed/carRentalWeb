@@ -14,31 +14,31 @@
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input class="rounded-pill" type="text" name="firstname" placeholder="First Name">
+            <input class="rounded-pill" type="text" name="firstname" placeholder="First Name *">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input class="rounded-pill" type="text" name="lastname" placeholder="Last Name">
+            <input class="rounded-pill" type="text" name="lastname" placeholder="Last Name *">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="at icon"></i>
-            <input class="rounded-pill" type="text" name="email" placeholder="E-mail address">
+            <input class="rounded-pill" type="text" name="email" placeholder="E-mail address *">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="mobile alternate icon"></i>
-            <input class="rounded-pill" type="text" name="phone" placeholder="Mobile no.">
+            <input class="rounded-pill" type="text" name="phone" placeholder="Mobile no. *">
           </div>
         </div>
         <div class="field">
           <div class="ui action left icon input">
             <i class="lock icon"></i>
-            <input class="rounded-pill" type="password" id="txtPassword" name="password" placeholder="Password">
+            <input class="rounded-pill" type="password" id="txtPassword" name="password" placeholder="Password *">
             <div class="ui icon button" id='toggle_pwd'>
               <i class="eye icon" id="toggle_pwd_icon"></i>
             </div>
@@ -47,7 +47,7 @@
         <div class="field">
           <div class="ui action left icon input">
             <i class="lock icon"></i>
-            <input class="rounded-pill" type="password" id="txtPassword2" name="password2" placeholder="Retype Password">
+            <input class="rounded-pill" type="password" id="txtPassword2" name="password2" placeholder="Retype Password *">
             <div class="ui icon button" id='toggle_pwd2'>
               <i class="eye icon" id="toggle_pwd_icon2"></i>
             </div>

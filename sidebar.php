@@ -17,11 +17,14 @@
     <div id="panel-car-type" class="accordion-collapse collapse show" aria-labelledby="heading-car-type">
       <div class="accordion-body">
         <ul>
-          <?php for ($i=0;$i<6;$i++) { ?>
+          <?php 
+          $sql = 'SELECT * FROM tbl_car_types ORDER BY typeID ASC';
+          $result = mysqli_query($dbconn, $sql); 
+          foreach ($result as $row) { ?>
             <li>
               <div class="ui checkbox">
-                <input type="checkbox" name="example" id="<?php echo $i; ?>">
-                <label for="<?php echo $i; ?>">Car Type</label>
+                <input type="checkbox" name="example" id="checkbox_<?php echo $row['name']; ?>">
+                <label for="checkbox_<?php echo $row['name']; ?>"><?php echo $row['name']; ?></label>
               </div>
             </li>
           <?php } ?>
@@ -39,14 +42,30 @@
     <div id="panel-capacity" class="accordion-collapse collapse show" aria-labelledby="heading-capacity">
       <div class="accordion-body">
         <ul>
-          <?php for ($i=0;$i<4;$i++) { ?>
             <li>
-            <div class="ui checkbox">
-              <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Capacity</label>
-            </div>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" id="capacity1">
+                <label for="capacity1">Small</label>
+              </div>
             </li>
-          <?php } ?>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" id="capacity2">
+                <label for="capacity2">Medium</label>
+              </div>
+            </li>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" id="capacity3">
+                <label for="capacity3">Large</label>
+              </div>
+            </li>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" id="capacity4">
+                <label for="capacity4">Huge</label>
+              </div>
+            </li>
         </ul>
       </div>
     </div>
@@ -61,14 +80,18 @@
     <div id="panel-transmission" class="accordion-collapse collapse show" aria-labelledby="heading-transmission">
       <div class="accordion-body">
         <ul>
-          <?php for ($i=0;$i<2;$i++) { ?>
             <li>
-            <div class="ui checkbox">
-              <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Automatic</label>
-            </div>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" id="transmission">
+                <label for="transmission">Automatic</label>
+              </div>
             </li>
-          <?php } ?>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" id="transmission2">
+                <label for="transmission2">Manual</label>
+              </div>
+            </li>
         </ul>
       </div>
     </div>
@@ -82,20 +105,27 @@
     </h2>
     <div id="panel-price" class="accordion-collapse collapse show" aria-labelledby="heading-price">
       <div class="accordion-body">
-          <div class="row">
-            <div class="ui input col-5">
-              <input type="number" placeholder="Min">
+        <div class="ui grid m-0 p-0" style="width: 100%;">
+            <div class="two column row p-0 m-0">
+              <div class="ui input left floated column">
+                <label class="left floated column">Min</label>
+                <input type="number" id="priceMin" placeholder="Min" value="50">
+              </div>
+              
+              <div class="ui input right floated column">
+                <label class="float-end">Max</label>
+                <input type="number" id="priceMax" placeholder="Max" value="10000">
+              </div>
             </div>
-            _
-            <div class="ui input col-5">
-              <input type="number" placeholder="Max">
-            </div>
+          <div class="two column row m-0">
+            <div class="ui range slider" id="slider-price"></div>
           </div>
-          <div class="row pt-3 px-3">
+          <div class="row px-3 m-0">
               <button class="ui secondary button">
                 Apply
               </button>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -112,8 +142,8 @@
           <?php for ($i=0;$i<2;$i++) { ?>
             <li>
             <div class="ui checkbox">
-              <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Red</label>
+              <input type="checkbox" name="example" id="color<?php echo $i; ?>">
+              <label for="color<?php echo $i; ?>">Red</label>
             </div>
             </li>
           <?php } ?>

@@ -11,14 +11,14 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading-car-type">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-car-type" aria-expanded="true" aria-controls="panel-car-type">
-        Age Group
+        Age Range
       </button>
     </h2>
     <div id="panel-car-type" class="accordion-collapse collapse show" aria-labelledby="heading-car-type">
       <div class="accordion-body">
         <label id="ageMin">18</label>
         <label id="ageMax" class="float-end">100</label>
-        <div class="ui range slider" id="slider-range"></div>
+        <div class="ui range slider" id="slider-age"></div>
 
       </div>
     </div>
@@ -76,20 +76,27 @@
     </h2>
     <div id="panel-price" class="accordion-collapse collapse show" aria-labelledby="heading-price">
       <div class="accordion-body">
-          <div class="row">
-            <div class="ui input col-5">
-              <input type="number" placeholder="Min">
+        <div class="ui grid m-0 p-0" style="width: 100%;">
+            <div class="two column row p-0 m-0">
+              <div class="ui input left floated column">
+                <label class="left floated column">Min</label>
+                <input type="number" id="priceMin" placeholder="Min" value="50">
+              </div>
+              
+              <div class="ui input right floated column">
+                <label class="float-end">Max</label>
+                <input type="number" id="priceMax" placeholder="Max" value="10000">
+              </div>
             </div>
-            _
-            <div class="ui input col-5">
-              <input type="number" placeholder="Max">
-            </div>
+          <div class="two column row m-0">
+            <div class="ui range slider" id="slider-price"></div>
           </div>
-          <div class="row pt-3 px-3">
+          <div class="row px-3 m-0">
               <button class="ui secondary button">
                 Apply
               </button>
           </div>
+        </div>
       </div>
     </div>
   </div>

@@ -55,41 +55,58 @@
 
 
     <div class="p-4 ui grid">
-<?php for ($i=0;$i<5;$i++) { ?>
+<?php 
+$sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1 AND i.displayImage = 1";
+$result = mysqli_query($dbconn, $sql);
+
+foreach ($result as $row) { ?>
 
       <div class="ui card m-2">
         <div class="content">
           <div class="right floated meta">14h</div>
-            Kia Picanto
+            <?php echo $row['name']; ?>
         </div>
         <div class="image">
-          <img src="assets/car-types/hatchback.png">
+          <?php if ($row['driverID']!=NULL){ ?>
+            <div class="ui black right corner label">
+              <i class="user plus icon"></i>
+            </div>
+          <?php } ?>
+          <img class="p-2" src="assets/cars/<?php echo $row['image'];?>" alt="<?php echo $row['title']; ?>">
         </div>
         <div class="content">
           <div class="row">
             <div class="col-6">
-              4 Seater
+              <i class="user icon"></i> <?php echo $row['capacity']; ?> Seater
             </div>
             <div class="col-6">
-              Auto
+              <i class="cogs icon"></i> <?php echo $row['transmission']; ?>
             </div>
           </div>
           <div class="row">
             <div class="col-6">
-              Engine: Gas
+              <i class="gas pump icon"> </i><?php echo $row['engine']; ?>
             </div>
             <div class="col-6">
-              Type: Hatchback
+              <i class="car icon"></i> <?php echo $row['type']; ?>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+                <div class="ui inverted black label my-1">
+                  4.7
+                </div>
+                 <div class="ui star rating" data-rating="5"></div>
             </div>
           </div>
         </div>
         <div class="content">
           <span class="float-start mt-2">
-              <h5 style="font-weight: bold;">₱4,000</h5>
+              <h5 style="font-weight: bold;">₱<?php echo $row['rate'];?>/hr</h5>
           </span>
           <span class="float-end">
-            <a href="">
-              <div class="ui vertical animated button secondary" tabindex="0">
+            <a href="cars.php?car=<?php echo $row['name'];?>&carID=<?php echo $row['carID']; ?>">
+              <div class="ui vertical animated button secondary rent-btn" tabindex="0">
                 <div class="hidden content"   style="font-weight:400">Rent</div>
                 <div class="visible content">
                   <i class="shop icon"   style="font-weight:400"></i>

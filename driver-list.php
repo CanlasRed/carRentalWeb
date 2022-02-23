@@ -96,6 +96,12 @@
                 Olongapo City
               </div>
             </div>
+            <div class="item">
+                <div class="ui inverted black label my-1">
+                  4.7
+                </div>
+                 <div class="ui star rating" data-rating="5"></div>
+            </div>
           </div>
 
         </div>
