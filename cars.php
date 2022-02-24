@@ -29,39 +29,47 @@
 
                 <!-- CAR DETAILS SEGMENT -->
                 <div class=" ui raised segment">
-                    <div class="row m-0">
-                        <div class="col-12 py-3">
-                            <div class="ui header large">
-                                <?php echo $row['name'];?>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="row m-0">
                         <div class="col-md-5">
-                            <div class="row image-preview-slider">
+                            <div class="image-preview-slider">
                                 <?php 
                                     $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$_GET['carID']." ";
                                     $result = mysqli_query($dbconn, $sql);
                                     foreach($result as $carImage) { ?>
-                                        <img width="50px" src="assets/cars/<?php echo $carImage['image'];?>">
+                                    <div class="card m-1 slick-ratio">
+                                        <div class="slick-ratio">
+                                            <img class="img-fluid align-middle" src="assets/cars/<?php echo $carImage['image'];?>">
+                                        </div>
+                                    </div>
                                 <?php } ?>
                             </div>
-                             <div class="row">
-                                 <div class="car-images-slider">
+                             
+                                 <div class="car-images-slider my-1">
                                     <?php 
                                     foreach($result as $carImage) { ?>
-                                        <div class="card" style="width:100px; height:100px">
-                                            <div class="ui bordered image" style="height:auto; object-fit: cover;">
-                                                <img height="100%" src="assets/cars/<?php echo $carImage['image'];?>">
+                                        <div class="card m-1 slick-ratio">
+                                            <div class="slick-border slick-ratio">
+                                                <img class="img-fluid align-middle img-cropped" src="assets/cars/<?php echo $carImage['image'];?>">
                                             </div>
                                         </div>
                                     <?php } ?>
                                  </div>
-                            </div>
+                            
                         </div>
                         <div class="col-md-7">
-
+                            <div class="row m-0">
+                                <div class="col-12 mt-1 py-2 px-0">
+                                    <div class="ui header large m-0">
+                                        <?php echo $row['name'];?>
+                                        <span class="float-end">₱<?php echo $row['rate'];?>/hr</span>
+                                    </div>
+                                    <div class="">
+                                         <?php echo $row['brandID'];?>  <?php echo $row['model'];?>  <?php echo $row['year'];?>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-10 py-1">
                                     <div class="ui inverted black label my-1" data-tooltip="Top Speed" data-inverted="" data-variation="tiny">
@@ -296,6 +304,7 @@
                     <div>
                         Car Rental Fee:
                         <div class="float-end">
+                            <div>₱<?php echo $row['rate']?> x <label id="days"></label></div>
                             3,000
                         </div>
                     </div>
@@ -343,7 +352,7 @@
               asNavFor: '.car-images-slider'
             });
             $('.car-images-slider').slick({
-              slidesToShow: 3,
+              slidesToShow: 4,
               slidesToScroll: 1,
               asNavFor: '.image-preview-slider',
               dots: false,
@@ -351,7 +360,28 @@
               focusOnSelect: true,
               infinite: false
             });
+
+            // $('.car-images-slider').on('afterChange', function(slick, currentSlide){
+            //     $('.slick-active').each(function(){
+            //         var divWidth = $(this).width(); 
+            //         $(this).height(divWidth);
+            //     })
+            // });
+
+            $('.slick-ratio').each(function(){
+                var divWidth = $(this).width(); 
+                $(this).height(divWidth);
+            })
+            
+            $(window).resize(function(){
+                $('.slick-ratio').each(function(){
+                    var divWidth = $(this).width(); 
+                    $(this).height(divWidth);
+                })
+            });
         });
+
+        
     </script>
 
 </body>

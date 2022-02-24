@@ -160,3 +160,36 @@ footer ul li a:hover{
   color: #1b1c1d;
 }
 
+.car-image-slider{
+  width: 100%;
+}
+
+.car-images-slider .slick-prev:before, .car-images-slider .slick-next:before{
+  color: black !important;
+}
+
+.car-images-slider .slick-slide{
+  padding: 0;
+  cursor: pointer;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.car-images-slider .slick-ratio{
+  overflow: hidden;
+}
+
+
+.car-images-slider .slick-current{
+  border: 2px solid #1b1c1d;
+}
+
+.image-preview-slider .card{
+  border: none;
+}
+
+.align-middle{
+  position: relative !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
