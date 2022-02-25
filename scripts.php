@@ -52,15 +52,8 @@
           startCalendar: $('#rangestart')
         });
 
-        var dateStart = "";
-        var dateEnd = "";
-
-        $('.ui.calendar').calendar({
-         onChange: function () {
-             var dateStart = $('.ui.calendar').calendar('get startDate');
-             alert(dateStart);
-            },
-        });
+        
+      
 
 
         $('#slider-age')

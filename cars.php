@@ -149,18 +149,26 @@
                 </div>
 
                 <!-- RENTAL DATE SEGMENT -->
-                <div class=" ui raised segment">
+                <div class="ui raised segment">
+                <form action="" method="POST" class="ui form" id="date_form">
                     <div class="row m-0">
                         <div class="col-12 py-3">
                             <div class="ui header medium">
                                 Car Rental Date
+                                <div id="apply_date" class="ui vertical black animated submit button float-end" tabindex="0">
+                                  <div class="hidden content">Apply</div>
+                                  <div class="visible content">
+                                    Apply
+                                  </div>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="ui two column stackable grid pb-3">
                         <div class="ui vertical divider"></div>
 
-                        <div class="middle aligned row ui form">
+                        <div class="middle aligned row">
                           <div class="column px-5">
 
                             <div class="field">
@@ -168,7 +176,7 @@
                               <div class="ui inverted calendar" id="rangestart">
                                 <div class="ui input left icon">
                                   <i class="calendar icon"></i>
-                                  <input type="text" placeholder="Pick-up Date">
+                                  <input type="text" name="startDate" placeholder="Pick-up Date">
                                 </div>
                               </div>
                             </div>
@@ -193,7 +201,7 @@
                               <div class="ui inverted calendar" id="rangeend">
                                 <div class="ui input left icon">
                                   <i class="calendar icon"></i>
-                                  <input type="text" placeholder="Drop-off Date">
+                                  <input type="text" name="endDate" placeholder="Drop-off Date">
                                 </div>
                               </div>
                             </div>
@@ -213,7 +221,7 @@
                           </div>
                         </div>
                       </div>
-                       
+                </form>
                 </div>
 
                 <!-- DRIVER SEGMENT -->
@@ -273,6 +281,8 @@
             <!-- END OF LEFT COLUMN -->
 
 
+
+
             <!-- RIGHT COLUMN -->
             <div class="col-lg-3 mt-3">
                 <div class="ui inverted raised clearing segment">
@@ -299,13 +309,23 @@
                     </div>
                 </div>
 
+
+
+
+
                 <div class="ui inverted raised clearing segment">
                     <h3 class="ui header">Price Summary</h3>
                     <div>
                         Car Rental Fee:
                         <div class="float-end">
-                            <div>₱<?php echo $row['rate']?> x <label id="days"></label></div>
-                            3,000
+                            <div>₱<?php echo $row['rate']?> x <label id="rent_hours"></label></div>
+                            <input type="text" name="rate" id="rate_fee" value="<?php echo $row['rate']; ?>" hidden>
+                        </div>
+                    </div>
+                    <div>
+                        =
+                        <div class="float-end">
+                            <label id="computed_rental"></label>
                         </div>
                     </div>
                     <div>
@@ -323,15 +343,10 @@
                     <div class="mt-3 ui header">
                         Total Amount:
                         <div class="float-end ui inverted header">
-                            6,000
+                            <label id="grand_total">6,000</label>
                         </div>
                     </div>
-                    <div class="ui fluid large vertical green animated submit button rounded-pill">
-                      <div class="hidden content">Book</div>
-                      <div class="visible content">
-                        Book
-                      </div>
-                    </div>
+                    <?php include 'rental_form.php'; ?>
                 </div>
             </div>
 
@@ -379,6 +394,110 @@
                     $(this).height(divWidth);
                 })
             });
+
+            
+                $('#date_form').form({
+                    fields:{
+                        startDate:{
+                            identifier: 'startDate',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a Pick-up Date'
+                                }
+                            ]
+                        },
+                        endDate:{
+                            identifier: 'endDate',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a Drop-off Date'
+                                }
+                            ]
+                        }
+                    },
+                    inline:true,
+                    onSuccess: function(e){
+
+                        $form  = $(this);
+                        e.preventDefault();
+                          // $_form = $(this).find('#date_form');
+                          $form.addClass('loading');
+                          $('#apply_date').addClass('loading');
+
+
+                          $.ajax({
+                              type: "POST",
+                              url: "php/compute_date.php",
+                              data: $form.serialize(),
+                              dataType:'JSON',
+                              success:function(data){
+                                if(data.length>0){
+                                    $('#rent_hours').html(data[0]);
+                                    var rate = $('#rate_fee').val();
+                                    var rentalFee = rate*data[0];
+                                    $('#computed_rental').html(rentalFee);
+                                    $('#carAmount').val(rentalFee);
+                                    $('#grand_total').html(rentalFee+3000);
+
+                                    $('#rental_start').val(data[1]);
+                                    $('#rental_end').val(data[2]);
+                                }
+                              }
+                             
+                        });
+                           $form.removeClass('loading');  
+                           $('#apply_date').removeClass('loading')
+                           $('#book_btn').removeClass('disabled');               
+                    }
+                });
+
+
+
+                $('#rental_form').form({
+                    // fields:{
+                    //     startDate:{
+                    //         identifier: 'startDate',
+                    //         rules: [
+                    //             {
+                    //                 type: 'empty',
+                    //                 prompt: 'Please enter a Pick-up Date'
+                    //             }
+                    //         ]
+                    //     },
+                    //     endDate:{
+                    //         identifier: 'endDate',
+                    //         rules: [
+                    //             {
+                    //                 type: 'empty',
+                    //                 prompt: 'Please enter a Drop-off Date'
+                    //             }
+                    //         ]
+                    //     }
+                    // },
+                    // inline:true,
+                    onSuccess: function(e){
+
+                        $form  = $(this);
+                        e.preventDefault();
+                          // $_form = $(this).find('#date_form');
+                          
+
+                          $.ajax({
+                              type: "POST",
+                              url: "php/insert_carRental.php",
+                              data: $form.serialize(),
+                              success:function(data){
+                                if(data>0){
+                                   
+                                }
+                              }
+                             
+                        });
+                                           
+                    }
+                });
         });
 
         
