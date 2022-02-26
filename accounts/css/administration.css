@@ -1,0 +1,98 @@
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+body{
+  scroll-behavior: smooth;
+}
+
+body.preloader-site{
+  overflow: hidden;
+}
+
+.preloader-wrapper{
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  /*background: radial-gradient(circle, rgba(245,245,245,1) 0%, rgba(226,226,226,1) 54%, rgba(213,213,213,1) 100%);*/
+  background: rgba(255,255,255,0.8);
+  top: 0;
+  left: 0;
+  z-index: 999999;
+}
+.preloader-wrapper .preloader-custom {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+
+.not-smooth{
+  transition: all 1ms ease !important;
+}
+
+.main-sidebar{
+  background: #1b1c1d;
+}
+
+.sidebar .nav-link:hover{
+/*  color: #76b947 !important;*/
+  background: #444;
+}
+
+.sidebar .nav-link{
+  font-weight: 400;
+  color: white !important;
+}
+
+.sidebar .nav-header{
+  color: white;
+}
+
+.brand-text{
+  color: white;
+}
+
+.info a{
+  color: white;
+}
+
+.user-panel .image img{
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+  object-fit: cover;
+}
+
+.table-image .w-10{
+  width: 10%;
+}
+
+.table-image td,
+.table-image tr{
+  text-align: center;
+}
+
+
+.plant_row:hover{
+  background: #ccc;
+}
+
+.tooltip{
+   font-size: 0.8rem !important;
+}
+
+.nav-link.active,
+.show > .nav-link {
+  background-color: #1b1c1d !important;
+}
