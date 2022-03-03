@@ -179,7 +179,7 @@
 
                     </div>
                     <div class="col-5 text-center">
-                      <img src="../assets/cars/toyota_fortuner.png" alt="car-image" class="img-circle img-fluid">
+                      <img src="../assets/cars/toyota_fortuner.png" alt="car-image" class="img-fluid">
                     </div>
                   </div>
                 </div>

@@ -36,6 +36,9 @@ body.preloader-site{
     transform: translate(-50%, -50%);
 }
 
+aside .nav-item:hover .nav-link{
+  color: #fff !important;
+}
 
 .not-smooth{
   transition: all 1ms ease !important;
@@ -94,5 +97,17 @@ body.preloader-site{
 
 .nav-link.active,
 .show > .nav-link {
+  background-color: #1b1c1d !important;
+}
+
+.nav-link.active:hover {
+  color: #fff !important;
+}
+
+.nav-link:hover{
+  color: #1b1c1d !important;
+}
+
+.bg-black{
   background-color: #1b1c1d !important;
 }

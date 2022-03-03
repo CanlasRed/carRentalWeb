@@ -23,8 +23,7 @@
 
 
      <script type="text/javascript">
-        $('.ui.dropdown')
-        .dropdown();
+        $('.ui.dropdown').dropdown();
 
         
 
@@ -81,11 +80,20 @@
             smooth: true,
             onMove: function(value, min, max) {
                 $('#priceMin').val(min);
-
                 $('#priceMax').val(max);
             }
           })
         ;
+
+
+        $('#filter_dropdown')
+            .dropdown({
+                onChange: function(value, name){
+                    $('#hidden_order').val(value);
+                }
+            });
+    
+
 
     </script>
 

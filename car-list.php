@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="right menu">
-          <div class="ui floating dropdown labeled icon button">
+          <div class="ui floating dropdown labeled icon button" id="filter_dropdown" >
             <i class="filter icon pt-4"></i>
             <span class="text mt-1">Sort</span>
             <div class="menu">
@@ -31,99 +31,40 @@
                 Sort By:
               </div>
               <div class="divider"></div>
-              <div class="item">
-                <i class="thumbs up icon"></i>
-                Relevance
-              </div>
-              <div class="item">
-                <i class="clock icon"></i>
-                Latest
-              </div>
-              <div class="item">
-                <i class="sort amount up icon"></i>
-                Price: Low to High
-              </div>
-              <div class="item">
-                <i class="sort amount down icon"></i>
-                Price: High to Low
-              </div>
+                <div class="item" data-value="latest">
+                  <i class="thumbs up icon"></i>
+                  Latest
+                </div>
+                <div class="item" data-value="oldest">
+                  <i class="clock icon"></i>
+                  Oldest
+                </div>
+                <div class="item" data-value="price_asc">
+                  <i class="sort amount up icon"></i>
+                  Price: Low to High
+                </div>
+                <div class="item" data-value="price_desc">
+                  <i class="sort amount down icon"></i>
+                  Price: High to Low
+                </div>
             </div>
           </div>
       </div>
+      <input type="text" name="order" id="hidden_order" hidden>
     </div>
 
 
 
-    <div class="p-4 ui grid">
-<?php 
-$sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1 AND i.displayImage = 1";
-$result = mysqli_query($dbconn, $sql);
+    <div class="p-4 ui grid" id="car-list-container">
 
-foreach ($result as $row) { ?>
-
-      <div class="ui card m-2">
-        <div class="content">
-          <div class="right floated meta">14h</div>
-            <?php echo $row['name']; ?>
-        </div>
-        <div class="image">
-          <?php if ($row['driverID']!=NULL){ ?>
-            <div class="ui black right corner label">
-              <i class="user plus icon"></i>
-            </div>
-          <?php } ?>
-          <img class="p-2" src="assets/cars/<?php echo $row['image'];?>" alt="<?php echo $row['title']; ?>">
-        </div>
-        <div class="content">
-          <div class="row">
-            <div class="col-6">
-              <i class="user icon"></i> <?php echo $row['capacity']; ?> Seater
-            </div>
-            <div class="col-6">
-              <i class="cogs icon"></i> <?php echo $row['transmission']; ?>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <i class="gas pump icon"> </i><?php echo $row['engine']; ?>
-            </div>
-            <div class="col-6">
-              <i class="car icon"></i> <?php echo $row['type']; ?>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12">
-                <div class="ui inverted black label my-1">
-                  4.7
-                </div>
-                 <div class="ui star rating" data-rating="5"></div>
-            </div>
-          </div>
-        </div>
-        <div class="content">
-          <span class="float-start mt-2">
-              <h5 style="font-weight: bold;">₱<?php echo $row['rate'];?>/hr</h5>
-          </span>
-          <span class="float-end">
-            <a href="cars.php?car=<?php echo $row['name'];?>&carID=<?php echo $row['carID']; ?>">
-              <div class="ui vertical animated button secondary rent-btn" tabindex="0">
-                <div class="hidden content"   style="font-weight:400">Rent</div>
-                <div class="visible content">
-                  <i class="shop icon"   style="font-weight:400"></i>
-                </div>
-              </div>
-            </a>
-          </span>
-        </div>
-      </div>
-
-  <?php } ?>
     </div>
 
 </div>
     </div>
    <!--  <?php include 'footer.php' ?> -->
     <?php include 'scripts.php'; ?>
+    <script type="text/javascript" src="js/car-filtering.js"></script>
+
 
 
 </body>

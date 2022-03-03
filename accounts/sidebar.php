@@ -39,23 +39,9 @@
           
           <li class="nav-header">User</li>
             <li class="nav-item">
-              <a href="/admin" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Dashboard
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="profile.php" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>User Profile</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="glossary.php" class="nav-link">
-                <i class="nav-icon fas fa-history"></i>
-                <p>History</p>
               </a>
             </li>
           </li>

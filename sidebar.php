@@ -23,7 +23,7 @@
           foreach ($result as $row) { ?>
             <li>
               <div class="ui checkbox">
-                <input type="checkbox" name="example" id="checkbox_<?php echo $row['name']; ?>">
+                <input type="checkbox" class="car_type common_selector" name="checkbox" value="<?php echo $row['typeID']; ?>" id="checkbox_<?php echo $row['name']; ?>">
                 <label for="checkbox_<?php echo $row['name']; ?>"><?php echo $row['name']; ?></label>
               </div>
             </li>
@@ -45,25 +45,25 @@
             <li>
               <div class="ui checkbox">
                 <input type="checkbox" name="example" id="capacity1">
-                <label for="capacity1">Small</label>
+                <label for="capacity1">2 Seaters</label>
               </div>
             </li>
             <li>
               <div class="ui checkbox">
                 <input type="checkbox" name="example" id="capacity2">
-                <label for="capacity2">Medium</label>
+                <label for="capacity2">4 Seaters</label>
               </div>
             </li>
             <li>
               <div class="ui checkbox">
                 <input type="checkbox" name="example" id="capacity3">
-                <label for="capacity3">Large</label>
+                <label for="capacity3">5 Seaters</label>
               </div>
             </li>
             <li>
               <div class="ui checkbox">
                 <input type="checkbox" name="example" id="capacity4">
-                <label for="capacity4">Huge</label>
+                <label for="capacity4">6 Seaters</label>
               </div>
             </li>
         </ul>
@@ -82,13 +82,13 @@
         <ul>
             <li>
               <div class="ui checkbox">
-                <input type="checkbox" name="example" id="transmission">
+                <input type="checkbox" class="common_selector car_transmission" value="automatic" name="example" id="transmission">
                 <label for="transmission">Automatic</label>
               </div>
             </li>
             <li>
               <div class="ui checkbox">
-                <input type="checkbox" name="example" id="transmission2">
+                <input type="checkbox" class="common_selector car_transmission" value="manual" name="example" id="transmission2">
                 <label for="transmission2">Manual</label>
               </div>
             </li>
@@ -121,7 +121,7 @@
             <div class="ui range slider" id="slider-price"></div>
           </div>
           <div class="row px-3 m-0">
-              <button class="ui secondary button">
+              <button class="ui secondary button common_selector">
                 Apply
               </button>
           </div>
