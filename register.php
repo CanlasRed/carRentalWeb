@@ -9,24 +9,24 @@
         Create Account
       </div>
     </h5>
-    <form action="" method="POST" class="ui large form">
+    <form action="" method="POST" id="register_form" class="ui large form">
       <div class="ui">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input class="rounded-pill" type="text" name="firstname" placeholder="First Name *">
+            <input class="rounded-pill" type="text" name="firstName" placeholder="First Name *">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input class="rounded-pill" type="text" name="lastname" placeholder="Last Name *">
+            <input class="rounded-pill" type="text" name="lastName" placeholder="Last Name *">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="at icon"></i>
-            <input class="rounded-pill" type="text" name="email" placeholder="E-mail address *">
+            <input class="rounded-pill" type="text" name="username" placeholder="E-mail address *">
           </div>
         </div>
         <div class="field">
@@ -112,7 +112,7 @@
           fields: {
 
             firstname: {
-              identifier: 'firstname',
+              identifier: 'firstName',
               rules: [
                 {
                   type   : 'empty',
@@ -121,7 +121,7 @@
               ]
             },
             lastname: {
-              identifier: 'lastname',
+              identifier: 'lastName',
               rules: [
                 {
                   type   : 'empty',
@@ -143,14 +143,14 @@
               ]
             },
             email: {
-              identifier  : 'email',
+              identifier  : 'username',
               rules: [
                 {
                   type   : 'empty',
                   prompt : 'Please enter your e-mail'
                 },
                 {
-                  type   : 'email',
+                  type   : 'username',
                   prompt : 'Please enter a valid e-mail'
                 }
               ]
@@ -165,10 +165,6 @@
                 {
                   type   : 'minLength[6]',
                   prompt : 'Your password must be at least {ruleValue} characters'
-                },
-                {
-                  type   : 'contains[1]',
-                  prompt : 'Your password not stronkgs'
                 }
               ]
             },
@@ -195,9 +191,72 @@
               ]
             }
           },
-          inline: true
+          inline: true,
+          onSuccess: function(e, fields){
+          e.preventDefault();
+          var formData = new FormData(this);
+              $.ajax({
+                url: "php/create-account.php",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(data){
+                  if(data.statusCode == 200 && data.data != null){
+                    Swal.fire({
+                        icon: 'success',
+                        title: data.msg,
+                        confirmButtonColor: '#1b1c1d',
+                        confirmButtonText: 'OK'
+                    }).then((result) =>{
+                         location.href = '/carRentalWeb/';
+                      
+                    })
+                  }
+                  else if (data.statusCode == 500){
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: data.msg,
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                  else if (data.statusCode == 200 && data.data == null){
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Invalid',
+                      text: data.msg,
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                  else if (data.statusCode == 400 && data.data == null){
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Invalid',
+                      text: data.msg,
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                  else{
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'An error has occured',
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                }
+              });
+          }
         })
       ;
+
+  
 </script>
 
 

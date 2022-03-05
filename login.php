@@ -9,12 +9,12 @@
         Sign in to your account
       </div>
     </h5>
-    <form action="" method="POST" class="ui large form">
+    <form action="php/login.php" id="login_form" method="POST" class="ui large form">
       <div class="ui">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input class="rounded-pill" type="text" name="email" placeholder="E-mail address">
+            <input class="rounded-pill" type="text" name="username" placeholder="E-mail address">
           </div>
         </div>
         <div class="field">
@@ -94,14 +94,6 @@
                 {
                   type   : 'empty',
                   prompt : 'Please enter a password'
-                },
-                {
-                  type   : 'minLength[6]',
-                  prompt : 'Your password must be at least {ruleValue} characters'
-                },
-                {
-                  type   : 'contains[1]',
-                  prompt : 'Your password not stronkgs'
                 }
               ]
             }
@@ -109,6 +101,62 @@
           inline: true
         })
       ;
+
+      $(document).ready(function(){
+        $('#login_form').submit(function(e){
+          e.preventDefault();
+          var formData = new FormData(this);
+              $.ajax({
+                url: "php/login.php",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(data){
+                  if(data.statusCode == 200){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Success',
+                        confirmButtonColor: '#1b1c1d',
+                        confirmButtonText: 'OK'
+                    }).then((result) =>{
+                         location.href = '/carRentalWeb/';
+                      
+                    })
+                  }
+                  else if (data.statusCode == 401){
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Invalid',
+                      text: 'Invalid Credentials',
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                  else if (data.statusCode == 400){
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Invalid',
+                      text: 'Username and Password is Required',
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                  else{
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'An error has occured',
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                    })
+                  }
+                }
+              });
+        });
+      });
+
 </script>
 
 

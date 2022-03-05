@@ -1,19 +1,17 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Speedy</title>
-	<link rel="icon" type="icon" href="favicon.ico">
+	
 
 	<?php include 'header.php'; ?>
 </head>
 <body>
 
 	<?php 
-	if(isset($_SESSION['userID'])){
-		header("Location: register.php");
-	} else {
 
 	include 'navbar.php'; ?>
 
@@ -299,4 +297,3 @@
 	</script>
 </body>
 </html>
-<?php }?>

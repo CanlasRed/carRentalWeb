@@ -22,5 +22,7 @@
 <!-- BOXICONS -->
 <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
 
+<link rel="icon" type="icon" href="favicon.ico">
+
 
 

@@ -31,12 +31,18 @@
           </ul>
         </li>
         <li class="nav-item">
-          <div class="ui vertical animated black button rounded-pill" tabindex="0">
-            <div class="hidden content">Login</div>
-            <div class="visible content">
-              Login
+          <?php if(isset($_SESSION['userID'])) { ?>
+             <a class="nav-link" href="accounts">Account</a>
+          <?php } else { ?>
+            <a href="login.php">
+            <div class="ui vertical animated black button rounded-pill" tabindex="0">
+              <div class="hidden content">Login</div>
+              <div class="visible content">
+                Login
+              </div>
             </div>
-          </div>
+            </a>
+          <?php } ?>
         </li>
       </ul>
     </div>
