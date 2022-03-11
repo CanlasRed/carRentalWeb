@@ -482,20 +482,50 @@
                         $form  = $(this);
                         e.preventDefault();
                           // $_form = $(this).find('#date_form');
-                          
+                    
+                            Swal.fire({
+                                icon: 'question',
+                                title: 'Confirm Booking',
+                                confirmButtonColor: '#1b1c1d',
+                                showCancelButton: true,
+                                confirmButtonText: 'Yes'
+                            }).then((result) =>{
+                                if(result.isConfirmed){
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "php/insert_carRental.php",
+                                        data: $form.serialize(),
+                                        success:function(data){
+                                        if(data>0){
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Success',
+                                                text: 'Car Booked Successfully',
+                                                confirmButtonColor: '#1b1c1d',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) =>{
+                                                location.href = '/carRentalWeb/';
+                                                      
+                                            })
 
-                          $.ajax({
-                              type: "POST",
-                              url: "php/insert_carRental.php",
-                              data: $form.serialize(),
-                              success:function(data){
-                                if(data>0){
-                                   
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Error',
+                                                confirmButtonColor: '#1b1c1d',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) =>{
+                                                location.href = '/carRentalWeb/';
+                                                      
+                                            })
+                                        }
+                                        }
+                                              
+                                             
+                                    });
                                 }
-                              }
-                             
-                        });
-                                           
+                            })
+                        
                     }
                 });
         });

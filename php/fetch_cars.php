@@ -11,6 +11,14 @@
 			$sql .= "AND c.rate BETWEEN '".$_POST['priceMin']."' AND '".$_POST['priceMax']."' ";
 		}
 
+		if(isset($_POST['search']) && !empty($_POST['search']))
+		{
+			$sql .= 'AND (c.name LIKE "%'.$_POST["search"].'%" ';
+			$sql .= 'OR c.model LIKE "%'.$_POST["search"].'%" ';
+			$sql .= 'OR c.year LIKE "%'.$_POST["search"].'%" ';
+			$sql .= 'OR t.name LIKE "%'.$_POST["search"].'%") ';
+		}
+
 		if(isset($_POST['type']))
 		{
 			$type_filter = implode("','", $_POST["type"]);
@@ -68,7 +76,7 @@
 			        <div class="content">
 			          <div class="row">
 			            <div class="col-6">
-			              <i class="user icon"></i> '.$row['capacity'].'Seater
+			              <i class="user icon"></i> '.$row['capacity'].' Seater
 			            </div>
 			            <div class="col-6">
 			              <i class="cogs icon"></i> '.$row['transmission'].'
@@ -76,7 +84,7 @@
 			          </div>
 			          <div class="row">
 			            <div class="col-6">
-			              <i class="gas pump icon"> </i>'.$row['engine'].'
+			              <i class="gas pump icon"></i> '.$row['engine'].'
 			            </div>
 			            <div class="col-6">
 			              <i class="car icon"></i> '.$row['type'].'

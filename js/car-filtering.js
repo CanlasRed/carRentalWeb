@@ -5,7 +5,7 @@ $(document).ready(function(){
 	function filter_data(){
 
 		var order = $('#hidden_order').val();
-		
+		var search = $('#searchbox').val();
 		var priceMin = $('#priceMin').val();
 		var priceMax = $('#priceMax').val();
 		var type = get_filter('car_type');
@@ -18,6 +18,7 @@ $(document).ready(function(){
 				action: 'fetch_data',
 				priceMin: priceMin,
 				priceMax: priceMax,
+				search: search,
 				type: type,
 				transmission: transmission,
 				capacity: capacity,

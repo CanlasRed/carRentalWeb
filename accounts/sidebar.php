@@ -57,7 +57,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="users-table.php?page=1" class="nav-link">
+            <a href="owner-cars.php" class="nav-link">
               <i class="nav-icon fas fa-cars"></i>
               <p>
                 Cars

@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Account | Speedy</title>
   <?php include 'header.php';?>
+  <!-- SEMANTIC UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
  
@@ -37,7 +40,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>Owner Dashboard</h1>
+            <h1>Owned Cars</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -128,7 +131,7 @@
         <div class="col-md-8">
         <div class="card">
           <div class="card-header ui-sortable-handle" style="cursor: move;">
-            <h3 class="card-title"><i class="fas fa-cars"></i> Bookings</h3>
+            <h3 class="card-title"><i class="fas fa-cars"></i> My Cars</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -141,68 +144,65 @@
               <div class="row">
 
               <?php
-              $sql = "SELECT * FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'done'";
+             $sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND c.ownerID = 1 AND i.status = 1 AND i.displayImage = 1 ";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="col-12 col-lg-4 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
-              <div class="card bg-light d-flex flex-fill">
-                <?php if ($row['status'] == 'pending'){ ?>
-                  <div class="ribbon-wrapper">
-                    <div class="ribbon bg-warning">
-                      Pending
-                    </div>
+              <div class="ui card m-2">
+              <div class="content">
+                <div class="right floated meta">14h</div>
+                  <?php echo $row['name'] ?>
+              </div>
+              <div class="image">
+                <?php if ($row['driverID']!=NULL){ ?>
+                  <div class="ui black right corner label">
+                    <i class="user plus icon"></i>
                   </div>
-                <?php } else if ($row['status'] == 'pickup') { ?>
-                  <div class="ribbon-wrapper">
-                    <div class="ribbon bg-info">
-                      Pick-Up
-                    </div>
+               <?php } ?>
+                <img class="p-2" src="../assets/cars/<?php echo $row['image']?>" alt="'.$row['title'].'">
+              </div>
+              <div class="content">
+                <div class="row">
+                  <div class="col-6">
+                    <i class="user icon"></i><?php echo $row['capacity']?> Seater
                   </div>
-                <?php } ?>
-                <div class="card-header border-bottom-0">
-                  <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
-                  $res = mysqli_query($dbconn,$sql);
-                  $car = mysqli_fetch_assoc($res); ?>
-                  <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
-                </div>
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="lead"><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
-
-                      <ul class="ml-0 mb-0 fa-ul text-muted">
-                        <li class="small"><i class="fas fa-map-marker"></i> Olongapo City</li>
-                        <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date($row['startDate']);?></li>
-                        <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date($row['endDate']);?></li>
-                        <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
-                        <li><b>₱ 6,000</b></li>
-                      </ul>
-
-                    </div>
-                    <div class="col-5 text-center">
-                      <img src="../assets/cars/toyota_fortuner.png" alt="car-image" class="img-fluid">
-                    </div>
+                  <div class="col-6">
+                    <i class="cogs icon"></i> <?php echo $row['transmission']?>
                   </div>
                 </div>
-                <div class="card-footer">
-                  <?php if ($row['status'] == 'pending'){ ?>
-                    <div class="text-right">
-                      <a href="#" class="btn btn-sm btn-danger">
-                        <i class="fas fa-ban"></i> Reject
-                      </a>
-                      <a href="#" class="btn btn-sm btn-success">
-                        <i class="fas fa-check"></i> Accept
-                      </a>
-                    </div>
-                  <?php } else if ($row['status'] == 'pickup') { ?>
-                    <div class="text-right">
-                      <a href="#" class="btn btn-sm btn-danger">
-                        <i class="fas fa-ban"></i> Cancel
-                      </a>
-                    </div>
-                  <?php } ?>
+                <div class="row">
+                  <div class="col-6">
+                    <i class="gas pump icon"></i><?php echo $row['engine']?> 
+                  </div>
+                  <div class="col-6">
+                    <i class="car icon"></i><?php echo $row['type']?> 
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                      <div class="ui inverted black label my-1">
+                        4.7
+                      </div>
+                       <div class="ui star rating" data-rating="5"></div>
+                  </div>
                 </div>
               </div>
+              <div class="content">
+                <span class="float-start mt-2">
+                    <h3 class="fw-bolder">₱<?php echo $row['rate']?>/hr</h3>
+                </span>
+                <span class="float-right">
+                  <a href="../cars.php?car=<?php echo $row['name'].'&carID='.$row['carID']?>">
+                    <div class="ui vertical animated button secondary rent-btn" tabindex="0">
+                      <div class="hidden content"   style="font-weight:bold">View</div>
+                      <div class="visible content">
+                        View
+                      </div>
+                    </div>
+                  </a>
+                </span>
+              </div>
+            </div>
             </div>
           <?php } ?>
 

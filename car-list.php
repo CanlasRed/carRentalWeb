@@ -17,8 +17,8 @@
     <div class="ui secondary  menu">
       <div class="item" style="width: 400px;">
         <div class="ui fluid icon input large">
-          <input type="text" placeholder="Search...">
-          <i class="search link icon"></i>
+          <input type="text" placeholder="Search..." id="searchbox">
+          <i class="search link icon common_selector"></i>
         </div>
       </div>
       <div class="right menu">
