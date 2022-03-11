@@ -23,6 +23,14 @@
 			$sql .= "AND c.transmission IN ('".$trans_filter."') ";
 		}
 
+		if(isset($_POST['capacity']))
+		{
+			$trans_filter = implode("','", $_POST["capacity"]);
+			$sql .= "AND c.capacity IN ('".$trans_filter."') ";
+		}
+
+
+
 		if(isset($_POST['order'])){
 			if($_POST['order'] == 'oldest'){
 				$sql .= "ORDER BY c.createdAt ASC";

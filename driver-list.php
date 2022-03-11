@@ -53,82 +53,16 @@
     </div>
 
 
+    <div class="p-4 ui grid" id="driver-list-container">
 
-    <div class="p-4 ui grid">
-<?php for ($i=0;$i<5;$i++) { ?>
-
-      <div class="ui card m-2">
-        <div class="content">
-          <a href=""><img class="right floated mini ui image" src="assets/avatar_2.png"></a>
-          <div class="header">
-            Elliot Fu
-          </div>
-          <div class="meta">
-            Professional
-          </div>
-        </div>
-        <div class="content">
-          <div class="description">
-            2 years driving experience of Victory Line bus. Knowledgeable on locations around Luzon
-          </div>
-          <div class="ui list">
-            <div class="item">
-              <i class="user icon"></i>
-              <div class="content">
-                29 years old
-              </div>
-            </div>
-            <div class="item">
-              <i class="venus mars icon"></i>
-              <div class="content">
-                Male
-              </div>
-            </div>
-            <div class="item">
-              <i class="syringe icon"></i>
-              <div class="content">
-                Fully vaccinated + booster
-              </div>
-            </div>
-            <div class="item">
-              <i class="map marker alternate icon"></i>
-              <div class="content">
-                Olongapo City
-              </div>
-            </div>
-            <div class="item">
-                <div class="ui inverted black label my-1">
-                  4.7
-                </div>
-                 <div class="ui star rating" data-rating="5"></div>
-            </div>
-          </div>
-
-        </div>
-        <div class="content">
-          <span class="float-start mt-2">
-              <h5 style="font-weight: bold;">₱100/hr</h5>
-          </span>
-          <span class="float-end">
-            <a href="">
-              <div class="ui vertical animated button secondary" tabindex="0">
-                <div class="hidden content"   style="font-weight:400">Rent</div>
-                <div class="visible content">
-                  <i class="shop icon"   style="font-weight:400"></i>
-                </div>
-              </div>
-            </a>
-          </span>
-        </div>
-      </div>
-
-  <?php } ?>
     </div>
+  
 
 </div>
     </div>
    <!--  <?php include 'footer.php' ?> -->
     <?php include 'scripts.php'; ?>
+    <script type="text/javascript" src="js/driver-filtering.js"></script>
 
 
 </body>

@@ -8,23 +8,25 @@ $(document).ready(function(){
 		
 		var priceMin = $('#priceMin').val();
 		var priceMax = $('#priceMax').val();
-		var type = get_filter('car_type');
-		var transmission = get_filter('car_transmission');
-		var capacity = get_filter('car_capacity');
+		var ageMin = $('#ageMin').html();
+		var ageMax = $('#ageMax').html();
+		var gender = get_filter('driver_gender');
+		var vaccine = get_filter('driver_vaccine');
 		$.ajax({
-			url: "php/fetch_cars.php",
+			url: "php/fetch_drivers.php",
 			method:"post",
 			data:{
 				action: 'fetch_data',
 				priceMin: priceMin,
 				priceMax: priceMax,
-				type: type,
-				transmission: transmission,
-				capacity: capacity,
+				ageMin: ageMin,
+				ageMax: ageMax,
+				gender: gender,
+				vaccine: vaccine,
 				order: order
 			},
 			success:function(data){
-				$('#car-list-container').html(data);
+				$('#driver-list-container').html(data);
 			}
 		})
 	}

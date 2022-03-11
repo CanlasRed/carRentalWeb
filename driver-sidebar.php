@@ -33,14 +33,24 @@
     <div id="panel-capacity" class="accordion-collapse collapse show" aria-labelledby="heading-capacity">
       <div class="accordion-body">
         <ul>
-          <?php for ($i=0;$i<4;$i++) { ?>
             <li>
-            <div class="ui checkbox">
-              <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Capacity</label>
-            </div>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" class="common_selector driver_gender" id="gender1" value="1">
+                <label for="gender1">Male</label>
+              </div>
             </li>
-          <?php } ?>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" class="common_selector driver_gender" id="gender2" value="2">
+                <label for="gender2">Female</label>
+              </div>
+            </li>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" class="common_selector driver_gender" id="gender3" value="3">
+                <label for="gender3">Others</label>
+              </div>
+            </li>
         </ul>
       </div>
     </div>
@@ -49,20 +59,30 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading-transmission">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-transmission" aria-expanded="false" aria-controls="panel-transmission">
-        Gender
+        Vaccine
       </button>
     </h2>
     <div id="panel-transmission" class="accordion-collapse collapse show" aria-labelledby="heading-transmission">
       <div class="accordion-body">
         <ul>
-          <?php for ($i=0;$i<2;$i++) { ?>
             <li>
-            <div class="ui checkbox">
-              <input type="checkbox" name="example" id="<?php echo $i; ?>">
-              <label for="<?php echo $i; ?>">Male</label>
-            </div>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" class="common_selector driver_vaccine" id="vac1" value="1">
+                <label for="vac1">1 Dose</label>
+              </div>
             </li>
-          <?php } ?>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" class="common_selector driver_vaccine" id="vac2" value="2">
+                <label for="vac2">Full Dose</label>
+              </div>
+            </li>
+            <li>
+              <div class="ui checkbox">
+                <input type="checkbox" name="example" class="common_selector driver_vaccine" id="vac3" value="3">
+                <label for="vac3">Full Dose + Booster</label>
+              </div>
+            </li>
         </ul>
       </div>
     </div>
@@ -92,7 +112,7 @@
             <div class="ui range slider" id="slider-price"></div>
           </div>
           <div class="row px-3 m-0">
-              <button class="ui secondary button">
+              <button class="ui secondary button common_selector">
                 Apply
               </button>
           </div>

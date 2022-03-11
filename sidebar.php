@@ -41,31 +41,19 @@
     </h2>
     <div id="panel-capacity" class="accordion-collapse collapse show" aria-labelledby="heading-capacity">
       <div class="accordion-body">
-        <ul>
+        <ul> 
+              <?php 
+              $sql = "SELECT DISTINCT capacity FROM tbl_cars";
+              $result = mysqli_query($dbconn, $sql);
+              $ctr = 0;
+              foreach ($result as $cap){ $ctr++; ?>
             <li>
               <div class="ui checkbox">
-                <input type="checkbox" name="example" id="capacity1">
-                <label for="capacity1">2 Seaters</label>
+                <input type="checkbox" name="capacity" class="common_selector car_capacity" id="capacity<?php echo $ctr;?>">
+                <label for="capacity<?php echo $ctr;?>"><?php echo $cap['capacity']; ?> Seaters</label>
               </div>
             </li>
-            <li>
-              <div class="ui checkbox">
-                <input type="checkbox" name="example" id="capacity2">
-                <label for="capacity2">4 Seaters</label>
-              </div>
-            </li>
-            <li>
-              <div class="ui checkbox">
-                <input type="checkbox" name="example" id="capacity3">
-                <label for="capacity3">5 Seaters</label>
-              </div>
-            </li>
-            <li>
-              <div class="ui checkbox">
-                <input type="checkbox" name="example" id="capacity4">
-                <label for="capacity4">6 Seaters</label>
-              </div>
-            </li>
+            <?php } ?>
         </ul>
       </div>
     </div>
