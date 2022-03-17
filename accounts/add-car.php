@@ -21,25 +21,26 @@
 
   <?php include 'sidebar.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content --><script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Owned Cars</h1>
+            <h1>Add New Car</h1>
           </div>
           <div class="col-sm-6">
             <div class="float-right">
-              <a href="add-car.php">
               <div class="ui vertical green animated button rounded-pill rent-btn" tabindex="0">
-                <div class="hidden content" style="font-weight:bold"><i class="fas fa-plus"></i> Add New Car</div>
+                <div class="hidden content"   style="font-weight:bold"><i class="fas fa-plus"></i> save</div>
                   <div class="visible content">
-                      <i class="fas fa-plus"></i> Add New Car
+                      <i class="fas fa-plus"></i> Save
                   </div>
               </div>
-              </a>
             </div>
           </div>
         </div>
@@ -56,7 +57,7 @@
         <div class="col-md-4">
         <div class="card">
           <div class="card-header ui-sortable-handle" style="cursor: move;">
-            <h3 class="card-title"><i class="fas fa-cars"></i> Overview</h3>
+            <h3 class="card-title"><i class="fas fa-cars"></i> Car Details</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -67,60 +68,57 @@
               <!-- form start --> 
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-12">
-                  <!-- small box -->
-                  <div class="info-box">
-                    <span class="info-box-icon bg-black">
-                      <i style="font-size: 30px;" class="fas fa-cars"></i>
-                    </span>
-                    <div class="info-box-content">
-                      <?php 
-                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = 1";
-                        $result = mysqli_query($dbconn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                      ?>
-                      <span class="info-box-text">Number of Cars</span>
-                      <span class="info-box-number"><?php echo $row['count']?></span>
-                    </div>
-                  </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-12">
-                  <!-- small box -->
-                    <div class="info-box">
-                      <span class="info-box-icon bg-black">
-                        <i style="font-size: 30px;" class="fas fa-clipboard-check"></i>
-                      </span>
-                      <div class="info-box-content">
-                        <?php 
-                          $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = 1";
+                <div class="col-12">
+                  <form action="php/login.php" id="login_form" method="POST" class="ui large form">
+                    
+                      <div class="field">
+                        <div class="ui left icon input">
+                          <i class="car icon"></i>
+                          <input class="rounded-pill" type="text" name="name" placeholder="Car Name">
+                        </div>
+                      </div>
+
+                      
+                        <select class="ui small selection dropdown rounded-pill">
+                          <?php 
+                          include 'php/connection.php';
+                          $sql = "SELECT * FROM tbl_car_types";
                           $result = mysqli_query($dbconn, $sql);
-                          $row = mysqli_fetch_assoc($result);
-                        ?>
-                        <span class="info-box-text">Successful Bookings</span>
-                        <span class="info-box-number"><?php echo $row['count']?></span>
+                          foreach($result as $row){ ?>
+                          <option value="<?php echo $row['typeID']?>">
+                            <?php echo $row['name']?>
+                          </option>
+                          <?php } ?>
+                        </select>
+                      
+
+                    
+                        <select class="ui small selection dropdown rounded-pill mt-3">
+                          <?php 
+                          include 'php/connection.php';
+                          $sql = "SELECT * FROM tbl_car_brands";
+                          $result = mysqli_query($dbconn, $sql);
+                          foreach($result as $row){ ?>
+                          <option value="<?php echo $row['brandID']?>">
+                            <?php echo $row['brand']?>
+                          </option>
+                          <?php } ?>
+                        </select>
+                      
+
+
+                      <div class="ui fluid large vertical black animated submit button rounded-pill">
+                        <div class="hidden content">Sign in</div>
+                        <div class="visible content">
+                          Sign in
+                        </div>
                       </div>
-                    </div>
+                    
+
+                    <div class="ui error message"></div>
+
+                  </form>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-12">
-                  <!-- small box -->
-                    <div class="info-box">
-                      <span class="info-box-icon bg-black">
-                        <i style="font-size: 30px;" class="fas fa-book"></i>
-                      </span>
-                      <div class="info-box-content">
-                    <?php 
-                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = 1 AND status = 'pending'";
-                        $result = mysqli_query($dbconn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                      ?>
-                        <span class="info-box-text">Pending Bookings</span>
-                        <span class="info-box-number"><?php echo $row['count']?></span>
-                      </div>
-                    </div>
-                </div>
-            <!-- ./col -->
               </div>
           </div>
         </div>

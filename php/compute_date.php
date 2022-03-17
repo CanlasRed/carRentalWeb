@@ -1,13 +1,16 @@
 <?php
 	include 'connection.php';
-	$start =  strtotime($_POST['startDate']);
-	$end =  strtotime($_POST['endDate']);
-	$secs = $end - $start;
+	$startDate =  strtotime($_POST['startDate']);
+	$startTime =  strtotime($_POST['startTime']);
+	$endDate =  strtotime($_POST['endDate']);
+	$endTime =  strtotime($_POST['endTime']);
+
+	$secs = ($endDate + $endTime) - ($startDate + $startTime);
 	$hours = $secs / 3600;
 
 
 	$hours = round($hours);
-	$array = array($hours, $_POST['startDate'], $_POST['endDate']);
+	$array = array($hours, $_POST['startDate'], $_POST['startTime'], $_POST['endDate'], $_POST['endTime']);
 
 	echo json_encode($array);
 	

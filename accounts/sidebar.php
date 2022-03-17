@@ -1,3 +1,37 @@
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+
+    <?php include 'php/notifications.php'; ?>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="far fa-bell">
+            <span class="badge badge-danger navbar-badge">4</span>
+          </i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">Notifications</span>
+          <div class="dropdown-divider"></div>
+          <?php if ($pendings > 0) { ?>
+          <a href="owner-dashboard.php" class="dropdown-item">
+            <i class="fas fa-cars"></i>
+            <?php echo $pendings;?> New Pending Rentals
+            <span class="float-right text-muted text-sm">4h ago</span>
+          </a>
+        <?php } ?>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
  <!-- Main Sidebar Container -->
   <div class="preloader-wrapper">
     <div class="preloader-custom">
@@ -39,7 +73,7 @@
           
           <li class="nav-header">User</li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="index.php" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>User Profile</p>
               </a>

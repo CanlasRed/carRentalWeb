@@ -13,20 +13,6 @@
 <div class="wrapper">
   
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav">
-    </ul>
-  </nav>
-  <!-- /.navbar -->
 
   <?php include 'sidebar.php'; ?>
 
@@ -163,11 +149,12 @@
                   <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
                   $res = mysqli_query($dbconn,$sql);
                   $car = mysqli_fetch_assoc($res); ?>
-                  <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
+                  <b>Transaction No: <?php echo $row['rentalID'];?></b>
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
+                      <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
                       <h2 class="lead"><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
 
                       <ul class="ml-0 mb-0 fa-ul text-muted">

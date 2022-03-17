@@ -179,6 +179,12 @@
                                   <input type="text" name="startDate" placeholder="Pick-up Date">
                                 </div>
                               </div>
+                              <div class="ui inverted calendar mt-3" id="timestart">
+                                <div class="ui input left icon">
+                                  <i class="clock icon"></i>
+                                  <input type="text" name="startTime" placeholder="Pick-up Time">
+                                </div>
+                              </div>
                             </div>
 
                             <div class="ui list">
@@ -202,6 +208,12 @@
                                 <div class="ui input left icon">
                                   <i class="calendar icon"></i>
                                   <input type="text" name="endDate" placeholder="Drop-off Date">
+                                </div>
+                              </div>
+                              <div class="ui inverted calendar mt-3" id="timeend">
+                                <div class="ui input left icon">
+                                  <i class="clock icon"></i>
+                                  <input type="text" name="endTime" placeholder="Drop-off Time">
                                 </div>
                               </div>
                             </div>
@@ -407,12 +419,30 @@
                                 }
                             ]
                         },
+                        startTime:{
+                            identifier: 'startTime',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a Pick-up Time'
+                                }
+                            ]
+                        },
                         endDate:{
                             identifier: 'endDate',
                             rules: [
                                 {
                                     type: 'empty',
                                     prompt: 'Please enter a Drop-off Date'
+                                }
+                            ]
+                        },
+                        endTime:{
+                            identifier: 'endTime',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a Drop-off Time'
                                 }
                             ]
                         }
@@ -441,8 +471,11 @@
                                     $('#carAmount').val(rentalFee);
                                     $('#grand_total').html(rentalFee+3000);
 
-                                    $('#rental_start').val(data[1]);
-                                    $('#rental_end').val(data[2]);
+                                    var startDate = moment(`${data[1]} ${data[2]}`, 'YYYY-MM-DD HH:mm:ss').format();
+                                    var endDate = moment(`${data[3]} ${data[4]}`, 'YYYY-MM-DD HH:mm:ss').format();
+
+                                    $('#rental_start').val(startDate);
+                                    $('#rental_end').val(endDate);
                                 }
                               }
                              
