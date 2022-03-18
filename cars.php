@@ -9,7 +9,7 @@
 </head>
 <body>
     <?php include 'navbar.php'; 
-    $sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1 AND i.displayImage = 1 AND c.carID = ".$_GET['carID']."";
+    $sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1  AND c.carID = ".$_GET['carID']."";
     $result = mysqli_query($dbconn, $sql);
     $row = mysqli_fetch_assoc($result);
     ?>

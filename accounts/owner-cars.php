@@ -55,7 +55,7 @@
 
         <div class="col-md-4">
         <div class="card">
-          <div class="card-header ui-sortable-handle" style="cursor: move;">
+          <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> Overview</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -130,7 +130,7 @@
 
         <div class="col-md-8">
         <div class="card">
-          <div class="card-header ui-sortable-handle" style="cursor: move;">
+          <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> My Cars</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -144,7 +144,7 @@
               <div class="row">
 
               <?php
-             $sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND c.ownerID = 1 AND i.status = 1 AND i.displayImage = 1 ";
+             $sql = "SELECT c.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND c.ownerID = 1 ";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="col-12 col-xl-4 col-lg-6 col-sm-12 col-md-6 d-flex align-items-stretch flex-column">
@@ -158,8 +158,12 @@
                   <div class="ui black right corner label">
                     <i class="user plus icon"></i>
                   </div>
-               <?php } ?>
-                <img class="p-2" src="../assets/cars/<?php echo $row['image']?>" alt="'.$row['title'].'">
+               <?php } 
+                $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY carID ASC";
+                  $res = mysqli_query($dbconn, $sql);
+                  $img = mysqli_fetch_assoc($res);
+               ?>
+                <img class="p-2" src="../assets/cars/<?php echo $img['image']?>" alt="'.$row['title'].'">
               </div>
               <div class="content">
                 <div class="row">
@@ -192,7 +196,7 @@
                     <h3 class="fw-bolder">₱<?php echo $row['rate']?>/hr</h3>
                 </span>
                 <span class="float-right">
-                  <a href="../cars.php?car=<?php echo $row['name'].'&carID='.$row['carID']?>">
+                  <a href="edit-car.php?car=<?php echo $row['name'].'&carID='.$row['carID']?>">
                     <div class="ui vertical animated button secondary rent-btn" tabindex="0">
                       <div class="hidden content"   style="font-weight:bold">Edit</div>
                       <div class="visible content">

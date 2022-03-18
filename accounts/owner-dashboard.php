@@ -38,7 +38,7 @@
 
         <div class="col-md-4">
         <div class="card">
-          <div class="card-header ui-sortable-handle" style="cursor: move;">
+          <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> Overview</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -113,7 +113,7 @@
 
         <div class="col-md-8">
         <div class="card">
-          <div class="card-header ui-sortable-handle" style="cursor: move;">
+          <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> Bookings</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">

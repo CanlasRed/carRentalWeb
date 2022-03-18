@@ -4,7 +4,7 @@
 
 	if(isset($_POST['action'])){
 
-		$sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1 AND i.displayImage = 1 ";
+		$sql = "SELECT c.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 ";
 
 		if(isset($_POST['priceMin'], $_POST['priceMax']) && !empty($_POST['priceMin']) && !empty($_POST['priceMax']))
 		{
@@ -59,6 +59,9 @@
 		$total_row = mysqli_num_rows($result);
 		if($total_row>0){
 			foreach($result as $row){
+				$sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY carID ASC";
+				$res = mysqli_query($dbconn, $sql);
+				$img = mysqli_fetch_assoc($res);
 				$output .='
 				<div class="ui card m-2">
 			        <div class="content">
@@ -71,7 +74,7 @@
 			              <i class="user plus icon"></i>
 			            </div>
 			         <?php } ?>
-			          <img class="p-2" src="assets/cars/'.$row['image'].'" alt="'.$row['title'].'">
+			          <img class="p-2" src="assets/cars/'.$img['image'].'" alt="'.$img['title'].'">
 			        </div>
 			        <div class="content">
 			          <div class="row">
