@@ -2,6 +2,7 @@
 	<input type="text" name="start" id="rental_start" hidden>
 	<input type="text" name="end" id="rental_end" hidden>
 
+
 	<input type="number" name="carID" value="<?php echo $row['carID']?>" hidden>
 	<input type="number" name="ownerID" value="<?php echo $row['ownerID']?>" hidden>
 	<input type="number" name="userID" value="1" hidden>

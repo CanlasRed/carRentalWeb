@@ -23,6 +23,8 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
      <script type="text/javascript">
         $('.ui.dropdown').dropdown();
@@ -51,20 +53,14 @@
             minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
           endCalendar: $('#rangeend')
         });
-        $('#timestart').calendar({
-          type: 'time',
-          endCalendar: $('#timeend')
-        });
+
 
 
         $('#rangeend').calendar({
             type: 'date',
           startCalendar: $('#rangestart')
         });
-        $('#timeend').calendar({
-          type: 'time',
-          startCalendar: $('#timestart')
-        });
+
 
         
       

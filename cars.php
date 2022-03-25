@@ -179,10 +179,10 @@
                                   <input type="text" name="startDate" placeholder="Pick-up Date">
                                 </div>
                               </div>
-                              <div class="ui inverted calendar mt-3" id="timestart">
+                              <div class="ui inverted mt-3">
                                 <div class="ui input left icon">
                                   <i class="clock icon"></i>
-                                  <input type="text" name="startTime" placeholder="Pick-up Time">
+                                  <input type="time" name="startTime" placeholder="Pick-up Time">
                                 </div>
                               </div>
                             </div>
@@ -210,10 +210,10 @@
                                   <input type="text" name="endDate" placeholder="Drop-off Date">
                                 </div>
                               </div>
-                              <div class="ui inverted calendar mt-3" id="timeend">
+                              <div class="ui inverted mt-3">
                                 <div class="ui input left icon">
                                   <i class="clock icon"></i>
-                                  <input type="text" name="endTime" placeholder="Drop-off Time">
+                                  <input type="time" name="endTime" placeholder="Drop-off Time">
                                 </div>
                               </div>
                             </div>
@@ -471,8 +471,10 @@
                                     $('#carAmount').val(rentalFee);
                                     $('#grand_total').html(rentalFee+3000);
 
-                                    var startDate = moment(`${data[1]} ${data[2]}`, 'YYYY-MM-DD HH:mm:ss').format();
-                                    var endDate = moment(`${data[3]} ${data[4]}`, 'YYYY-MM-DD HH:mm:ss').format();
+                                    var startDate = moment(data[1] + ' ' + data[2]).format('YYYY-MM-DD HH:mm:ss');
+                                    var endDate = moment(data[3] + ' ' + data[4]).format('YYYY-MM-DD HH:mm:ss');
+
+                                    alert(startDate);
 
                                     $('#rental_start').val(startDate);
                                     $('#rental_end').val(endDate);
@@ -524,6 +526,7 @@
                                 confirmButtonText: 'Yes'
                             }).then((result) =>{
                                 if(result.isConfirmed){
+
                                     $.ajax({
                                         type: "POST",
                                         url: "php/insert_carRental.php",

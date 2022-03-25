@@ -66,16 +66,18 @@
 				<div class="ui card m-2">
 			        <div class="content">
 			          <div class="right floated meta">14h</div>
+			            <a class="fw-bold" style="text-decoration: none; color:#1b1c1d;" href="cars.php?car='.$row['name'].'&carID='.$row['carID'].'">
 			            '. $row['name'] .'
+			            </a>
 			        </div>
-			        <div class="image">
+			        <a href="cars.php?car='.$row['name'].'&carID='.$row['carID'].'" class="image">
 			          <?php if ('.$row['driverID'].'!=NULL){ ?>
 			            <div class="ui black right corner label">
 			              <i class="user plus icon"></i>
 			            </div>
 			         <?php } ?>
 			          <img class="p-2" src="assets/cars/'.$img['image'].'" alt="'.$img['title'].'">
-			        </div>
+			        </a>
 			        <div class="content">
 			          <div class="row">
 			            <div class="col-6">

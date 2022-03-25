@@ -164,7 +164,6 @@
                         <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
                         <li><b>₱ 6,000</b></li>
                       </ul>
-
                     </div>
                     <div class="col-5 text-center">
                       <img src="../assets/cars/toyota_fortuner.png" alt="car-image" class="img-fluid">
@@ -177,7 +176,7 @@
                       <a href="#" class="btn btn-sm btn-danger">
                         <i class="fas fa-ban"></i> Reject
                       </a>
-                      <a href="#" class="btn btn-sm btn-success">
+                      <a data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
                         <i class="fas fa-check"></i> Accept
                       </a>
                     </div>
@@ -221,6 +220,53 @@
 <!-- ./wrapper -->
 
 <?php include 'script.php'?>
+
+<script type="text/javascript">
+  $('.acceptBooking').on('click', function(){
+    var status = 'pickup';
+    var rentalID = $(this).attr('data-id');
+    Swal.fire({
+      icon: 'question',
+      title: 'Accept Booking',
+      confirmButtonColor: '#1b1c1d',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) =>{
+      if(result.isConfirmed){
+        $.ajax({
+          type: 'POST',
+          url: 'php/change_booking_status.php',
+          data:{
+            status: status,
+            rentalID: rentalID,
+          },
+          success: function(data){
+            if(data == 200){
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Booking Accepted',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              }).then((result) =>{
+                location.reload();
+                                                      
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Unexpected error has occured',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+          }
+        });
+      }
+     })
+  });
+</script>
 
 
 </body>
