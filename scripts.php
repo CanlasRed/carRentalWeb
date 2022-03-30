@@ -47,19 +47,6 @@
           })
           .rating('disable');
         ;
-        var today = new Date();
-        $('#rangestart').calendar({
-            type: 'date',
-            minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
-          endCalendar: $('#rangeend')
-        });
-
-
-
-        $('#rangeend').calendar({
-            type: 'date',
-          startCalendar: $('#rangestart')
-        });
 
 
         

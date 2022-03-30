@@ -144,6 +144,18 @@
                       Pick-Up
                     </div>
                   </div>
+                <?php } else if ($row['status'] == 'dropoff') { ?>
+                  <div class="ribbon-wrapper">
+                    <div class="ribbon bg-purple">
+                      Ongoing
+                    </div>
+                  </div>
+                <?php } else if ($row['status'] == 'complete') {?>
+                  <div class="ribbon-wrapper">
+                    <div class="ribbon bg-success">
+                      Complete
+                    </div>
+                  </div>
                 <?php } ?>
                 <div class="card-header border-bottom-0">
                   <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
@@ -159,14 +171,19 @@
 
                       <ul class="ml-0 mb-0 fa-ul text-muted">
                         <li class="small"><i class="fas fa-map-marker"></i> Olongapo City</li>
-                        <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date($row['startDate']);?></li>
-                        <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date($row['endDate']);?></li>
+                        <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?></li>
+                        <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?></li>
                         <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
                         <li><b>₱ 6,000</b></li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
-                      <img src="../assets/cars/toyota_fortuner.png" alt="car-image" class="img-fluid">
+                      <?php 
+                              $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY imageID ASC LIMIT 1";
+                              $result = mysqli_query($dbconn, $sql);
+                              $carIMG = mysqli_fetch_assoc($result);
+                              ?>
+                            <img src="../assets/cars/<?php echo $carIMG['image']; ?>" alt="car-image" class="img-fluid">
                     </div>
                   </div>
                 </div>
@@ -176,7 +193,7 @@
                       <a href="#" class="btn btn-sm btn-danger">
                         <i class="fas fa-ban"></i> Reject
                       </a>
-                      <a data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                      <a data-action="pickup" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
                         <i class="fas fa-check"></i> Accept
                       </a>
                     </div>
@@ -184,6 +201,15 @@
                     <div class="text-right">
                       <a href="#" class="btn btn-sm btn-danger">
                         <i class="fas fa-ban"></i> Cancel
+                      </a>
+                      <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                        <i class="fas fa-check"></i> Pick-Up
+                      </a>
+                    </div>
+                  <?php } else if ($row['status'] == 'dropoff') { ?>
+                    <div class="text-right">
+                      <a data-action="complete" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                        <i class="fas fa-check"></i> Drop-Off
                       </a>
                     </div>
                   <?php } ?>
@@ -223,11 +249,20 @@
 
 <script type="text/javascript">
   $('.acceptBooking').on('click', function(){
-    var status = 'pickup';
+    var status = $(this).attr('data-action');
     var rentalID = $(this).attr('data-id');
+    if(status == 'pickup'){
+      var statement = 'Accept Booking';
+    } else if (status == 'dropoff'){
+      var statement = 'Confirm car pick-up';
+    } else if(status == 'complete'){
+      var statement = 'Confirm car drop-off';
+    } else if(status == 'cancel'){
+      var statement = 'Cancel Booking';
+    }
     Swal.fire({
       icon: 'question',
-      title: 'Accept Booking',
+      title: statement,
       confirmButtonColor: '#1b1c1d',
       showCancelButton: true,
       confirmButtonText: 'Yes'
@@ -245,7 +280,7 @@
               Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: 'Booking Accepted',
+                text: 'Action Success',
                 confirmButtonColor: '#1b1c1d',
                 confirmButtonText: 'OK'
               }).then((result) =>{

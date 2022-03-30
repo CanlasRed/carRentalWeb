@@ -93,7 +93,7 @@
                     foreach($result as $row){ ?>
                     <div class="col-12 col-lg-6 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
-                      <?php if ($row['status'] == 'pending'){ ?>
+                     <?php if ($row['status'] == 'pending'){ ?>
                         <div class="ribbon-wrapper">
                           <div class="ribbon bg-warning">
                             Pending
@@ -105,29 +105,48 @@
                             Pick-Up
                           </div>
                         </div>
+                      <?php } else if ($row['status'] == 'dropoff') { ?>
+                        <div class="ribbon-wrapper">
+                          <div class="ribbon bg-purple">
+                            Ongoing
+                          </div>
+                        </div>
+                      <?php } else if ($row['status'] == 'complete') {?>
+                        <div class="ribbon-wrapper">
+                          <div class="ribbon bg-success">
+                            Complete
+                          </div>
+                        </div>
                       <?php } ?>
                       <div class="card-header border-bottom-0">
                         <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
                         $res = mysqli_query($dbconn,$sql);
                         $car = mysqli_fetch_assoc($res); ?>
-                        <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
+                        <b>Transaction No: <?php echo $row['rentalID'];?></b>
+                       
                       </div>
                       <div class="card-body pt-0">
                         <div class="row">
                           <div class="col-7">
+                             <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
                             <h2 class="lead"><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
 
                             <ul class="ml-0 mb-0 fa-ul text-muted">
                               <li class="small"><i class="fas fa-map-marker"></i> Olongapo City</li>
-                              <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date($row['startDate']);?></li>
-                              <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date($row['endDate']);?></li>
+                              <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?></li>
+                              <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?></li>
                               <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
                               <li><b>₱ 6,000</b></li>
                             </ul>
 
                           </div>
                           <div class="col-5 text-center">
-                            <img src="../assets/cars/toyota_fortuner.png" alt="car-image" class="img-fluid">
+                            <?php 
+                              $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY imageID ASC LIMIT 1";
+                              $result = mysqli_query($dbconn, $sql);
+                              $carIMG = mysqli_fetch_assoc($result);
+                              ?>
+                            <img src="../assets/cars/<?php echo $carIMG['image']; ?>" alt="car-image" class="img-fluid">
                           </div>
                         </div>
                       </div>

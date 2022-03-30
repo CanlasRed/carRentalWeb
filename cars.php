@@ -176,7 +176,7 @@
                               <div class="ui inverted calendar" id="rangestart">
                                 <div class="ui input left icon">
                                   <i class="calendar icon"></i>
-                                  <input type="text" name="startDate" placeholder="Pick-up Date">
+                                  <input type="text" autocomplete="off" name="startDate" placeholder="Pick-up Date">
                                 </div>
                               </div>
                               <div class="ui inverted mt-3">
@@ -207,7 +207,7 @@
                               <div class="ui inverted calendar" id="rangeend">
                                 <div class="ui input left icon">
                                   <i class="calendar icon"></i>
-                                  <input type="text" name="endDate" placeholder="Drop-off Date">
+                                  <input type="text" autocomplete="off" name="endDate" placeholder="Drop-off Date">
                                 </div>
                               </div>
                               <div class="ui inverted mt-3">
@@ -369,7 +369,65 @@
    <!--  <?php include 'footer.php' ?> -->
     <?php include 'scripts.php'; ?>
 
+    <style type="text/css">
+        td[data-variation="red"]{
+            background: firebrick !important;
+            color: #fff !important;
+        }
+    </style>
+
     <script type="text/javascript">
+
+        var carID = "<?php echo $_GET['carID'];?>";
+        
+
+        $.ajax({
+            type: "POST",
+            url: 'php/get_booked_dates.php',
+            dataType: "JSON",
+            data:{
+                carID: carID,
+            },
+            success: function(data){
+                var arr = [];
+                for(var i=0;i<data[0].length;i++){
+                    var start = data[0][i];
+                    var end = data[1][i];
+                    var disable = start;
+                    while (disable <= end){
+                        arr.push({
+                            date: new Date(disable),
+                            message: 'Date Booked',
+                            inverted: true,
+                            variation: 'red'
+                        });
+
+                        var disable = moment(disable).add(1, 'day');
+                        disable = moment(disable).format('YYYY-MM-DD');
+                    }
+                    
+                }
+
+                console.log(arr);
+                var today = new Date();
+                $('#rangestart').calendar({
+                    type: 'date',
+                    minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+                    endCalendar: $('#rangeend'),
+                    disabledDates: arr
+                });
+
+                $('#rangeend').calendar({
+                    type: 'date',
+                    startCalendar: $('#rangestart')
+                });
+            }
+        });
+
+        
+
+
+
         $(document).ready(function(){
              $('.image-preview-slider').slick({
               slidesToShow: 1,
@@ -540,7 +598,7 @@
                                                 confirmButtonColor: '#1b1c1d',
                                                 confirmButtonText: 'OK'
                                             }).then((result) =>{
-                                                location.href = '/carRentalWeb/';
+                                                location.href = '/carRentalWeb/accounts/';
                                                       
                                             })
 
