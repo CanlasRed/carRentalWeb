@@ -127,33 +127,39 @@
               <div class="row">
 
               <?php
-              $sql = "SELECT * FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'done'";
+              $sql = "SELECT * FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'done' ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="col-12 col-lg-4 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
               <div class="card bg-light d-flex flex-fill">
                 <?php if ($row['status'] == 'pending'){ ?>
-                  <div class="ribbon-wrapper">
+                  <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-warning">
                       Pending
                     </div>
                   </div>
                 <?php } else if ($row['status'] == 'pickup') { ?>
-                  <div class="ribbon-wrapper">
+                  <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-info">
                       Pick-Up
                     </div>
                   </div>
                 <?php } else if ($row['status'] == 'dropoff') { ?>
-                  <div class="ribbon-wrapper">
+                  <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-purple">
                       Ongoing
                     </div>
                   </div>
-                <?php } else if ($row['status'] == 'complete') {?>
-                  <div class="ribbon-wrapper">
+                <?php } else if ($row['status'] == 'completed') {?>
+                  <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-success">
                       Complete
+                    </div>
+                  </div>
+                <?php } else if ($row['status'] == 'cancelled') {?>
+                  <div class="ribbon-wrapper ribbon-lg">
+                    <div class="ribbon bg-danger">
+                      Cancelled
                     </div>
                   </div>
                 <?php } ?>
@@ -190,7 +196,7 @@
                 <div class="card-footer">
                   <?php if ($row['status'] == 'pending'){ ?>
                     <div class="text-right">
-                      <a href="#" class="btn btn-sm btn-danger">
+                      <a data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                         <i class="fas fa-ban"></i> Reject
                       </a>
                       <a data-action="pickup" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
@@ -199,7 +205,7 @@
                     </div>
                   <?php } else if ($row['status'] == 'pickup') { ?>
                     <div class="text-right">
-                      <a href="#" class="btn btn-sm btn-danger">
+                      <a data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                         <i class="fas fa-ban"></i> Cancel
                       </a>
                       <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
@@ -208,7 +214,7 @@
                     </div>
                   <?php } else if ($row['status'] == 'dropoff') { ?>
                     <div class="text-right">
-                      <a data-action="complete" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                      <a data-action="completed" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
                         <i class="fas fa-check"></i> Drop-Off
                       </a>
                     </div>
@@ -255,9 +261,9 @@
       var statement = 'Accept Booking';
     } else if (status == 'dropoff'){
       var statement = 'Confirm car pick-up';
-    } else if(status == 'complete'){
+    } else if(status == 'completed'){
       var statement = 'Confirm car drop-off';
-    } else if(status == 'cancel'){
+    } else if(status == 'cancelled'){
       var statement = 'Cancel Booking';
     }
     Swal.fire({

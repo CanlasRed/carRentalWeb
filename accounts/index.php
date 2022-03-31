@@ -94,27 +94,33 @@
                     <div class="col-12 col-lg-6 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
                      <?php if ($row['status'] == 'pending'){ ?>
-                        <div class="ribbon-wrapper">
+                        <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-warning">
                             Pending
                           </div>
                         </div>
                       <?php } else if ($row['status'] == 'pickup') { ?>
-                        <div class="ribbon-wrapper">
+                        <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-info">
                             Pick-Up
                           </div>
                         </div>
                       <?php } else if ($row['status'] == 'dropoff') { ?>
-                        <div class="ribbon-wrapper">
+                        <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-purple">
                             Ongoing
                           </div>
                         </div>
-                      <?php } else if ($row['status'] == 'complete') {?>
-                        <div class="ribbon-wrapper">
+                      <?php } else if ($row['status'] == 'completed') {?>
+                        <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-success">
                             Complete
+                          </div>
+                        </div>
+                      <?php } else if ($row['status'] == 'cancelled') {?>
+                        <div class="ribbon-wrapper ribbon-lg">
+                          <div class="ribbon bg-danger">
+                            Cancelled
                           </div>
                         </div>
                       <?php } ?>
@@ -161,6 +167,12 @@
                           <div class="text-right">
                             <a href="#" class="btn btn-sm btn-danger">
                               <i class="fas fa-ban"></i> Cancel
+                            </a>
+                          </div>
+                        <?php } else if ($row['status'] == 'completed') { ?>
+                          <div class="text-right">
+                            <a href="#" class="btn btn-sm btn-info">
+                              <i class="fas fa-star"></i> Rate
                             </a>
                           </div>
                         <?php } ?>

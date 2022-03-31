@@ -289,6 +289,105 @@
                        
                 </div>
 
+                <!-- REVIEWS SEGMENT -->
+                <div class=" ui raised segment mb-3">
+                    <div class="row m-0">
+                        <div class="col-12 py-3">
+                            <div class="ui header medium">
+                                <label>Reviews</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-3">
+
+                        <div class="col-6 px-2 my-2">
+                          <div class=" ui raised segment mb-3" style="height:170px">
+                            <div class="col-12">
+                                <div class="ui tiny header">
+                                    <label>Overall Rating</label>
+                                </div>
+                            </div>
+
+                            <div class="row text-center mt-4 justify-content-center d-flex">
+                                <h2 class="fw-bold">4.5<small class="text-muted">/5</small></h2>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="ui large yellow rating" data-rating="5"></div>
+                            </div>
+                            <div class="row text-center justify-content-center d-flex">
+                                <small class="fw-bold text-muted">5 Reviews</small>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-6 px-2 my-1">
+                          <div class=" ui raised segment mb-3">
+                            <div class="col-12">
+                                <div class="ui tiny header">
+                                    <label>Rating Breakdown</label>
+                                </div>
+                            </div>
+
+                            <div class="ui list">
+
+                              <div class="item d-flex flex-row">
+                                <div class="ui large yellow rating" data-rating="5"></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                </div>
+                              <div class="item d-flex flex-row">
+                                <div class="ui large yellow rating" data-rating="4"></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">2</p></div>
+                              </div>
+                              <div class="item d-flex flex-row">
+                                <div class="ui large yellow rating" data-rating="3"></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">0</p></div>
+                              </div>
+                              <div class="item d-flex flex-row">
+                                <div class="ui large yellow rating" data-rating="2"></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">0</p></div>
+                              </div>
+                              <div class="item d-flex flex-row">
+                                <div class="ui large yellow rating" data-rating="1"></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">0</p></div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row px-3">
+                        <div class="col-12 px-2 my-1">
+                          <div class=" ui raised segment mb-3">
+                            <div class="ui comments">
+                              <div class="comment">
+                                <a class="avatar">
+                                  <img src="assets/avatar_2.png">
+                                </a>
+                                <div class="content">
+                                  <a class="author" style="text-decoration: none;">Stevie Feliciano</a>
+                                  <div class="metadata">
+                                    <div class="date">2 days ago</div>
+                                  </div>
+                                  <div class="text">
+                                    1 Star lang kasi tumitirik
+                                  </div>
+                                  <div class="meta">
+                                    <div class="ui large yellow rating" data-rating="1"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
+                    </div>
+                       
+                </div>
+
             </div>
             <!-- END OF LEFT COLUMN -->
 

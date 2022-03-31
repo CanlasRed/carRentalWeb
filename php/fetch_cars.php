@@ -76,7 +76,8 @@
 			              <i class="user plus icon"></i>
 			            </div>
 			         <?php } ?>
-			          <img class="p-2" src="assets/cars/'.$img['image'].'" alt="'.$img['title'].'">
+			         <div style="width:100%; overflow:hidden; height:220px; background: url(assets/cars/'.$img['image'].') no-repeat center; background-size: contain;">
+			          </div>
 			        </a>
 			        <div class="content">
 			          <div class="row">
@@ -100,7 +101,7 @@
 			                <div class="ui inverted black label my-1">
 			                  4.7
 			                </div>
-			                 <div class="ui star rating" data-rating="5"></div>
+			                <div class="ui star rating" data-rating="5"></div>
 			            </div>
 			          </div>
 			        </div>

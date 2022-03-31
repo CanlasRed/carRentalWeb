@@ -163,7 +163,8 @@
                   $res = mysqli_query($dbconn, $sql);
                   $img = mysqli_fetch_assoc($res);
                ?>
-                <img class="p-2" src="../assets/cars/<?php echo $img['image']?>" alt="'.$row['title'].'">
+                <div style="width:100%; overflow:hidden; height:220px; background: url(../assets/cars/<?php echo $img['image']; ?>) no-repeat center; background-size: contain;">
+                </div>
               </div>
               <div class="content">
                 <div class="row">
