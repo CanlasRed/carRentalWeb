@@ -335,23 +335,43 @@
 
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="5"></div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                <div class="mx-2 me-4 mt-1 my-0 ui green progress" id="ratings_5" style="width: 100% !important;">
+                                    <div class="bar">
+                                    </div>
                                 </div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                              </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="4"></div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">2</p></div>
+                                <div class="mx-2 me-4 mt-1 my-0 ui teal progress" id="ratings_4" style="width: 100% !important;">
+                                    <div class="bar">
+                                    </div>
+                                </div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="3"></div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">0</p></div>
+                                <div class="mx-2 me-4 mt-1 my-0 ui yellow progress" id="ratings_3" style="width: 100% !important;">
+                                    <div class="bar">
+                                    </div>
+                                </div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="2"></div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">0</p></div>
+                                <div class="mx-2 me-4 mt-1 my-0 ui orange progress" id="ratings_2" style="width: 100% !important;">
+                                    <div class="bar">
+                                    </div>
+                                </div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="1"></div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">0</p></div>
+                                <div class="mx-2 me-4 mt-1 my-0 ui red progress" id="ratings_1" style="width: 100% !important;">
+                                    <div class="bar">
+                                    </div>
+                                </div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
                               </div>
                             </div>
                             
@@ -476,6 +496,24 @@
     </style>
 
     <script type="text/javascript">
+
+        $('#ratings_5').progress({
+          percent: 60
+        });
+        $('#ratings_4').progress({
+          percent: 20
+        });
+        $('#ratings_3').progress({
+          percent: 5
+        });
+        $('#ratings_2').progress({
+          percent: 5
+        });
+        $('#ratings_1').progress({
+          percent: 20
+        });
+
+
 
         var carID = "<?php echo $_GET['carID'];?>";
         

@@ -156,16 +156,19 @@
                           </div>
                         </div>
                       </div>
+
+                      
                       <div class="card-footer">
+                        <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
                         <?php if ($row['status'] == 'pending'){ ?>
                           <div class="text-right">
-                            <a href="#" class="btn btn-sm btn-danger">
+                            <a href="#" data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                               <i class="fas fa-ban"></i> Cancel
                             </a>
                           </div>
                         <?php } else if ($row['status'] == 'pickup') { ?>
                           <div class="text-right">
-                            <a href="#" class="btn btn-sm btn-danger">
+                            <a href="#" data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                               <i class="fas fa-ban"></i> Cancel
                             </a>
                           </div>
@@ -295,6 +298,61 @@
 <!-- ./wrapper -->
 
 <?php include 'script.php'?>
+<script type="text/javascript">
+  $('.acceptBooking').on('click', function(){
+    var status = $(this).attr('data-action');
+    var rentalID = $(this).attr('data-id');
+    if(status == 'pickup'){
+      var statement = 'Accept Booking';
+    } else if (status == 'dropoff'){
+      var statement = 'Confirm car pick-up';
+    } else if(status == 'completed'){
+      var statement = 'Confirm car drop-off';
+    } else if(status == 'cancelled'){
+      var statement = 'Cancel Booking';
+    }
+    Swal.fire({
+      icon: 'question',
+      title: statement,
+      confirmButtonColor: '#1b1c1d',
+      showCancelButton: true,
+      confirmButtonText: 'Yes'
+    }).then((result) =>{
+      if(result.isConfirmed){
+        $.ajax({
+          type: 'POST',
+          url: 'php/change_booking_status.php',
+          data:{
+            status: status,
+            rentalID: rentalID,
+          },
+          success: function(data){
+            if(data == 200){
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Action Success',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              }).then((result) =>{
+                location.reload();
+                                                      
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Unexpected error has occured',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+          }
+        });
+      }
+     })
+  });
+</script>
 
 
 </body>

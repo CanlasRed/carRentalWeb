@@ -76,7 +76,7 @@
                       </span>
                       <div class="info-box-content">
                         <?php 
-                          $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = 1";
+                          $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = 1 AND status = 'completed'";
                           $result = mysqli_query($dbconn, $sql);
                           $row = mysqli_fetch_assoc($result);
                         ?>
@@ -131,6 +131,8 @@
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="col-12 col-lg-4 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
+
+                <!-- RIBBONS -->
               <div class="card bg-light d-flex flex-fill">
                 <?php if ($row['status'] == 'pending'){ ?>
                   <div class="ribbon-wrapper ribbon-lg">
@@ -163,26 +165,47 @@
                     </div>
                   </div>
                 <?php } ?>
+
+
                 <div class="card-header border-bottom-0">
                   <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
                   $res = mysqli_query($dbconn,$sql);
                   $car = mysqli_fetch_assoc($res); ?>
                   <b>Transaction No: <?php echo $row['rentalID'];?></b>
                 </div>
+
+
                 <div class="card-body pt-0">
                   <div class="row">
+
+
                     <div class="col-7">
                       <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
                       <h2 class="lead"><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
 
                       <ul class="ml-0 mb-0 fa-ul text-muted">
-                        <li class="small"><i class="fas fa-map-marker"></i> Olongapo City</li>
-                        <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?></li>
-                        <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?></li>
-                        <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
-                        <li><b>₱ 6,000</b></li>
+                        <li class="small">
+                          <i class="fas fa-map-marker"></i> Olongapo City
+                        </li>
+                        <li class="small">
+                          <i class="fas fa-calendar-alt"></i> 
+                          <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?>
+                        </li>
+                        <li class="small">
+                          <i class="fas fa-calendar-check"></i> 
+                          <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?>
+                        </li>
+                        <li class="small">
+                          <i class="fas fa-hourglass-half"></i> 24 Hours
+                        </li>
+                        <li>
+                          <b>₱ 6,000</b>
+                        </li>
                       </ul>
+
                     </div>
+
+
                     <div class="col-5 text-center">
                       <?php 
                               $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY imageID ASC LIMIT 1";
@@ -191,9 +214,16 @@
                               ?>
                             <img src="../assets/cars/<?php echo $carIMG['image']; ?>" alt="car-image" class="img-fluid">
                     </div>
+
+
                   </div>
                 </div>
+
+
+
+                <!-- ACTIONS -->
                 <div class="card-footer">
+                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
                   <?php if ($row['status'] == 'pending'){ ?>
                     <div class="text-right">
                       <a data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
@@ -208,7 +238,7 @@
                       <a data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                         <i class="fas fa-ban"></i> Cancel
                       </a>
-                      <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                      <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-info acceptBooking">
                         <i class="fas fa-check"></i> Pick-Up
                       </a>
                     </div>
