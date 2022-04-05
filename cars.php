@@ -527,16 +527,29 @@
             },
             success: function(data){
                 var arr = [];
+                var arr2 = [];
                 for(var i=0;i<data[0].length;i++){
                     var start = data[0][i];
                     var end = data[1][i];
                     var disable = start;
-                    while (disable <= end){
+                    var endTime = data[2][i];
+                    while (disable < end){
                         arr.push({
                             date: new Date(disable),
                             message: 'Date Booked',
                             inverted: true,
                             variation: 'red'
+                        });
+
+                        var disable = moment(disable).add(1, 'day');
+                        disable = moment(disable).format('YYYY-MM-DD');
+                    }
+                    while (disable == end){
+                        arr2.push({
+                            date: new Date(disable),
+                            message: 'Booking starts @ '+data[2][i],
+                            inverted: true,
+                            class: 'green'
                         });
 
                         var disable = moment(disable).add(1, 'day');
@@ -551,7 +564,9 @@
                     type: 'date',
                     minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
                     endCalendar: $('#rangeend'),
-                    disabledDates: arr
+                    disabledDates: arr,
+                    eventDates: arr2
+
                 });
 
                 $('#rangeend').calendar({
@@ -731,7 +746,7 @@
                                             Swal.fire({
                                                 icon: 'success',
                                                 title: 'Success',
-                                                text: 'Car Booked Successfully',
+                                                text: 'Please allow up to 5 working hours for your rental confirmation',
                                                 confirmButtonColor: '#1b1c1d',
                                                 confirmButtonText: 'OK'
                                             }).then((result) =>{

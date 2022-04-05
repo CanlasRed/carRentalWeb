@@ -1,9 +1,17 @@
 <!-- jQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
 
 <!-- Bootstrap 5 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+
 
 
 <!-- overlayScrollbars -->
@@ -36,24 +44,25 @@
 
 
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+  
 
   <script type="text/javascript">
-  $(document).ready( function () {
-    $('#table').DataTable();
-    $(document).on('click', '.archives_btn', function(){
-      $('#archives_table').DataTable();
-    });
-    $(document).on('click', '.archives_btn2', function(){
-      $('#archives_table2').DataTable();
-    });
+    $(document).ready( function () {
+      $('#table').DataTable();
+      $(document).on('click', '.archives_btn', function(){
+        $('#archives_table').DataTable();
+      });
+      $(document).on('click', '.archives_btn2', function(){
+        $('#archives_table2').DataTable();
+      });
 
       $('.ui.dropdown').dropdown();
 
-  });
+    });
 
-  $(function () {
-    bsCustomFileInput.init();
-  });
+    $(function () {
+      bsCustomFileInput.init();
+    });
 
 
 </script>

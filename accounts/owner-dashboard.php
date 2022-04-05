@@ -127,7 +127,7 @@
               <div class="row">
 
               <?php
-              $sql = "SELECT * FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'done' ORDER BY r.rentalID DESC";
+              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'done' ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="col-12 col-lg-4 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
@@ -223,8 +223,12 @@
 
                 <!-- ACTIONS -->
                 <div class="card-footer">
-                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
                   <?php if ($row['status'] == 'pending'){ ?>
+                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['rcreatedAt']));?></small>
+                <?php } else { ?>
+                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
+                  <?php } 
+                  if ($row['status'] == 'pending'){ ?>
                     <div class="text-right">
                       <a data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                         <i class="fas fa-ban"></i> Reject

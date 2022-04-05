@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Account | Speedy</title>
   <?php include 'header.php';?>
+  <!-- SEMANTIC UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
  
@@ -174,7 +177,7 @@
                           </div>
                         <?php } else if ($row['status'] == 'completed') { ?>
                           <div class="text-right">
-                            <a href="#" class="btn btn-sm btn-info">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#review_modal" class="btn btn-sm btn-info">
                               <i class="fas fa-star"></i> Rate
                             </a>
                           </div>
@@ -297,8 +300,59 @@
 </div>
 <!-- ./wrapper -->
 
+<div class="modal fade" id="review_modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Review</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Rate this Ride</h3>
+        <center><div class="ui massive yellow rating"></div></center>
+        <h3 class="text-center">Leave a Comment</h3>
+        <div class="summernote">
+        </div>
+        <input type="number" name="rate" hidden id="hidden_rate">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-info">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php include 'script.php'?>
+
 <script type="text/javascript">
+  $('.summernote').summernote({
+     height: 200,
+     toolbar: [
+     ["font", ["bold", "underline", "clear"]],
+     ["color", ["color"]],
+     ["para", ["ul", "ol"]],
+     ["insert", ["link","picture"]],
+     ],
+     callbacks: {
+      onImageUpload: function(files) {
+        editor = $(this);
+        for(var i = files.length - 1;i>=0;i--){
+          sendFile(files[i],editor);
+        }
+      }
+    }
+  });
+
+  $('.ui.rating').rating({
+    maxRating: 5,
+    onRate(value){
+      $('#hidden_rate').val(value);
+    }
+  });
+
   $('.acceptBooking').on('click', function(){
     var status = $(this).attr('data-action');
     var rentalID = $(this).attr('data-id');
