@@ -289,6 +289,38 @@
                        
                 </div>
 
+
+                <?php 
+                $total = 0;
+                $avgRatings = 0;
+                $sql = "SELECT * FROM tbl_car_review WHERE status = 1 AND carID = ".$_GET['carID']."";
+                if($result = mysqli_query($dbconn, $sql)){
+                    $total = mysqli_num_rows($result);
+                    $arr = array(0,0,0,0,0);
+                    foreach($result as $row){
+                        if($row['rate']==5){
+                            $arr[0]++;
+                        } else if ($row['rate']==4){
+                            $arr[1]++;
+                        } else if ($row['rate']==3){
+                            $arr[2]++;
+                        } else if ($row['rate']==2){
+                            $arr[3]++;
+                        } else if ($row['rate']==1){
+                            $arr[4]++;
+                        }
+                    }
+
+                    if($total>0){
+                        $avgRatings = ((1*$arr[4])+(2*$arr[3])+(3*$arr[2])+(4*$arr[1])+(5*$arr[0]))/$total;
+                    }
+                }
+        ?>
+
+
+
+
+
                 <!-- REVIEWS SEGMENT -->
                 <div class=" ui raised segment mb-3">
                     <div class="row m-0">
@@ -310,14 +342,14 @@
                             </div>
 
                             <div class="row text-center mt-4 justify-content-center d-flex">
-                                <h2 class="fw-bold">4.5<small class="text-muted">/5</small></h2>
+                                <h2 class="fw-bold"><?php echo $avgRatings; ?><small class="text-muted">/5</small></h2>
                             </div>
 
                             <div class="text-center">
-                                <div class="ui large yellow rating" data-rating="5"></div>
+                                <div class="ui large yellow rating" data-rating="<?php echo round($avgRatings); ?>"></div>
                             </div>
                             <div class="row text-center justify-content-center d-flex">
-                                <small class="fw-bold text-muted">5 Reviews</small>
+                                <small class="fw-bold text-muted"><?php echo $total; ?> Reviews</small>
                             </div>
                           </div>
                         </div>
@@ -339,7 +371,7 @@
                                     <div class="bar">
                                     </div>
                                 </div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;"><?php echo $arr[0]; ?></p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="4"></div>
@@ -347,7 +379,7 @@
                                     <div class="bar">
                                     </div>
                                 </div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;"><?php echo $arr[1]; ?></p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="3"></div>
@@ -355,7 +387,7 @@
                                     <div class="bar">
                                     </div>
                                 </div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;"><?php echo $arr[2]; ?></p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="2"></div>
@@ -363,7 +395,7 @@
                                     <div class="bar">
                                     </div>
                                 </div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;"><?php echo $arr[3]; ?></p></div>
                               </div>
                               <div class="item d-flex flex-row">
                                 <div class="ui large yellow rating" data-rating="1"></div>
@@ -371,7 +403,7 @@
                                     <div class="bar">
                                     </div>
                                 </div>
-                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;">5</p></div>
+                                <div class="me-auto text-muted"><p style="position: absolute; right: 15px !important;"><?php echo $arr[4]; ?></p></div>
                               </div>
                             </div>
                             
@@ -382,27 +414,41 @@
 
                     <div class="row px-3">
                         <div class="col-12 px-2 my-1">
-                          <div class=" ui raised segment mb-3">
-                            <div class="ui comments">
-                              <div class="comment">
-                                <a class="avatar">
-                                  <img src="assets/avatar_2.png">
-                                </a>
-                                <div class="content">
-                                  <a class="author" style="text-decoration: none;">Stevie Feliciano</a>
-                                  <div class="metadata">
-                                    <div class="date">2 days ago</div>
-                                  </div>
-                                  <div class="text">
-                                    1 Star lang kasi tumitirik
-                                  </div>
-                                  <div class="meta">
-                                    <div class="ui large yellow rating" data-rating="1"></div>
+
+                        <?php 
+                        $sql = "SELECT *,r.rate as reviewRate, r.createdAt as reviewDate FROM tbl_car_review r INNER JOIN tbl_cars c ON c.carID = r.carID INNER JOIN tbl_customers u ON u.customerID = r.customerID WHERE r.status = 1 AND r.carID = ".$_GET['carID']." ORDER BY r.rate DESC";
+                        $result = mysqli_query($dbconn, $sql);
+                        if(mysqli_fetch_assoc($result)){
+                            foreach($result as $row){ ?>
+                              <div class=" ui raised segment mb-3">
+                                <div class="ui comments">
+                                  <div class="comment">
+                                    <a class="avatar">
+                                      <img src="assets/avatar_2.png">
+                                    </a>
+                                    <div class="content">
+                                      <a class="author" style="text-decoration: none;"><?php echo $row['firstName'].' '.$row['lastName']; ?></a>
+                                      <div class="metadata">
+                                        <div class="date"><?php echo get_time_ago(strtotime($row['reviewDate'])); ?></div>
+                                      </div>
+                                      <div class="text">
+                                        <?php echo $row['comment']; ?>
+                                      </div>
+                                      <div class="meta">
+                                        <div class="ui large yellow rating" data-rating="<?php echo $row['reviewRate']; ?>"></div>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
+                            <?php } 
+                        } else { ?>
+                            <div class=" ui raised segment mb-3 text-center">
+                                <h6 class="fw-bold">This car has no reviews...</h6>
                             </div>
-                          </div>
+                        <?php } ?>
+
+
                         </div> 
                     </div>
                        
@@ -496,22 +542,36 @@
     </style>
 
     <script type="text/javascript">
+        var carID = '<?php echo $_GET["carID"]; ?>';
+        $.ajax({
+            type: 'POST',
+            url: 'php/get_car_reviews.php',
+            dataType: 'JSON',
+            data: {
+                carID:carID,
+            },
+            success: function(data){
+                if(data.total>0){
+                    $('#ratings_5').progress({
+                      percent: (data.rates[0]/data.total)*100
+                    });
+                    $('#ratings_4').progress({
+                      percent: (data.rates[1]/data.total)*100
+                    });
+                    $('#ratings_3').progress({
+                      percent: (data.rates[2]/data.total)*100
+                    });
+                    $('#ratings_2').progress({
+                      percent: (data.rates[3]/data.total)*100
+                    });
+                    $('#ratings_1').progress({
+                      percent: (data.rates[4]/data.total)*100
+                    });
+                }
+            }
+        });
 
-        $('#ratings_5').progress({
-          percent: 60
-        });
-        $('#ratings_4').progress({
-          percent: 20
-        });
-        $('#ratings_3').progress({
-          percent: 5
-        });
-        $('#ratings_2').progress({
-          percent: 5
-        });
-        $('#ratings_1').progress({
-          percent: 20
-        });
+        
 
 
 

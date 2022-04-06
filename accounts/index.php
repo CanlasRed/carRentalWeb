@@ -91,7 +91,7 @@
                   <div class="active tab-pane" id="bookings">
                     <div class="row">
                     <?php
-                    $sql = "SELECT * FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 AND status != 'done'";
+                    $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 ORDER BY r.createdAt DESC";
                     $result = mysqli_query($dbconn, $sql);
                     foreach($result as $row){ ?>
                     <div class="col-12 col-lg-6 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
@@ -118,6 +118,12 @@
                         <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-success">
                             Complete
+                          </div>
+                        </div>
+                      <?php } else if ($row['status'] == 'review') {?>
+                        <div class="ribbon-wrapper ribbon-lg">
+                          <div class="ribbon bg-olive">
+                            To Review
                           </div>
                         </div>
                       <?php } else if ($row['status'] == 'cancelled') {?>
@@ -162,8 +168,12 @@
 
                       
                       <div class="card-footer">
+                       <?php if ($row['status'] == 'pending'){ ?>
+                        <small class="text-muted"><?php  echo get_time_ago(strtotime($row['rcreatedAt']));?></small>
+                      <?php } else { ?>
                         <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
-                        <?php if ($row['status'] == 'pending'){ ?>
+                      <?php } 
+                       if ($row['status'] == 'pending'){ ?>
                           <div class="text-right">
                             <a href="#" data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                               <i class="fas fa-ban"></i> Cancel
@@ -175,9 +185,9 @@
                               <i class="fas fa-ban"></i> Cancel
                             </a>
                           </div>
-                        <?php } else if ($row['status'] == 'completed') { ?>
+                        <?php } else if ($row['status'] == 'review') { ?>
                           <div class="text-right">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#review_modal" class="btn btn-sm btn-info">
+                            <a href="#" id="rate_btn" data-id="<?php echo $row['rentalID']; ?>" data-bs-toggle="modal" data-bs-target="#review_modal" class="btn btn-sm bg-olive">
                               <i class="fas fa-star"></i> Rate
                             </a>
                           </div>
@@ -312,14 +322,25 @@
       <div class="modal-body">
         <h3 class="text-center">Rate this Ride</h3>
         <center><div class="ui massive yellow rating"></div></center>
-        <h3 class="text-center">Leave a Comment</h3>
-        <div class="summernote">
-        </div>
-        <input type="number" name="rate" hidden id="hidden_rate">
+        <p class="text-center text-muted" id="invalid_rating"><small>Please select a rating</small></p>
+
+          <div class="form-group">
+            <input type="number" class="form-control" hidden name="rate" id="hidden_rate">
+          </div>
+
+          <div class="form-group">
+            <input type="number" class="form-control" hidden name="rentalID" id="hidden_rentalID">
+          </div>
+
+          <h3 class="text-center">Leave a Comment</h3>
+          <div class="summernote" id="summer_comment" name="comment">
+
+          </div>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-info">Submit</button>
+        <button type="button" onclick="submitReview()" class="btn btn-info">Submit</button>
       </div>
     </div>
   </div>
@@ -350,6 +371,7 @@
     maxRating: 5,
     onRate(value){
       $('#hidden_rate').val(value);
+      $('#invalid_rating').attr('hidden', true);
     }
   });
 
@@ -406,6 +428,60 @@
       }
      })
   });
+
+
+function submitReview(){
+  var rate = $('#hidden_rate').val();
+  var comment = $('#summer_comment').summernote('code');
+  var rentalID = $('#hidden_rentalID').val();
+  if (rate == null || rate < 1){
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid',
+      text: 'Select a rating first',
+      confirmButtonColor: '#1b1c1d',
+      confirmButtonText: 'OK'
+    })
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "php/create_review.php",
+      data: {
+        rentalID: rentalID,
+        rate: rate,
+        comment: comment
+      },
+      success: function(data){
+        if(data == 200){
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Review Submitted',
+            confirmButtonColor: '#1b1c1d',
+            confirmButtonText: 'OK'
+          }).then((result) =>{
+            location.reload();
+
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'The transaction/car is either invalid or not existing',
+            confirmButtonColor: '#1b1c1d',
+            confirmButtonText: 'OK'
+          })
+        }
+      }
+    });
+  }
+}
+
+$('#rate_btn').on('click', function(){
+  var rentalID = $(this).attr('data-id');
+  $('#hidden_rentalID').val(rentalID);
+});
+
 </script>
 
 

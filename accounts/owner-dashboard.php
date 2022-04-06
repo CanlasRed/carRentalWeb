@@ -158,6 +158,12 @@
                       Complete
                     </div>
                   </div>
+                <?php } else if ($row['status'] == 'review') {?>
+                  <div class="ribbon-wrapper ribbon-lg">
+                    <div class="ribbon bg-olive">
+                      To Review
+                    </div>
+                  </div>
                 <?php } else if ($row['status'] == 'cancelled') {?>
                   <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-danger">
@@ -248,7 +254,7 @@
                     </div>
                   <?php } else if ($row['status'] == 'dropoff') { ?>
                     <div class="text-right">
-                      <a data-action="completed" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                      <a data-action="review" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
                         <i class="fas fa-check"></i> Drop-Off
                       </a>
                     </div>
@@ -295,7 +301,7 @@
       var statement = 'Accept Booking';
     } else if (status == 'dropoff'){
       var statement = 'Confirm car pick-up';
-    } else if(status == 'completed'){
+    } else if(status == 'review'){
       var statement = 'Confirm car drop-off';
     } else if(status == 'cancelled'){
       var statement = 'Cancel Booking';
