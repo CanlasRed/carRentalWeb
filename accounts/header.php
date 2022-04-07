@@ -24,6 +24,22 @@
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 
+  <style type="text/css">
+    .ribbon-wrapper.ribbon-lg .ribbon{
+      width: 100% !important;
+      top: 13px !important;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+    .ribbon-wrapper .ribbon{
+      -webkit-transform:  rotate(0deg) !important;
+      transform:  rotate(0deg) !important;
+    }
+    .ribbon::before, .ribbon::after{
+      display: none !important;
+    }
+  </style>
+
 <?php include '../php/connection.php'; ?>
 
 <?php 

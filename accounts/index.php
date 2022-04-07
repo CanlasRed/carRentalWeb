@@ -93,7 +93,13 @@
                     <?php
                     $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 ORDER BY r.createdAt DESC";
                     $result = mysqli_query($dbconn, $sql);
-                    foreach($result as $row){ ?>
+                    foreach($result as $row){ 
+                      $date_now = date("Y-m-d H:i:s");
+                      if($row['status']=='dropoff' && $row['updatedAt']<$date_now){
+                        $sql = "UPDATE tbl_rental SET status = 'overdue' WHERE rentalID = ".$row['rentalID']."";
+                        mysqli_query($dbconn, $sql);
+                      }
+                      ?>
                     <div class="col-12 col-lg-6 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
                      <?php if ($row['status'] == 'pending'){ ?>
@@ -124,6 +130,12 @@
                         <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-olive">
                             To Review
+                          </div>
+                        </div>
+                      <?php } else if ($row['status'] == 'overdue') {?>
+                        <div class="ribbon-wrapper ribbon-lg">
+                          <div class="ribbon bg-indigo">
+                            Overdue
                           </div>
                         </div>
                       <?php } else if ($row['status'] == 'cancelled') {?>

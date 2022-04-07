@@ -164,6 +164,12 @@
                       To Review
                     </div>
                   </div>
+                <?php } else if ($row['status'] == 'overdue') {?>
+                  <div class="ribbon-wrapper ribbon-lg">
+                    <div class="ribbon bg-indigo">
+                      Overdue
+                    </div>
+                  </div>
                 <?php } else if ($row['status'] == 'cancelled') {?>
                   <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-danger">
@@ -252,9 +258,9 @@
                         <i class="fas fa-check"></i> Pick-Up
                       </a>
                     </div>
-                  <?php } else if ($row['status'] == 'dropoff') { ?>
+                  <?php } else if ($row['status'] == 'dropoff' || $row['status'] == 'overdue') { ?>
                     <div class="text-right">
-                      <a data-action="review" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-success acceptBooking">
+                      <a data-action="review" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm bg-purple acceptBooking">
                         <i class="fas fa-check"></i> Drop-Off
                       </a>
                     </div>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -237,7 +238,7 @@
                 </div>
 
                 <!-- DRIVER SEGMENT -->
-                 <div class=" ui raised segment mb-3">
+                 <!-- <div class=" ui raised segment mb-3">
                     <div class="row m-0">
                         <div class="col-12 py-3">
                             <div class="ui header medium">
@@ -287,7 +288,7 @@
                         
                     </div>
                        
-                </div>
+                </div> -->
 
 
                 <?php 
