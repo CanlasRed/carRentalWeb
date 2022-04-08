@@ -345,7 +345,7 @@
                             </div>
 
                             <div class="row text-center mt-4 justify-content-center d-flex">
-                                <h2 class="fw-bold"><?php echo round($avgRatings,2); ?><small class="text-muted">/5</small></h2>
+                                <h2 class="fw-bold"><?php echo round($avgRatings,1); ?><small class="text-muted">/5</small></h2>
                             </div>
 
                             <div class="text-center">
@@ -588,6 +588,12 @@
         });
       });
     </script>
+
+    <style type="text/css">
+        #example2.dataTable.no-footer{
+            border-bottom:  none !important;
+        }
+    </style>
 
     <script type="text/javascript">
         var carID = '<?php echo $_GET["carID"]; ?>';

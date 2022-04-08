@@ -94,11 +94,6 @@
                     $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 ORDER BY r.createdAt DESC";
                     $result = mysqli_query($dbconn, $sql);
                     foreach($result as $row){ 
-                      $date_now = date("Y-m-d H:i:s");
-                      if($row['status']=='dropoff' && $row['updatedAt']<$date_now){
-                        $sql = "UPDATE tbl_rental SET status = 'overdue' WHERE rentalID = ".$row['rentalID']."";
-                        mysqli_query($dbconn, $sql);
-                      }
                       ?>
                     <div class="col-12 col-lg-6 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
@@ -187,13 +182,13 @@
                       <?php } 
                        if ($row['status'] == 'pending'){ ?>
                           <div class="text-right">
-                            <a href="#" data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
+                            <a href="#" id="cancel_btn" data-id="<?php echo $row['rentalID']; ?>" data-bs-toggle="modal" data-bs-target="#cancel_modal" class="btn btn-sm btn-danger">
                               <i class="fas fa-ban"></i> Cancel
                             </a>
                           </div>
                         <?php } else if ($row['status'] == 'pickup') { ?>
                           <div class="text-right">
-                            <a href="#" data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
+                            <a href="#" id="cancel_btn" data-id="<?php echo $row['rentalID']; ?>" data-bs-toggle="modal" data-bs-target="#cancel_modal" class="btn btn-sm btn-danger">
                               <i class="fas fa-ban"></i> Cancel
                             </a>
                           </div>
@@ -358,6 +353,50 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="cancel_modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cancel Booking</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<form method="POST" enctype="multipart/form-data" action="php/cancel_booking.php" id="cancel_booking_form">
+
+        <div class="form-group">
+          <label>Select reason for cancellation</label>
+          <select class="form-control" id="reason">
+            <?php 
+            $result = mysqli_query($dbconn, "SELECT * FROM tbl_cancellation_reasons;");
+            foreach ($result as $row){ ?>
+              <option value="<?php echo $row['reasonID']; ?>"><?php echo $row['reason']; ?></option>
+           <?php } ?>
+          </select>
+        </div>
+
+
+          <div class="form-group">
+            <input type="number" class="form-control" hidden name="rentalID" id="hidden_rentalID2">
+          </div>
+
+          <div class="form-group">
+            <label>Remarks</label>
+            <textarea name="remarks" id="remarks" class="form-control" required></textarea>
+          </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" onclick="submitCancellation()" class="btn btn-info">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php include 'script.php'?>
 
 <script type="text/javascript">
@@ -493,6 +532,51 @@ $('#rate_btn').on('click', function(){
   var rentalID = $(this).attr('data-id');
   $('#hidden_rentalID').val(rentalID);
 });
+
+$('#cancel_btn').on('click', function(){
+  var rentalID = $(this).attr('data-id');
+  $('#hidden_rentalID2').val(rentalID);
+});
+
+
+function submitCancellation(){
+  var reason = $('#reason :selected').val();
+  var remarks = $('#remarks').val();
+  var rentalID = $('#hidden_rentalID2').val();
+    $.ajax({
+      type: "POST",
+      url: "php/cancel_booking.php",
+      data: {
+        rentalID: rentalID,
+        reason: reason,
+        remarks: remarks
+      },
+      success: function(data){
+        if(data == 200){
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Booking Cancelled',
+            confirmButtonColor: '#1b1c1d',
+            confirmButtonText: 'OK'
+          }).then((result) =>{
+            location.reload();
+
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error has occured. Booking is not cancelled',
+            confirmButtonColor: '#1b1c1d',
+            confirmButtonText: 'OK'
+          })
+        }
+      }
+    });
+  
+}
+
 
 </script>
 
