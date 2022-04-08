@@ -7,6 +7,8 @@
     <title>Cars | Speedy</title>
     <link rel="icon" type="icon" href="favicon.ico">
     <?php include 'header.php'; ?>
+
+
 </head>
 <body>
     <?php include 'navbar.php'; 
@@ -343,7 +345,7 @@
                             </div>
 
                             <div class="row text-center mt-4 justify-content-center d-flex">
-                                <h2 class="fw-bold"><?php echo $avgRatings; ?><small class="text-muted">/5</small></h2>
+                                <h2 class="fw-bold"><?php echo round($avgRatings,2); ?><small class="text-muted">/5</small></h2>
                             </div>
 
                             <div class="text-center">
@@ -414,41 +416,56 @@
                     </div>
 
                     <div class="row px-3">
-                        <div class="col-12 px-2 my-1">
+                      <div class="col-12 px-2 my-1">
+                        <table id="example2" class="table ">
+                  <thead>
+                  <tr>
+                    <th hidden></th>
 
-                        <?php 
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php 
                         $sql = "SELECT *,r.rate as reviewRate, r.createdAt as reviewDate FROM tbl_car_review r INNER JOIN tbl_cars c ON c.carID = r.carID INNER JOIN tbl_customers u ON u.customerID = r.customerID WHERE r.status = 1 AND r.carID = ".$_GET['carID']." ORDER BY r.rate DESC";
                         $result = mysqli_query($dbconn, $sql);
                         if(mysqli_fetch_assoc($result)){
-                            foreach($result as $row){ ?>
-                              <div class=" ui raised segment mb-3">
-                                <div class="ui comments">
-                                  <div class="comment">
-                                    <a class="avatar">
-                                      <img src="assets/avatar_2.png">
-                                    </a>
-                                    <div class="content">
-                                      <a class="author" style="text-decoration: none;"><?php echo $row['firstName'].' '.$row['lastName']; ?></a>
-                                      <div class="metadata">
-                                        <div class="date"><?php echo get_time_ago(strtotime($row['reviewDate'])); ?></div>
+                            foreach($result as $row){  echo '<tr>' ?>
+                                <td>
+                                    <div class=" ui raised segment mb-3">
+                                        <div class="ui comments">
+                                          <div class="comment">
+                                            <a class="avatar">
+                                              <img src="assets/avatar_2.png">
+                                            </a>
+                                            <div class="content">
+                                              <a class="author" style="text-decoration: none;"><?php echo $row['firstName'].' '.$row['lastName']; ?></a>
+                                              <div class="metadata">
+                                                <div class="date"><?php echo get_time_ago(strtotime($row['reviewDate'])); ?></div>
+                                              </div>
+                                              <div class="text">
+                                                <?php echo $row['comment']; ?>
+                                              </div>
+                                              <div class="meta">
+                                                <div class="ui large yellow rating" data-rating="<?php echo $row['reviewRate']; ?>"></div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div class="text">
-                                        <?php echo $row['comment']; ?>
-                                      </div>
-                                      <div class="meta">
-                                        <div class="ui large yellow rating" data-rating="<?php echo $row['reviewRate']; ?>"></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                                </td>
+                              
                             <?php } 
                         } else { ?>
-                            <div class=" ui raised segment mb-3 text-center">
+                            <td>
+                                <div class=" ui raised segment mb-3 text-center">
                                 <h6 class="fw-bold">This car has no reviews...</h6>
                             </div>
+                            </td>
+                            
                         <?php } ?>
-
+                  </tbody>
+                  
+                </table>
 
                         </div> 
                     </div>
@@ -541,6 +558,36 @@
             color: #fff !important;
         }
     </style>
+
+    <!-- DataTables  & Plugins -->
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
+
+    <!-- Page specific script -->
+    <script>
+      $(function () {
+        $('#example2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": false,
+          "info": false,
+          "autoWidth": false,
+          "responsive": true,
+          "pageLength" : 5,
+          "columnDefs": [{
+                "targets": '_all',
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    $(td).css('padding', '0px')
+                    $(td).css('border', '1px solid white')
+                }
+            }],
+        });
+      });
+    </script>
 
     <script type="text/javascript">
         var carID = '<?php echo $_GET["carID"]; ?>';
