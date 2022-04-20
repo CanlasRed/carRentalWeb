@@ -99,7 +99,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="avatars-table.php?page=1" class="nav-link">
+            <a href="owner-history.php" class="nav-link">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 History
@@ -107,7 +107,7 @@
             </a>
           </li>
 
-          <li class="nav-header">Driver</li>
+          <!-- <li class="nav-header">Driver</li>
           <li class="nav-item">
             <a href="/admin" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -131,7 +131,7 @@
                 History
               </p>
             </a>
-          </li>
+          </li> -->
       
 
           <li class="nav-header">Exit</li>

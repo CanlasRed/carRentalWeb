@@ -22,8 +22,8 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-12">
-            <h1>Owner Dashboard</h1>
+          <div class="col-sm-6">
+            <h1 style="font-weight: bold;">Owner Dashboard</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -36,7 +36,7 @@
       <div class="row">
 
 
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-8">
         <div class="card">
           <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> Overview</h3>
@@ -50,7 +50,7 @@
               <!-- form start --> 
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-4">
                   <!-- small box -->
                   <div class="info-box">
                     <span class="info-box-icon bg-black">
@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-12">
+                <div class="col-lg-4">
                   <!-- small box -->
                     <div class="info-box">
                       <span class="info-box-icon bg-black">
@@ -80,13 +80,13 @@
                           $result = mysqli_query($dbconn, $sql);
                           $row = mysqli_fetch_assoc($result);
                         ?>
-                        <span class="info-box-text">Successful Bookings</span>
+                        <span class="info-box-text"> Successful Bookings</span>
                         <span class="info-box-number"><?php echo $row['count']?></span>
                       </div>
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-12">
+                <div class="col-lg-4">
                   <!-- small box -->
                     <div class="info-box">
                       <span class="info-box-icon bg-black">
@@ -107,14 +107,53 @@
               </div>
           </div>
         </div>
+
+            <div class="card">
+              <div class="card-header bg-black">
+                <h3 class="card-title"><i class="fas fa-chart-bar"></i> Successfull Bookings</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+
+            <div class="card">
+              <div class="card-header bg-black">
+                <h3 class="card-title"><i class="fas fa-chart-line"></i> Sales</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+
         </div>
         <!-- ./card -->
 
 
-        <div class="col-md-8">
+        <div class="col-md-6 col-lg-4">
         <div class="card">
           <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
-            <h3 class="card-title"><i class="fas fa-cars"></i> Bookings</h3>
+            <h3 class="card-title"><i class="fas fa-cars"></i> Active Bookings</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -127,10 +166,13 @@
               <div class="row">
 
               <?php
-              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'done' ORDER BY r.rentalID DESC";
+              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'completed' AND status != 'cancelled' ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
+              if (mysqli_num_rows($result)<=0){ ?>
+                  <h4 class="ml-3">No Active Bookings...</h4>
+              <?php }
               foreach($result as $row){ ?>
-              <div class="col-12 col-lg-4 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
+              <div class="col-12 d-flex align-items-stretch flex-column">
 
                 <!-- RIBBONS -->
               <div class="card bg-light d-flex flex-fill">
@@ -211,7 +253,13 @@
                           <i class="fas fa-hourglass-half"></i> 24 Hours
                         </li>
                         <li>
-                          <b>₱ 6,000</b>
+                          <?php 
+                          $sql = "SELECT *, SUM(carAmount+deposit+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                          $result=mysqli_query($dbconn, $sql);
+                          $amount = mysqli_fetch_assoc($result);
+                          setlocale(LC_MONETARY, "en_US");
+                          ?>
+                          <b>₱ <?php echo number_format($amount['total']); ?></b>
                         </li>
                       </ul>
 
@@ -254,9 +302,16 @@
                       <a data-action="cancelled" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-danger acceptBooking">
                         <i class="fas fa-ban"></i> Cancel
                       </a>
-                      <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-info acceptBooking">
-                        <i class="fas fa-check"></i> Pick-Up
-                      </a>
+                      <?php $date_now = date("Y-m-d H:i:s");
+                        if($row['startDate']<=$date_now){ ?>
+                          <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-info acceptBooking">
+                            <i class="fas fa-check"></i> Pick-Up
+                          </a>
+                        <?php } else { ?>
+                          <a data-action="dropoff" data-id="<?php echo $row['rentalID'];?>" class="btn btn-sm btn-info disabled acceptBooking">
+                            <i class="fas fa-check"></i> Pick-Up
+                          </a>
+                        <?php } ?>
                     </div>
                   <?php } else if ($row['status'] == 'dropoff' || $row['status'] == 'overdue') { ?>
                     <div class="text-right">
@@ -304,7 +359,7 @@
     var status = $(this).attr('data-action');
     var rentalID = $(this).attr('data-id');
     if(status == 'pickup'){
-      var statement = 'Accept Booking';
+      var statement = 'Accept Booking? Pending bookings under the same date will be cancelled';
     } else if (status == 'dropoff'){
       var statement = 'Confirm car pick-up';
     } else if(status == 'review'){
@@ -353,6 +408,141 @@
       }
      })
   });
+
+  var months = [];
+  var cancelled = [];
+  var completed = [];
+  var sales = [];
+
+  $.ajax({
+    type: 'POST',
+    url: 'php/get_chart_value.php',
+    data:{
+      action: 'fetch',
+    },
+    success: function(data){
+      data = JSON.parse(data);
+      console.log(data);
+
+
+      months = data.month;
+      cancelled = data.cancelled;
+      completed = data.completed;
+      sales = data.sales;
+
+      fillCharts(months, cancelled, completed, sales);
+
+    }
+  });
+
+function fillCharts(months, cancelled, completed, sales){
+
+  var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+
+
+
+    var areaChartData = {
+      labels  : months,
+      datasets: [
+        {
+          label               : 'Cancelled',
+          backgroundColor     : 'rgba(220, 53, 69,0.7)',
+          borderColor         : 'rgba(220, 53, 69,0.6)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(220, 53, 69,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220, 53, 69,1)',
+          pointStyle: 'circle',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          data                : cancelled
+        },
+        {
+          label               : 'Completed',
+          backgroundColor     : 'rgba(40, 167, 69, 0.7)',
+          borderColor         : 'rgba(40, 167, 69, 0.6)',
+          pointRadius         : false,
+          pointColor          : 'rgba(40, 167, 69, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(40, 167, 69,1)',
+          pointStyle: 'circle',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          data                : completed
+        },
+      ]
+    }
+
+    var salesChartData = {
+      labels  : months,
+      datasets: [
+        {
+          label               : 'Sales',
+          backgroundColor     : 'rgba(40, 167, 69, 0.7)',
+          borderColor         : 'rgba(40, 167, 69, 0.6)',
+          pointRadius         : false,
+          pointColor          : 'rgba(40, 167, 69, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(40, 167, 69,1)',
+          pointStyle: 'circle',
+          pointRadius: 5,
+          pointHoverRadius: 10,
+          data                : sales
+        },
+      ]
+    }
+
+    var areaChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: true
+      },
+      scales: {
+        x: {
+          display : true,
+          title: {
+            display: true
+          }
+        },
+        y: {
+          display : true,
+          title: {
+            display: true
+          }
+        }
+      }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    new Chart(areaChartCanvas, {
+      type: 'line',
+      data: salesChartData,
+      options: areaChartOptions
+    })
+
+  var barChartCanvas = $('#barChart');
+    var barChartData = $.extend(true, {}, areaChartData);
+    var temp0 = areaChartData.datasets[0];
+    var temp1 = areaChartData.datasets[1];
+    barChartData.datasets[0] = temp1;
+    barChartData.datasets[1] = temp0;
+
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+}
 </script>
 
 

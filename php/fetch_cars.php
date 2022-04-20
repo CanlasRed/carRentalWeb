@@ -1,4 +1,30 @@
 <?php
+	function get_time_ago( $time )
+	{
+	  $time_difference = time() - $time;
+
+	  if( $time_difference < 1 ) { return 'Just Now'; }
+
+
+	  $condition = array( 12 * 30 * 24 * 60 * 60 =>  'year',
+	    30 * 24 * 60 * 60       =>  'month',
+	    24 * 60 * 60            =>  'day',
+	    60 * 60                 =>  'hour',
+	    60                      =>  'minute',
+	    1                       =>  'second'
+	  );
+
+	  foreach( $condition as $secs => $str )
+	  {
+	    $d = $time_difference / $secs;
+
+	    if( $d >= 1 )
+	    {
+	      $t = round( $d );
+	      return 'about ' . $t . ' ' . $str . ( $t > 1 ? 's' : '' ) . ' ago';
+	    }
+	  }
+	}
 	include 'connection.php';
 	$output = "";
 
@@ -62,20 +88,40 @@
 				$sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY carID ASC";
 				$res = mysqli_query($dbconn, $sql);
 				$img = mysqli_fetch_assoc($res);
+				$postedTime = get_time_ago(strtotime($row['createdAt']));
+				$total = 0;
+                        $avgRatings = 0;
+                        $sql = "SELECT * FROM tbl_car_review WHERE status = 1 AND carID = ".$row['carID']."";
+                        if($result = mysqli_query($dbconn, $sql)){
+                          $total = mysqli_num_rows($result);
+                          $arr = array(0,0,0,0,0);
+                          foreach($result as $rate){
+                            if($rate['rate']==5){
+                              $arr[0]++;
+                            } else if ($rate['rate']==4){
+                              $arr[1]++;
+                            } else if ($rate['rate']==3){
+                              $arr[2]++;
+                            } else if ($rate['rate']==2){
+                              $arr[3]++;
+                            } else if ($rate['rate']==1){
+                              $arr[4]++;
+                            }
+                          }
+
+                          if($total>0){
+                            $avgRatings = ((1*$arr[4])+(2*$arr[3])+(3*$arr[2])+(4*$arr[1])+(5*$arr[0]))/$total;
+                          }
+                        }
 				$output .='
 				<div class="ui card m-2">
 			        <div class="content">
-			          <div class="right floated meta">14h</div>
+			           <div class="right floated meta"><small>'.$postedTime.'</small></div>
 			            <a class="fw-bold" style="text-decoration: none; color:#1b1c1d;" href="cars.php?car='.$row['name'].'&carID='.$row['carID'].'">
 			            '. $row['name'] .'
 			            </a>
 			        </div>
 			        <a href="cars.php?car='.$row['name'].'&carID='.$row['carID'].'" class="image">
-			          <?php if ('.$row['driverID'].'!=NULL){ ?>
-			            <div class="ui black right corner label">
-			              <i class="user plus icon"></i>
-			            </div>
-			         <?php } ?>
 			         <div style="width:100%; overflow:hidden; height:220px; background: url(assets/cars/'.$img['image'].') no-repeat center; background-size: contain;">
 			          </div>
 			        </a>
@@ -99,9 +145,9 @@
 			          <div class="row mt-2">
 			            <div class="col-12">
 			                <div class="ui inverted black label my-1">
-			                  4.7
+			                  '.round($avgRatings,1).'
 			                </div>
-			                <div class="ui star rating" data-rating="5"></div>
+			                 <div class="ui yellow rating" data-rating="'.round($avgRatings).'"></div>
 			            </div>
 			          </div>
 			        </div>

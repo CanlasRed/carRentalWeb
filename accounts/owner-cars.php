@@ -53,82 +53,7 @@
       <div class="row">
 
 
-        <div class="col-md-4">
-        <div class="card">
-          <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
-            <h3 class="card-title"><i class="fas fa-cars"></i> Overview</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-            </div>
-          </div>
-              <!-- /.card-header -->
-              <!-- form start --> 
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-12">
-                  <!-- small box -->
-                  <div class="info-box">
-                    <span class="info-box-icon bg-black">
-                      <i style="font-size: 30px;" class="fas fa-cars"></i>
-                    </span>
-                    <div class="info-box-content">
-                      <?php 
-                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = 1";
-                        $result = mysqli_query($dbconn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                      ?>
-                      <span class="info-box-text">Number of Cars</span>
-                      <span class="info-box-number"><?php echo $row['count']?></span>
-                    </div>
-                  </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-12">
-                  <!-- small box -->
-                    <div class="info-box">
-                      <span class="info-box-icon bg-black">
-                        <i style="font-size: 30px;" class="fas fa-clipboard-check"></i>
-                      </span>
-                      <div class="info-box-content">
-                        <?php 
-                          $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = 1";
-                          $result = mysqli_query($dbconn, $sql);
-                          $row = mysqli_fetch_assoc($result);
-                        ?>
-                        <span class="info-box-text">Successful Bookings</span>
-                        <span class="info-box-number"><?php echo $row['count']?></span>
-                      </div>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-12">
-                  <!-- small box -->
-                    <div class="info-box">
-                      <span class="info-box-icon bg-black">
-                        <i style="font-size: 30px;" class="fas fa-book"></i>
-                      </span>
-                      <div class="info-box-content">
-                    <?php 
-                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = 1 AND status = 'pending'";
-                        $result = mysqli_query($dbconn, $sql);
-                        $row = mysqli_fetch_assoc($result);
-                      ?>
-                        <span class="info-box-text">Pending Bookings</span>
-                        <span class="info-box-number"><?php echo $row['count']?></span>
-                      </div>
-                    </div>
-                </div>
-            <!-- ./col -->
-              </div>
-          </div>
-        </div>
-        </div>
-        <!-- ./card -->
-
-
-        <div class="col-md-8">
+        <div class="col-md-12">
         <div class="card">
           <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> My Cars</h3>
@@ -147,25 +72,23 @@
              $sql = "SELECT c.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND c.ownerID = 1 ";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
-              <div class="col-12 col-xl-4 col-lg-6 col-sm-12 col-md-6 d-flex align-items-stretch flex-column">
-              <div class="ui card m-2">
+              <div class="col-12 col-xl-3 col-lg-4 col-sm-12 col-md-6">
+              <div class="ui card m-2" style="width:100%">
               <div class="content">
-                <div class="right floated meta">14h</div>
-                  <?php echo $row['name'] ?>
+                <div class="right floated meta"><small><?php  echo get_time_ago(strtotime($row['createdAt']));?></small></div>
+                 <a style="font-weight: bold;text-decoration: none; color:#1b1c1d;" href="../cars.php?car=<?php echo $row['name'];?>&carID=<?php echo $row['carID'];?>">
+                  <?php echo $row['name'] ;?>
+                  </a>
               </div>
-              <div class="image">
-                <?php if ($row['driverID']!=NULL){ ?>
-                  <div class="ui black right corner label">
-                    <i class="user plus icon"></i>
-                  </div>
-               <?php } 
+              <a href="../cars.php?car=<?php echo $row['name'];?>&carID=<?php echo $row['carID'];?>" class="image">
+                <?php
                 $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY carID ASC";
                   $res = mysqli_query($dbconn, $sql);
                   $img = mysqli_fetch_assoc($res);
                ?>
                 <div style="width:100%; overflow:hidden; height:220px; background: url(../assets/cars/<?php echo $img['image']; ?>) no-repeat center; background-size: contain;">
                 </div>
-              </div>
+              </a>
               <div class="content">
                 <div class="row">
                   <div class="col-6">
@@ -186,9 +109,34 @@
                 <div class="row mt-2">
                   <div class="col-12">
                       <div class="ui inverted black label my-1">
-                        4.7
+                        <?php 
+                        $total = 0;
+                        $avgRatings = 0;
+                        $sql = "SELECT * FROM tbl_car_review WHERE status = 1 AND carID = ".$row['carID']."";
+                        if($result = mysqli_query($dbconn, $sql)){
+                          $total = mysqli_num_rows($result);
+                          $arr = array(0,0,0,0,0);
+                          foreach($result as $rate){
+                            if($rate['rate']==5){
+                              $arr[0]++;
+                            } else if ($rate['rate']==4){
+                              $arr[1]++;
+                            } else if ($rate['rate']==3){
+                              $arr[2]++;
+                            } else if ($rate['rate']==2){
+                              $arr[3]++;
+                            } else if ($rate['rate']==1){
+                              $arr[4]++;
+                            }
+                          }
+
+                          if($total>0){
+                            $avgRatings = ((1*$arr[4])+(2*$arr[3])+(3*$arr[2])+(4*$arr[1])+(5*$arr[0]))/$total;
+                          }
+                        }
+                         echo round($avgRatings,1); ?>
                       </div>
-                       <div class="ui star rating" data-rating="5"></div>
+                        <div class="ui yellow rating" data-rating="<?php echo round($avgRatings); ?>"></div>
                   </div>
                 </div>
               </div>

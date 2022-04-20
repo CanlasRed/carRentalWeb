@@ -685,7 +685,9 @@
 
                 $('#rangeend').calendar({
                     type: 'date',
-                    startCalendar: $('#rangestart')
+                    startCalendar: $('#rangestart'),
+                    disabledDates: arr,
+                    eventDates: arr2
                 });
             }
         });

@@ -26,6 +26,12 @@ $(document).ready(function(){
 			},
 			success:function(data){
 				$('#car-list-container').html(data);
+				$('.ui.rating')
+		          .rating({
+		            maxRating: 5
+		          })
+		          .rating('disable');
+		        ;
 			}
 		})
 	}
