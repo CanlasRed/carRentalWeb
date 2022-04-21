@@ -51,13 +51,12 @@
               <!-- form start --> 
             <div class="card-body">
               <div class="row">
-
+                <div id="hipGrid">
               <?php
               $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
-              <div class="col-12 col-lg-4 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
-
+              <div class="hip-item">
                 <!-- RIBBONS -->
               <div class="card bg-light d-flex flex-fill">
                 <?php if ($row['status'] == 'pending'){ ?>
@@ -134,10 +133,16 @@
                           <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?>
                         </li>
                         <li class="small">
-                          <i class="fas fa-hourglass-half"></i> 24 Hours
+                          <i class="fas fa-hourglass-half"></i> <?php echo get_time_diff(strtotime($row['startDate']), strtotime($row['endDate'])); ?>
                         </li>
                         <li>
-                          <b>₱ 6,000</b>
+                          <?php 
+                          $sql = "SELECT *, SUM(carAmount+deposit+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                          $result=mysqli_query($dbconn, $sql);
+                          $amount = mysqli_fetch_assoc($result);
+                          setlocale(LC_MONETARY, "en_US");
+                          ?>
+                          <b>₱ <?php echo number_format($amount['total']); ?></b>
                         </li>
                       </ul>
 
@@ -195,7 +200,7 @@
               </div>
             </div>
           <?php } ?>
-
+            </div>
           </div>
           </div>
         </div>
@@ -224,6 +229,24 @@
 <!-- ./wrapper -->
 
 <?php include 'script.php'?>
+
+<script type="text/javascript">
+      $(document).ready(function(){
+          $('#hipGrid').hip({
+            itemsPerPage: 10,
+            dynItemsPerRow: {
+              hs: 1,
+              sm: 1,
+              md: 2,
+              lg: 3
+            },
+            paginationPos:'right',
+            filter:true,
+            filterPos:"right",
+            filterText:"Search"
+          });
+      });
+    </script>
 
 <script type="text/javascript">
   $('.acceptBooking').on('click', function(){

@@ -57,7 +57,8 @@
 
     <!-- Main content -->
     <section class="content">
-    <form action="php/add_car.php" id="add_car_from" method="POST">
+    <form action="php/update_car.php" id="add_car_from" method="POST">
+      <input type="text" name="carID" value="<?php echo $_GET['carID']; ?>" hidden>
       <div class="container-fluid">
       <div class="row">
 
@@ -328,7 +329,7 @@
                             ><i class="fas fa-pencil-alt"></i></button>
                           </td>
                           <td>
-                            <button type="button" class="btn btn-danger delete_pdf" data-id="<?php echo $row['imageID']; ?>"><i class="fas fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-danger delete_images" data-id="<?php echo $row['imageID']; ?>"><i class="fas fa-trash-alt"></i></button>
                           </td>
                         </tr>
 
@@ -365,8 +366,134 @@
 </div>
 <!-- ./wrapper -->
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="edit_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Medicinal Use</h5>
+        <button type="button" class="close clear-text" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="update_car_images" method="POST" enctype="multipart/form-data">
+          <input type="text" name="imageID" id="imageID" hidden>
+          <div class="form-group">
+            <label>Car Title</label>
+            <input type="text" name="title" id="edit_title" class="form-control rounded-pill" placeholder="Image Title" required>
+          </div>
+          <div class="form-group">
+            <label for="add_image">Car Image</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" name="image" id="edit_image" onchange="displayImage2(this)">
+                <label class="custom-file-label" for="edit_image">JPEG, JPG Max. 3MB</label>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <img class="img-fluid" alt="Car Image" id="edit_image_preview" src="../assets/imgPlaceholder.png">
+            </div>
+            <br>
+          </div>
+        </form>
+        <script type="text/javascript">
+          function displayImage2(e){
+            if (e.files[0]){
+              var reader = new FileReader();
+
+              reader.onload = function(e){
+                document.querySelector('#edit_image_preview').setAttribute('src', e.target.result);
+              }
+              reader.readAsDataURL(e.files[0]);
+            }
+          }
+        </script>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary clear-text" data-bs-dismiss="modal">Close</button>
+        <button type="submit" form="update_car_images" id="edit_image_btn" class="btn btn-info">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="archives_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Deleted Car Images</h5>
+        <button type="button" class="close clear-text" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table" id="archives_table">
+          <thead>
+            <tr>
+              <th scope="col">Image ID</th>
+              <th scope="col">Image</th>
+              <th scope="col">Restore</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php 
+            $sql = "SELECT * FROM tbl_car_image WHERE status = 0 AND carID = ".$_GET['carID']."";
+            $result = mysqli_query($dbconn, $sql);
+            foreach($result as $row) { ?>
+              <tr>
+                <th><?php echo $row['imageID'];?></th>
+                <td  id="image<?php echo $row['imageID']; ?>">
+                  <img style="width:300px;" src="../assets/cars/<?php echo $row['image']; ?>" class="img-thumbnail">
+                </td>
+                <td>
+                  <button type="button" class="btn btn-success restore_images" data-id="<?php echo $row['imageID']; ?>"><i class="fas fa-trash-restore"></i></button>
+                </td>
+              </tr>
+
+            <?php  } ?>
+          </tbody>
+        </table>   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary clear-text" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 <?php include 'script.php'?>
 <script type="text/javascript" src="js/add_car_validation.js"></script>
+
+ <script type="text/javascript">
+  $('.edit_btn').on('click', function(){
+    imageID = $(this).attr('data-id');
+    image = $(this).attr('data-image');
+    title = $(this).attr('data-title');
+    $('#edit_image_preview').attr('src', '../assets/cars/' + image);
+    $('#imageID').val(imageID);
+    $('#edit_title').val(title);
+
+  });
+
+  $('#edit_modal').on('hidden.bs.modal', function () {
+    $('#edit_image_preview').attr('src', '');
+  });
+
+  // $('.clear-text').on('click', function(){
+  //   $('#edit_summernote').summernote('editor.insertText', "");
+  // });
+</script>
 
 
 </body>

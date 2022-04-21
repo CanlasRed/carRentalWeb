@@ -28,7 +28,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Owned Cars</h1>
+            <h1>Owner Profile</h1>
           </div>
           <div class="col-sm-6">
             <div class="float-right">
@@ -51,9 +51,48 @@
 
       <div class="container-fluid">
       <div class="row">
+        <?php
+            $sql = "SELECT * FROM tbl_customers WHERE customerID = 1";
+            $result = mysqli_query($dbconn, $sql);
+            $row = mysqli_fetch_assoc($result);
+          ?>
+        <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="card card-dark card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="../assets/avatar_2.png"
+                       alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center"><?php echo $row['firstName'].' '.$row['lastName']; ?></h3>
+
+                <p class="text-muted text-center">Owner <i class="fas fa-badge-check"></i></p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Email</b> <p class="float-right"><?php echo $row['username']?></p>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Phone No.</b> <p class="float-right"><?php echo $row['phone']?></p>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Location</b> <p class="float-right">Olongapo City</p>
+                  </li>
+                </ul>
+
+                <a href="#" class="btn bg-black btn-block"><b><i class="fas fa-badge-check"></i> Verify Account</b></a>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+          </div>
 
 
-        <div class="col-md-12">
+        <div class="col-md-9">
         <div class="card">
           <div class="card-header ui-sortable-handle bg-black" style="cursor: move;">
             <h3 class="card-title"><i class="fas fa-cars"></i> My Cars</h3>
@@ -72,7 +111,7 @@
              $sql = "SELECT c.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND c.ownerID = 1 ";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
-              <div class="col-12 col-xl-3 col-lg-4 col-sm-12 col-md-6">
+              <div class="col-12 col-xl-4 col-lg-4 col-sm-12 col-md-6">
               <div class="ui card m-2" style="width:100%">
               <div class="content">
                 <div class="right floated meta"><small><?php  echo get_time_ago(strtotime($row['createdAt']));?></small></div>

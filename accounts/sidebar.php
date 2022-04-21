@@ -13,8 +13,8 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-          <i class="far fa-bell">
-            <span class="badge badge-danger navbar-badge">4</span>
+          <i class="far fa-bell" style="font-size: 18px;">
+            <span class="badge badge-danger navbar-badge"></span>
           </i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -91,18 +91,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="owner-cars.php" class="nav-link">
-              <i class="nav-icon fas fa-cars"></i>
-              <p>
-                Cars
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="owner-history.php" class="nav-link">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 History
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="owner-cars.php" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Account
               </p>
             </a>
           </li>

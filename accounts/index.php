@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,12 +91,13 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="bookings">
                     <div class="row">
+                      <div id="hipGrid">
                     <?php
-                    $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 ORDER BY r.createdAt DESC";
+                    $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 AND r.status != 'completed' AND r.status != 'cancelled' ORDER BY r.createdAt DESC";
                     $result = mysqli_query($dbconn, $sql);
-                    foreach($result as $row){ 
+                    foreach($result as $row){  echo '<tr>'
                       ?>
-                    <div class="col-12 col-lg-6 col-sm-6 col-md-6 d-flex align-items-stretch flex-column">
+                    <div class="hip-item">
                     <div class="card bg-light d-flex flex-fill">
                      <?php if ($row['status'] == 'pending'){ ?>
                         <div class="ribbon-wrapper ribbon-lg">
@@ -157,8 +159,17 @@
                               <li class="small"><i class="fas fa-map-marker"></i> Olongapo City</li>
                               <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?></li>
                               <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?></li>
-                              <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
-                              <li><b>₱ 6,000</b></li>
+                              <li class="small"><i class="fas fa-hourglass-half"></i> <?php echo get_time_diff(strtotime($row['startDate']), strtotime($row['endDate'])); ?>
+                              </li>
+                              <li>
+                               <?php 
+                               $sql = "SELECT *, SUM(carAmount+deposit+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                               $result=mysqli_query($dbconn, $sql);
+                               $amount = mysqli_fetch_assoc($result);
+                               setlocale(LC_MONETARY, "en_US");
+                               ?>
+                               <b>₱ <?php echo number_format($amount['total']); ?></b>
+                             </li>
                             </ul>
 
                           </div>
@@ -204,6 +215,7 @@
                   </div>
                 <?php } ?>
                 </div>
+                </div>
 
                   </div>
                   <!-- /.tab-pane -->
@@ -211,79 +223,199 @@
 
                   <div class="tab-pane" id="history">
                     <div class="row">
-                      <div class="col-12">
-                        <div class="card bg-light d-flex flex-fill">
-                          <div class="card-header border-bottom-0">
-                            <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
-                            $res = mysqli_query($dbconn,$sql);
-                            $car = mysqli_fetch_assoc($res); ?>
-                            <a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>">
-                              <h4 style="font-weight: bold"><?php echo $car['name'];?></h4>
-                            </a>
-                          </div>
-                      <div class="card-body pt-0">
-                        <div class="row">
-                          <div class="col-7">
-                            <h2 class="lead"><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
+                      <div id="hipGrid2">
+                        <?php
+                        $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
+                        $result = mysqli_query($dbconn, $sql);
+                        foreach($result as $row){ ?>
+                          <div class="hip-item">
+                            <!-- RIBBONS -->
+                            <div class="card bg-light d-flex flex-fill">
+                              <?php if ($row['status'] == 'pending'){ ?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-warning">
+                                    Pending
+                                  </div>
+                                </div>
+                              <?php } else if ($row['status'] == 'pickup') { ?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-info">
+                                    Pick-Up
+                                  </div>
+                                </div>
+                              <?php } else if ($row['status'] == 'dropoff') { ?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-purple">
+                                    Ongoing
+                                  </div>
+                                </div>
+                              <?php } else if ($row['status'] == 'completed') {?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-success">
+                                    Complete
+                                  </div>
+                                </div>
+                              <?php } else if ($row['status'] == 'review') {?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-olive">
+                                    To Review
+                                  </div>
+                                </div>
+                              <?php } else if ($row['status'] == 'overdue') {?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-indigo">
+                                    Overdue
+                                  </div>
+                                </div>
+                              <?php } else if ($row['status'] == 'cancelled') {?>
+                                <div class="ribbon-wrapper ribbon-lg">
+                                  <div class="ribbon bg-danger">
+                                    Cancelled
+                                  </div>
+                                </div>
+                              <?php } ?>
 
-                            <ul class="ml-0 mb-0 fa-ul text-muted">
-                              <li class="small"><i class="fas fa-map-marker"></i> Olongapo City</li>
-                              <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date($row['startDate']);?></li>
-                              <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date($row['endDate']);?></li>
-                              <li class="small"><i class="fas fa-hourglass-half"></i> 24 Hours</li>
-                              <li><b>₱ 6,000</b></li>
-                            </ul>
 
+                              <div class="card-header border-bottom-0">
+                                <?php $sql = "SELECT * FROM tbl_cars WHERE carID = ".$row['carID']."";
+                                $res = mysqli_query($dbconn,$sql);
+                                $car = mysqli_fetch_assoc($res); ?>
+                                <b>Transaction No: <?php echo $row['rentalID'];?></b>
+                              </div>
+
+
+                              <div class="card-body pt-0">
+                                <div class="row">
+                                  <div class="col-7">
+                                    <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
+                                    <h2 class="lead"><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
+
+                                    <ul class="ml-0 mb-0 fa-ul text-muted">
+                                      <li class="small">
+                                        <i class="fas fa-map-marker"></i> Olongapo City
+                                      </li>
+                                      <li class="small">
+                                        <i class="fas fa-calendar-alt"></i> 
+                                        <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?>
+                                      </li>
+                                      <li class="small">
+                                        <i class="fas fa-calendar-check"></i> 
+                                        <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?>
+                                      </li>
+                                      <li class="small">
+                                        <i class="fas fa-hourglass-half"></i> <?php echo get_time_diff(strtotime($row['startDate']), strtotime($row['endDate'])); ?>
+                                      </li>
+                                      <li>
+                                        <?php 
+                                        $sql = "SELECT *, SUM(carAmount+deposit+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                                        $result=mysqli_query($dbconn, $sql);
+                                        $amount = mysqli_fetch_assoc($result);
+                                        setlocale(LC_MONETARY, "en_US");
+                                        ?>
+                                        <b>₱ <?php echo number_format($amount['total']); ?></b>
+                                      </li>
+                                    </ul>
+
+                                  </div>
+
+
+                                  <div class="col-5 text-center">
+                                    <?php 
+                                    $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$row['carID']." ORDER BY imageID ASC LIMIT 1";
+                                    $result = mysqli_query($dbconn, $sql);
+                                    $carIMG = mysqli_fetch_assoc($result);
+                                    ?>
+                                    <img src="../assets/cars/<?php echo $carIMG['image']; ?>" alt="car-image" class="img-fluid">
+                                  </div>
+
+
+                                </div>
+                              </div>
+
+
+
+                              <!-- ACTIONS -->
+                              <div class="card-footer">
+                                <?php if ($row['status'] == 'pending'){ ?>
+                                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['rcreatedAt']));?></small>
+                                <?php } else { ?>
+                                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
+                                <?php } ?>
+                              </div>
+                            </div>
                           </div>
-                          <div class="col-5 text-center">
-                            <img src="../assets/cars/toyota_fortuner.png" width="200" alt="car-image" class="img-fluid">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                          <div class="text-right">
-                            <a href="#" class="btn btn-sm bg-black">
-                              Rent Again
-                            </a>
-                          </div>
-                      </div>
-                    </div>
+                        <?php } ?>
                       </div>
                     </div>
                   </div>
                   <!-- /.tab-pane -->
 
                   <div class="tab-pane" id="edit-profile">
+                    <?php 
+                      $sql = "SELECT * FROM tbl_customers WHERE customerID = ".$_SESSION['userID']."";
+                      $result = mysqli_query($dbconn, $sql);
+                      $row = mysqli_fetch_assoc($result);
+                    ?>
                     <form class="form-horizontal">
+
+                      <div class="mb-3 row">
+                        <div class="col-sm-2">
+                          <img width="100" height="100" id="dp_preview" class="profile-user-img img-circle"
+                        src="../assets/avatar_2.png"
+                        alt="User profile picture">
+                        </div>
+                        <div class="col-sm-10">
+                          <button onclick="triggerProfile()" style="position: relative; top: 50%; transform: translateY(-50%);" type="button" class="btn bg-black">Upload Image</button>
+                          <input type="file" id="profilePic" onchange="displayProfile(this)" hidden>
+                        </div>
+                      </div>
+
+                      <script type="text/javascript">
+                        function triggerProfile(){
+                          document.querySelector('#profilePic').click();
+                        }
+
+                        function displayProfile(e){
+                          if (e.files[0]){
+                            var reader = new FileReader();
+
+                            reader.onload = function(e){
+                              document.querySelector('#dp_preview').setAttribute('src', e.target.result);
+                            }
+                            reader.readAsDataURL(e.files[0]);
+                          }
+                        }
+                      </script>
+
                       <div class="form-group row">
                         <label for="fname" class="col-sm-2 col-form-label">First Name</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="fname" placeholder="First Name">
+                          <input type="text" class="form-control" id="fname" placeholder="First Name" value="<?php echo $row['firstName']; ?>">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="lname" class="col-sm-2 col-form-label">Last Name</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="lname" placeholder="Last Name">
+                          <input type="text" class="form-control" id="lname" placeholder="Last Name" value="<?php echo $row['lastName']; ?>">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="phone" class="col-sm-2 col-form-label">Phone No.</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="phone" placeholder="Phone No.">
+                          <input type="text" class="form-control" id="phone" placeholder="Phone No." value="<?php echo $row['phone']; ?>">
                         </div>
                       </div>
 
-                      <div class="form-group row">
+                      <!-- <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Confirm Password</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="password" placeholder="Password">
                         </div>
-                      </div>
+                      </div> -->
                       
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn bg-black">Submit</button>
+                          <button type="submit" class="btn bg-black">Save</button>
                         </div>
                       </div>
                     </form>
@@ -398,6 +530,35 @@
 </div>
 
 <?php include 'script.php'?>
+
+
+<!-- Page specific script -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('#hipGrid').hip({
+            itemsPerPage: 10,
+            dynItemsPerRow: {
+              hs: 1,
+              sm: 1,
+              md: 2,
+              lg: 3
+            },
+            paginationPos:'right',
+            filter:true,
+            filterPos:"right",
+            filterText:"Search"
+          });
+
+          $('#hipGrid2').hip({
+            itemsPerPage: 10,
+            itemsPerRow: 1,
+            paginationPos:'right',
+            filter:true,
+            filterPos:"right",
+            filterText:"Search"
+          });
+      });
+    </script>
 
 <script type="text/javascript">
   $('.summernote').summernote({

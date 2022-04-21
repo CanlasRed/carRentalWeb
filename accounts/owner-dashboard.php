@@ -164,7 +164,7 @@
               <!-- form start --> 
             <div class="card-body">
               <div class="row">
-
+                <div id="hipGrid">
               <?php
               $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'completed' AND status != 'cancelled' ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
@@ -172,7 +172,7 @@
                   <h4 class="ml-3">No Active Bookings...</h4>
               <?php }
               foreach($result as $row){ ?>
-              <div class="col-12 d-flex align-items-stretch flex-column">
+              <div class="hip-item">
 
                 <!-- RIBBONS -->
               <div class="card bg-light d-flex flex-fill">
@@ -250,7 +250,7 @@
                           <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?>
                         </li>
                         <li class="small">
-                          <i class="fas fa-hourglass-half"></i> 24 Hours
+                          <i class="fas fa-hourglass-half"></i> <?php echo get_time_diff(strtotime($row['startDate']), strtotime($row['endDate'])); ?>
                         </li>
                         <li>
                           <?php 
@@ -324,7 +324,7 @@
               </div>
             </div>
           <?php } ?>
-
+          </div>
           </div>
           </div>
         </div>
@@ -353,6 +353,19 @@
 <!-- ./wrapper -->
 
 <?php include 'script.php'?>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('#hipGrid').hip({
+            itemsPerPage: 10,
+            itemsPerRow: 1,
+            paginationPos:'right',
+            filter:true,
+            filterPos:"right",
+            filterText:"Search"
+          });
+      });
+    </script>
 
 <script type="text/javascript">
   $('.acceptBooking').on('click', function(){

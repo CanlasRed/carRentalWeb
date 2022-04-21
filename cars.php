@@ -418,13 +418,13 @@
                     <div class="row px-3">
                       <div class="col-12 px-2 my-1">
                         <table id="example2" class="table ">
-                  <thead>
-                  <tr>
-                    <th hidden></th>
+                          <thead>
+                              <tr>
+                                <th hidden></th>
 
-                  </tr>
-                  </thead>
-                  <tbody>
+                            </tr>
+                        </thead>
+                        <tbody>
                     <?php 
                         $sql = "SELECT *,r.rate as reviewRate, r.createdAt as reviewDate FROM tbl_car_review r INNER JOIN tbl_cars c ON c.carID = r.carID INNER JOIN tbl_customers u ON u.customerID = r.customerID WHERE r.status = 1 AND r.carID = ".$_GET['carID']." ORDER BY r.rate DESC";
                         $result = mysqli_query($dbconn, $sql);

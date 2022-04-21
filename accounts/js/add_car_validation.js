@@ -66,19 +66,29 @@ $(function () {
               icon: 'success',
               title: 'Car Saved',
               text: 'New Car Added successfully',
-              confirmButtonColor: '#76b947',
+              confirmButtonColor: '#1b1c1d',
               confirmButtonText: 'OK'
             }).then((result) =>{
 
                   window.location.href = '/accounts/edit-car.php?carID=' + data;
                 
             })
+          } else if (data=='updated'){
+            Swal.fire({
+              icon: 'success',
+              title: 'Changes Saved',
+              text: 'Car updated successfully',
+              confirmButtonColor: '#1b1c1d',
+              confirmButtonText: 'OK'
+            }).then((result) =>{
+                location.reload();
+            })
           } else if (data=='dbfailed'){
             Swal.fire({
               icon: 'error',
               title: 'Database Error',
               text: 'There seems to be a problem, please try again',
-              confirmButtonColor: '#76b947',
+              confirmButtonColor: '#1b1c1d',
               confirmButtonText: 'OK'
             })
           } else if (data=='imgfailed'){
@@ -86,7 +96,7 @@ $(function () {
               icon: 'error',
               title: 'Error Saving Image',
               text: 'An error has occured while saving the image',
-              confirmButtonColor: '#76b947',
+              confirmButtonColor: '#1b1c1d',
               confirmButtonText: 'OK'
             })
           } else if (data=='SL'){
@@ -94,7 +104,7 @@ $(function () {
               icon: 'error',
               title: 'Image too Large',
               text: 'Image must be 3MB or less',
-              confirmButtonColor: '#76b947',
+              confirmButtonColor: '#1b1c1d',
               confirmButtonText: 'OK'
             })
           } else if (data=='ASL'){
@@ -102,7 +112,7 @@ $(function () {
               icon: 'error',
               title: 'Audio too Large',
               text: 'Audio must be 1MB or less',
-              confirmButtonColor: '#76b947',
+              confirmButtonColor: '#1b1c1d',
               confirmButtonText: 'OK'
             })
           } else if (data=='audiofailed'){
@@ -110,7 +120,7 @@ $(function () {
               icon: 'error',
               title: 'Error Saving Audio',
               text: 'An error has occured while saving the audio',
-              confirmButtonColor: '#76b947',
+              confirmButtonColor: '#1b1c1d',
               confirmButtonText: 'OK'
             })
           }
@@ -121,8 +131,6 @@ $(function () {
     }
   });
 
-
- 
 });
 
 
@@ -143,7 +151,7 @@ $(function () {
                   icon: 'success',
                   title: 'Image Saved',
                   text: 'New Image Added Successfully',
-                  confirmButtonColor: '#76b947',
+                  confirmButtonColor: '#1b1c1d',
                   confirmButtonText: 'OK'
               }).then((result) =>{
                    location.reload();
@@ -155,7 +163,7 @@ $(function () {
                 icon: 'error',
                 title: 'Invalid',
                 text: 'Please Upload an Image',
-                confirmButtonColor: '#76b947',
+                confirmButtonColor: '#1b1c1d',
                 confirmButtonText: 'OK'
               })
             }
@@ -164,7 +172,7 @@ $(function () {
                 icon: 'error',
                 title: 'Error Saving Image',
                 text: 'An error has occured while saving the image',
-                confirmButtonColor: '#76b947',
+                confirmButtonColor: '#1b1c1d',
                 confirmButtonText: 'OK'
               })
             }
@@ -173,7 +181,7 @@ $(function () {
                 icon: 'error',
                 title: 'Image too Large',
                 text: 'Image must be 3MB or less',
-                confirmButtonColor: '#76b947',
+                confirmButtonColor: '#1b1c1d',
                 confirmButtonText: 'OK'
               })
             }
@@ -182,7 +190,7 @@ $(function () {
                 icon: 'error',
                 title: 'Invalid Image Format',
                 text: 'Only JPG JPEG and PNG formats are accepted',
-                confirmButtonColor: '#76b947',
+                confirmButtonColor: '#1b1c1d',
                 confirmButtonText: 'OK'
               })
             }
@@ -191,7 +199,7 @@ $(function () {
                 icon: 'error',
                 title: 'Error',
                 text: 'An error has occured while inserting the data',
-                confirmButtonColor: '#76b947',
+                confirmButtonColor: '#1b1c1d',
                 confirmButtonText: 'OK'
               })
             }
@@ -200,3 +208,173 @@ $(function () {
         });
     });
 
+
+$('#update_car_images').submit(function(e){
+      e.preventDefault();
+      var formData = new FormData(this);
+        $.ajax({
+          url: "php/update_car_images.php",
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data){
+            if(data == 'success'){
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Image Updated',
+                  text: 'Image Updated successfully',
+                  confirmButtonColor: '#1b1c1d',
+                  confirmButtonText: 'OK'
+              }).then((result) =>{
+                   location.reload();
+                
+              })
+            }
+            else if (data == 'done'){
+              Swal.fire({
+                icon: 'info',
+                title: 'Done?',
+                text: 'No changes are made',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else if (data == 'imgfailed'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Saving Image',
+                text: 'An error has occured while saving the image',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else if (data == 'SL'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Image too Large',
+                text: 'Image must be 3MB or less',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else if (data == 'WT'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Invalid Image Format',
+                text: 'Only JPG JPEG and PNG formats are accepted',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error has occured while updating the data',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+          }
+        });
+    });
+
+    $(document).on('click', '.delete_images', function(){
+      var imageID = $(this).attr('data-id');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Confirm Delete',
+        text: 'Are you sure you want to delete this data?',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        confirmButtonColor: '#dc3545',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+              $.ajax({
+              url: "php/delete_images.php",
+              type: "POST",
+              data:{
+                imageID: imageID,
+                action: '1',
+              },
+              success: function(data){
+                if(data == 'success'){
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Data Deleted',
+                      text: 'Image has been deleted successfully',
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                  }).then((result) =>{
+                    if (result.isConfirmed){
+                       location.reload();
+                    }
+                  })
+                }
+                else{
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error has occured while deleting the data',
+                    confirmButtonColor: '#1b1c1d',
+                    confirmButtonText: 'OK'
+                  })
+                }
+              }
+            });
+        }
+      })
+      
+    });
+
+
+    $(document).on('click', '.restore_images', function(){
+      var imageID = $(this).attr('data-id');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Restore Data',
+        text: 'Are you sure you want to restore this data?',
+        showCancelButton: true,
+        confirmButtonText: 'Restore',
+        confirmButtonColor: '#28a745',
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+              $.ajax({
+              url: "php/delete_images.php",
+              type: "POST",
+              data:{
+                imageID: imageID,
+                action: '2',
+              },
+              success: function(data){
+                if(data == 'success'){
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Data Restored',
+                      text: 'Image has been restored successfully',
+                      confirmButtonColor: '#1b1c1d',
+                      confirmButtonText: 'OK'
+                  }).then((result) =>{
+                    if (result.isConfirmed){
+                       location.reload();
+                    }
+                  })
+                }
+                else{
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error has occured while restoring the data',
+                    confirmButtonColor: '#1b1c1d',
+                    confirmButtonText: 'OK'
+                  })
+                }
+              }
+            });
+        }
+      })
+      
+    });
