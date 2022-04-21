@@ -484,7 +484,35 @@
                     <h4 class="ui header">Owner Info</h4>
                     <div>
                         <img class="ui avatar image" src="assets/car-types/hatchback.png">
-                        <span><a href="" style="text-decoration: none; color: #fff; font-weight: bold;">Juan Dela Cruz</a></span>
+                        <span><a href="" data-bs-toggle="modal" data-bs-target="#archives_modal" style="text-decoration: none; color: #fff; font-weight: bold;">Juan Dela Cruz</a></span>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="archives_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header bg-dark">
+                                <h5 class="modal-title" id="exampleModalLong">More about owner</h5>
+                                <button type="button" class="close clear-text" data-bs-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="content text-dark">
+                                    <img class="img-fluid avatar image" src="assets/car-types/hatchback.png">
+                                    <i class="user icon"></i><b>Name </b><p>Juan Dela Cruz</p>
+                                    <i class="mars icon"></i><b>Gender </b><p>Male</p>
+                                    <i class="sort numeric up icon"></i><b>Age </b><p>23</p>
+                                    <i class="map marker alternate icon"></i><b>Address </b><p>Olongapo City</p>
+                                    <i class="phone icon"></i><b>Phone </b><p>09123456789</p>
+                                </div>   
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary clear-text" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
 
  <!--                        <button class="circular ui right floated icon button">
                           <i class="icon comments"></i>
@@ -558,6 +586,7 @@
             color: #fff !important;
         }
     </style>
+
 
     <!-- DataTables  & Plugins -->
      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
