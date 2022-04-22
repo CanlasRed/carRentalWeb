@@ -12,6 +12,12 @@ if($_SESSION['userType']!=2){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Account | Speedy</title>
   <?php include 'header.php';?>
+  <style type="text/css">
+    .card_hover:hover {
+      transform: scale(1.01);
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
  
@@ -182,7 +188,7 @@ if($_SESSION['userType']!=2){
               <div class="hip-item">
 
                 <!-- RIBBONS -->
-              <div class="card bg-light d-flex flex-fill">
+              <div class="card bg-light d-flex flex-fill card_hover" data-id="<?php echo $row['rentalID'];?>">
                 <?php if ($row['status'] == 'pending'){ ?>
                   <div class="ribbon-wrapper ribbon-lg">
                     <div class="ribbon bg-warning">
@@ -359,6 +365,27 @@ if($_SESSION['userType']!=2){
 </div>
 <!-- ./wrapper -->
 
+<!-- MODAL -->
+<div class="modal fade" id="bookinginfo_Modal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form name="" id="">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-cars"></i> Booking Information</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bookinginfo-body">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ./MODAL -->
+
+
 <?php include 'script.php'?>
 
     <script type="text/javascript">
@@ -375,6 +402,25 @@ if($_SESSION['userType']!=2){
     </script>
 
 <script type="text/javascript">
+  $('.card_hover').on('click', function(){
+    var userid = $(this).attr('data-Id');
+    const myArray = userid.split("");
+    const rentalID = myArray[0];
+
+    $.ajax({
+      url: 'php/booking_info.php',
+      type: 'post',
+      data: {rentalID: rentalID},
+      success: function(response){ 
+
+        $('.bookinginfo-body').html(response);
+        $('#bookinginfo_Modal').modal('show'); 
+
+      }
+    });
+
+  });
+
   $('.acceptBooking').on('click', function(){
     var status = $(this).attr('data-action');
     var rentalID = $(this).attr('data-id');

@@ -16,8 +16,9 @@
 		array_push($completed, $row['completed']);	
 	}
 
-	$sql = "SELECT *, date_format(createdAt, '%M') AS month, SUM(carAmount+deposit+addCharge) AS sales FROM tbl_payment WHERE status = 'pending' GROUP BY MONTH(createdAt) ORDER BY MONTH(createdAt)";
+	$sql = "SELECT p.*, date_format(p.createdAt, '%M') AS month, SUM(p.carAmount+p.deposit+p.addCharge) AS sales FROM tbl_payment p INNER JOIN tbl_rental r ON r.rentalID = p.rentalID WHERE p.status = 'completed' AND r.ownerID = ".$_SESSION['userID']." GROUP BY MONTH(p.createdAt) ORDER BY MONTH(p.createdAt)";
 	$result = mysqli_query($dbconn, $sql);
+
 	foreach($result as $row){
 		array_push($sales, $row['sales']);
 	}

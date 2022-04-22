@@ -16,7 +16,14 @@
 				if(mysqli_query($dbconn, $sql)){
 					$sql = "UPDATE tbl_rental SET status = 'completed' WHERE rentalID = ".$rentalID."";
 					if(mysqli_query($dbconn, $sql)){
-						echo 200;
+						$sql = "UPDATE tbl_payment SET status = 'completed' WHERE rentalID = ".$rentalID."";
+						if(mysqli_query($dbconn, $sql)){
+							echo 200;
+						} else {
+							echo 'error';
+						}
+					} else {
+						echo 'error';
 					}
 				}
 			} else {
