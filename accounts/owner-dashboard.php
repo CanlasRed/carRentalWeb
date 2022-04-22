@@ -1,3 +1,10 @@
+<?php
+session_start();
+if($_SESSION['userType']!=2){
+  header("Location: ../index.php");
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +65,7 @@
                     </span>
                     <div class="info-box-content">
                       <?php 
-                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = 1";
+                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_cars WHERE ownerID = ".$_SESSION['userID']."";
                         $result = mysqli_query($dbconn, $sql);
                         $row = mysqli_fetch_assoc($result);
                       ?>
@@ -76,7 +83,7 @@
                       </span>
                       <div class="info-box-content">
                         <?php 
-                          $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = 1 AND status = 'completed'";
+                          $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = ".$_SESSION['userID']." AND status = 'completed'";
                           $result = mysqli_query($dbconn, $sql);
                           $row = mysqli_fetch_assoc($result);
                         ?>
@@ -94,7 +101,7 @@
                       </span>
                       <div class="info-box-content">
                     <?php 
-                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = 1 AND status = 'pending'";
+                        $sql = "SELECT COUNT(*) AS 'count' FROM tbl_rental WHERE ownerID = ".$_SESSION['userID']." AND status = 'pending'";
                         $result = mysqli_query($dbconn, $sql);
                         $row = mysqli_fetch_assoc($result);
                       ?>
@@ -166,7 +173,7 @@
               <div class="row">
                 <div id="hipGrid">
               <?php
-              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND status != 'completed' AND status != 'cancelled' ORDER BY r.rentalID DESC";
+              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.customerID = c.userID WHERE ownerID = ".$_SESSION['userID']." AND status != 'completed' AND status != 'cancelled' ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               if (mysqli_num_rows($result)<=0){ ?>
                   <h4 class="ml-3">No Active Bookings...</h4>

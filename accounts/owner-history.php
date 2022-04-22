@@ -1,3 +1,9 @@
+<?php
+session_start();
+if($_SESSION['userType']!=2){
+  header("Location: ../index.php");
+} 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +59,7 @@
               <div class="row">
                 <div id="hipGrid">
               <?php
-              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE ownerID = 1 AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
+              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.customerID = c.userID WHERE ownerID = ".$_SESSION['userID']." AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="hip-item">

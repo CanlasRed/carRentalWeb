@@ -117,7 +117,8 @@
                                     <div class="ui header m-0">
                                         Car Details:
                                     </div>
-                                    <div class="ui list">
+                                    <div><?php echo $row['description']; ?></div>
+                                    <!-- <div class="ui list">
                                         <div class="item">
                                             <i class="check icon"></i>
                                             <div class="content">
@@ -142,7 +143,7 @@
                                               1 Spare tire
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 
@@ -434,7 +435,7 @@
                         </thead>
                         <tbody>
                     <?php 
-                        $sql = "SELECT *,r.rate as reviewRate, r.createdAt as reviewDate FROM tbl_car_review r INNER JOIN tbl_cars c ON c.carID = r.carID INNER JOIN tbl_customers u ON u.customerID = r.customerID WHERE r.status = 1 AND r.carID = ".$_GET['carID']." ORDER BY r.rate DESC";
+                        $sql = "SELECT *,r.rate as reviewRate, r.createdAt as reviewDate FROM tbl_car_review r INNER JOIN tbl_cars c ON c.carID = r.carID INNER JOIN tbl_users u ON u.userID = r.customerID WHERE r.status = 1 AND r.carID = ".$_GET['carID']." ORDER BY r.rate DESC";
                         $result = mysqli_query($dbconn, $sql);
                         if(mysqli_fetch_assoc($result)){
                             foreach($result as $row){  echo '<tr>' ?>
@@ -443,7 +444,7 @@
                                         <div class="ui comments">
                                           <div class="comment">
                                             <a class="avatar">
-                                              <img src="assets/avatar_2.png">
+                                              <img src="assets/user-image/<?php echo $row['image']; ?>">
                                             </a>
                                             <div class="content">
                                               <a class="author" style="text-decoration: none;"><?php echo $row['firstName'].' '.$row['lastName']; ?></a>
@@ -484,63 +485,58 @@
             <!-- END OF LEFT COLUMN -->
 
 
+            <?php 
+                $result = $dbconn->query("SELECT * FROM tbl_cars WHERE carID = ".$_GET['carID']."");
+                $owner = $result->fetch_assoc();
+                $ownerID = $row['ownerID'];
 
+                $result = $dbconn->query("SELECT * FROM tbl_users WHERE userType = 2 AND userID = ".$ownerID."");
+                $owner = $result->fetch_assoc();
+            ?>
 
             <!-- RIGHT COLUMN -->
             <div class="col-lg-3 mt-3">
                 <div class="ui inverted raised clearing segment">
                     <h4 class="ui header">Owner Info</h4>
                     <div>
-                        <img class="ui avatar image" src="assets/car-types/hatchback.png">
-                        <span><a href="" data-bs-toggle="modal" data-bs-target="#archives_modal" style="text-decoration: none; color: #fff; font-weight: bold;">Juan Dela Cruz</a></span>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="archives_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header bg-dark">
-                                <h5 class="modal-title" id="exampleModalLong">More about owner</h5>
-                                <button type="button" class="close clear-text" data-bs-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="content text-dark">
-                                    <img class="img-fluid avatar image" src="assets/car-types/hatchback.png">
-                                    <i class="user icon"></i><b>Name </b><p>Juan Dela Cruz</p>
-                                    <i class="mars icon"></i><b>Gender </b><p>Male</p>
-                                    <i class="sort numeric up icon"></i><b>Age </b><p>23</p>
-                                    <i class="map marker alternate icon"></i><b>Address </b><p>Olongapo City</p>
-                                    <i class="phone icon"></i><b>Phone </b><p>09123456789</p>
-                                </div>   
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary clear-text" data-bs-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
- <!--                        <button class="circular ui right floated icon button">
-                          <i class="icon comments"></i>
-                        </button> -->
+                        <img class="ui avatar image" src="assets/user-image/<?php echo $owner['image'];?>">
+                        <span><a href="" data-bs-toggle="modal" data-bs-target="#owner_modal" style="text-decoration: none; color: #fff; font-weight: bold;"><?php echo $owner['firstName'].' '.$owner['lastName'];?></a></span>
                     </div>
-                    <div>
-                        <i class="mars icon"></i>
-                        Male
+                    <div class="mt-3 ms-2">
+                        <i class="envelope icon"></i>
+                        <?php echo $owner['username']; ?>
                     </div>
-                    <div>
-                        <i class="sort numeric up icon"></i>
-                        23
-                    </div>
-                    <div>
-                        <i class="map marker alternate icon"></i>
-                        Olongapo City
+                    <div class="ms-2">
+                        <i class="phone icon"></i>
+                        <?php echo $owner['phone']; ?>
                     </div>
                 </div>
 
 
+                <!-- Modal -->
+                <div class="modal fade" id="owner_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLong">More about owner</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="content text-dark">
+                            <img class="ui avatar image" src="assets/user-image/<?php echo $owner['image'];?>">
+                            <i class="user icon"></i><b>Name </b><p>Juan Dela Cruz</p>
+                            <i class="mars icon"></i><b>Gender </b><p>Male</p>
+                            <i class="sort numeric up icon"></i><b>Age </b><p>23</p>
+                            <i class="map marker alternate icon"></i><b>Address </b><p>Olongapo City</p>
+                            <i class="phone icon"></i><b>Phone </b><p>09123456789</p>
+                        </div>   
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary clear-text" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -559,22 +555,22 @@
                             <label id="computed_rental"></label>
                         </div>
                     </div>
-                    <div>
+                    <!-- <div>
                         Drivers Fee:
                         <div class="float-end">
                             1,000
                         </div>
-                    </div>
+                    </div> -->
                     <div>
                         Deposit:
                         <div class="float-end">
-                            2,000
+                            1,000
                         </div>
                     </div>
                     <div class="mt-3 ui header">
                         Total Amount:
                         <div class="float-end ui inverted header">
-                            <label id="grand_total">6,000</label>
+                            <label id="grand_total">0</label>
                         </div>
                     </div>
                     <?php include 'rental_form.php'; ?>
@@ -827,12 +823,13 @@
                               dataType:'JSON',
                               success:function(data){
                                 if(data.length>0){
+                                    let currency = Intl.NumberFormat('en-US');
                                     $('#rent_hours').html(data[0]);
                                     var rate = $('#rate_fee').val();
                                     var rentalFee = rate*data[0];
-                                    $('#computed_rental').html(rentalFee);
+                                    $('#computed_rental').html(currency.format(rentalFee));
                                     $('#carAmount').val(rentalFee);
-                                    $('#grand_total').html(rentalFee+3000);
+                                    $('#grand_total').html(currency.format(rentalFee+1000));
 
                                     var startDate = moment(data[1] + ' ' + data[2]).format('YYYY-MM-DD HH:mm:ss');
                                     var endDate = moment(data[3] + ' ' + data[4]).format('YYYY-MM-DD HH:mm:ss');

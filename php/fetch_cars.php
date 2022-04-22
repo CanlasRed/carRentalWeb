@@ -121,10 +121,16 @@
 			            '. $row['name'] .'
 			            </a>
 			        </div>
-			        <a href="cars.php?car='.$row['name'].'&carID='.$row['carID'].'" class="image">
-			         <div style="width:100%; overflow:hidden; height:220px; background: url(assets/cars/'.$img['image'].') no-repeat center; background-size: contain;">
-			          </div>
-			        </a>
+			        <a href="cars.php?car='.$row['name'].'&carID='.$row['carID'].'" class="image">';
+			        if(!isset($img)){
+							  $output .='<div style="width:100%; overflow:hidden; height:220px; background: url(assets/cars/Speedy_Full_Logo_Black.png) no-repeat center; background-size: contain;">
+							          </div>';
+							 } else {
+							  $output .='<div style="width:100%; overflow:hidden; height:220px; background: url(assets/cars/'.$img['image'].') no-repeat center; background-size: contain;">
+							          </div>';
+							 }
+
+			    $output .= '</a>
 			        <div class="content">
 			          <div class="row">
 			            <div class="col-6">

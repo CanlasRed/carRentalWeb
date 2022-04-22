@@ -1,11 +1,12 @@
 <?php
 	include 'connection.php';
+	session_start();
 
 	$start = strtotime($_POST['start']);
 	$end = strtotime($_POST['end']);
 	$carID = $_POST['carID'];
 	$ownerID = $_POST['ownerID'];
-	$userID = $_POST['userID'];
+	$userID = $_SESSION['userID'];
 	$driverID = $_POST['driverID'];
 	$carAmount = $_POST['carAmount'];
 	$driverAmount = $_POST['driverAmount'];

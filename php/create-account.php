@@ -28,11 +28,12 @@ if($check == 200){
         $username = mysqli_real_escape_string($dbconn, htmlspecialchars(strtolower($username)));
         $password = mysqli_real_escape_string($dbconn, htmlspecialchars($password));
         $password = md5($password);
-        $sql = "INSERT INTO tbl_customers
+        $sql = "INSERT INTO tbl_users
                     SET firstName = '".$firstName."',
                     lastName = '".$lastName."',
                     phone = '".$phone."',
                     username = '".$username."',
+                    image = 'user-image-placeholder.jpg',
                     password = '".$password."'";
 
         $result = mysqli_query($dbconn, $sql);
@@ -46,7 +47,7 @@ if($check == 200){
         } else {
             $msg['statusCode'] = 500;
             $msg['data'] = null;
-            $msg['msg'] = 'Failed to create an account. ' . mysqli_error($conn);
+            $msg['msg'] = 'Failed to create an account. ' . mysqli_error($dbconn);
         }
     } else {
         $msg['statusCode'] = 200;
@@ -61,26 +62,27 @@ function getAccountByID($conn, $id) {
     include 'connection.php';
     session_start();
     $sql = "SELECT
-                customerID,
+                userID,
                 firstName,
                 lastName,
                 phone,
                 username,
                 createdAt
-            FROM tbl_customers
-            WHERE customerID = '".$id."'";
+            FROM tbl_users
+            WHERE userID = '".$id."'";
 
     $result = mysqli_query($dbconn, $sql);
     $row = mysqli_fetch_assoc($result);
-    $_SESSION['userID'] = $row['customerID'];
+    $_SESSION['userID'] = $row['userID'];
+    $_SESSION['userType'] = $row['userType'];
     
     return $row;
 }
 
 function getExistingAccount($conn, $username){
     include 'connection.php';
-    $sql = "SELECT * FROM tbl_customers WHERE username = '".$username."'";
-    $result = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM tbl_users WHERE username = '".$username."'";
+    $result = mysqli_query($dbconn, $sql);
     $row = mysqli_num_rows($result);
     if($row > 0){
         return 200;

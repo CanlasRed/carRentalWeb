@@ -2,7 +2,7 @@
 	include 'connection.php';
 	session_start();
 	$action = $_POST['action'];
-	$sql = "SELECT *, date_format(updatedAt, '%M') AS month, SUM(CASE status WHEN 'completed' THEN 1 ELSE NULL END) completed, SUM(CASE status WHEN 'cancelled' THEN 1 ELSE NULL END) cancelled FROM tbl_rental WHERE status = 'completed' OR status = 'cancelled' AND ownerID = ".$_SESSION['userID']." GROUP BY MONTH(updatedAt) ORDER BY MONTH(updatedAt)";
+	$sql = "SELECT *, date_format(updatedAt, '%M') AS month, SUM(CASE status WHEN 'completed' THEN 1 ELSE NULL END) completed, SUM(CASE status WHEN 'cancelled' THEN 1 ELSE NULL END) cancelled FROM tbl_rental WHERE (status = 'completed' OR status = 'cancelled') AND ownerID = ".$_SESSION['userID']." GROUP BY MONTH(updatedAt) ORDER BY MONTH(updatedAt)";
 	$result = mysqli_query($dbconn, $sql);
 
 	$month = array();

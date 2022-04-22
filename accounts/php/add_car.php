@@ -20,6 +20,14 @@
 
 	$description = mysqli_real_escape_string($dbconn, $_POST['description']);
 
+	$ownerID = $_SESSION['userID'];
+
+	if(isset($_POST['penalty'])){
+		$penalty = 2;
+	} else {
+		$penalty = 1;
+	}
+
 
 
 	$sql = "INSERT INTO tbl_cars (
@@ -38,9 +46,10 @@
 			AC,
 			speed,
 			description,
+			penalty,
 			rate)
 			VALUES (
-			'1',
+			'$ownerID',
 			'$type',
 			'$name',
 			'$brand',
@@ -55,6 +64,7 @@
 			'$AC',
 			'$speed',
 			'$description',
+			'$penalty',
 			'$rate')";
 
 	if(mysqli_query($dbconn,$sql)){

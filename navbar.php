@@ -12,43 +12,41 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto mb-lg-1">
         <li class="nav-item px-3">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item px-3">
           <a class="nav-link" href="car-list.php">Cars</a>
         </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="driver-list.php">Drivers</a>
-        </li>
-        <li class="nav-item dropdown px-3">
+        
+
+        <?php if(isset($_SESSION['userID'])) { ?>
+         <li class="nav-item dropdown px-3">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
+            Profile
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="accounts">Account</a></li>
+            <li><a class="dropdown-item" href="php/logout.php">Logout</a></li>
           </ul>
         </li>
+      <?php } else { ?>
         <li class="nav-item">
-          <?php if(isset($_SESSION['userID'])) { ?>
-             <a class="nav-link" href="accounts">Account</a>
-          <?php } else { ?>
-            <a href="login.php">
+          <a href="login.php">
             <div class="ui vertical animated black button rounded-pill" tabindex="0">
               <div class="hidden content">Login</div>
               <div class="visible content">
                 Login
               </div>
             </div>
-            </a>
-          <?php } ?>
+          </a>
         </li>
-      </ul>
-    </div>
-
-
+      <?php } ?>
+      
+    </ul>
   </div>
+
+
+</div>
 </nav>
 
 

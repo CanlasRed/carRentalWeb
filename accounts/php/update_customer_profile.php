@@ -17,7 +17,7 @@ if($pic_size>10){
 	if($pic_size < 1097153){
 		if($pic_type == 'image/jpeg' || $pic_type == 'image/jpg' || $pic_type == 'image/png'){
 			if (move_uploaded_file($_FILES['image']['tmp_name'], $path)){
-				$sql = "UPDATE tbl_customers SET firstName = '$firstName', lastName = '$lastName', image = '$pic', phone = '$phone' WHERE customerID = '$customerID' ";
+				$sql = "UPDATE tbl_users SET firstName = '$firstName', lastName = '$lastName', image = '$pic', phone = '$phone' WHERE userID = '$customerID' ";
 				if(mysqli_query($dbconn, $sql)){
 					echo 'success';
 				} else {
@@ -35,7 +35,7 @@ if($pic_size>10){
 	}
 }
 else if ($pic_size<10){
-	$sql = "UPDATE tbl_customers SET firstName = '$firstName', lastName = '$lastName', phone = '$phone' WHERE customerID = '$customerID' ";
+	$sql = "UPDATE tbl_users SET firstName = '$firstName', lastName = '$lastName', phone = '$phone' WHERE userID = '$customerID' ";
 	if(mysqli_query($dbconn, $sql)){
 		echo 'success';
 	} else {

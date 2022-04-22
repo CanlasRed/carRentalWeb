@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,6 +149,17 @@
                           </div>
                         </div>
                       </div>
+
+                      <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="ui toggle checkbox mt-2 ms-2">
+                                  <input type="checkbox" name="penalty">
+                                <label>Toggle overdue penalty</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
                       
                       

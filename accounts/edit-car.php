@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,10 +161,22 @@
                           </div>
                         </div>
 
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="ui toggle checkbox mt-2 ms-2">
+                                <?php if($car['penalty']==1){ ?>
+                                  <input type="checkbox" name="penalty">
+                                <?php } else { ?>
+                                  <input type="checkbox" name="penalty" checked>
+                                <?php } ?>
+                                <label>Toggle overdue penalty</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
-
-
-
+                        
                       </div>
                     </div>
                   </div>

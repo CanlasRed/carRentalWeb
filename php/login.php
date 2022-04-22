@@ -14,7 +14,7 @@ if (isset($username) && isset($password)) {
     $password = mysqli_real_escape_string($dbconn, htmlspecialchars($password));
     $password = md5($password);
     $sql = "SELECT *
-            FROM tbl_customers
+            FROM tbl_users
             WHERE username = '".$username."' 
             AND password = '".$password."'";
 
@@ -26,7 +26,8 @@ if (isset($username) && isset($password)) {
         $msg['statusCode'] = 200;
         $msg['data'] = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $msg['msg'] = 'Successfully login';
-        $_SESSION['userID'] = $user['customerID'];
+        $_SESSION['userID'] = $user['userID'];
+        $_SESSION['userType'] = $user['userType'];
     } else {
         $msg['statusCode'] = 401;
         $msg['data'] = null;

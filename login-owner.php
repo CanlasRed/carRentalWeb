@@ -6,7 +6,7 @@
       <div class="content">
         <center><img src="assets/logo/Speedy_Full_Logo_Black.png" style="height: 80px;"></center>
         <br>
-        Sign in to your account
+        Sign in as Owner
       </div>
     </h5>
     <form action="php/login.php" id="login_form" method="POST" class="ui large form">
@@ -84,7 +84,7 @@
                 },
                 {
                   type   : 'email',
-                  prompt : 'Please enter a valid fe-mail'
+                  prompt : 'Please enter a valid e-mail'
                 }
               ]
             },

@@ -39,7 +39,7 @@
       <div class="container-fluid">
       <div class="row">
           <?php
-            $sql = "SELECT * FROM tbl_customers WHERE customerID = 1";
+            $sql = "SELECT * FROM tbl_users WHERE userID = ".$_SESSION['userID']."";
             $result = mysqli_query($dbconn, $sql);
             $row = mysqli_fetch_assoc($result);
           ?>
@@ -49,7 +49,7 @@
             <div class="card card-dark card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
+                  <img style="width: 150px!important; height: 150px!important;" class="profile-user-img img-circle"
                        src="../assets/user-image/<?php echo $row['image']; ?>"
                        alt="User profile picture">
                 </div>
@@ -93,7 +93,7 @@
                     <div class="row">
                       <div id="hipGrid">
                     <?php
-                    $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 AND r.status != 'completed' AND r.status != 'cancelled' ORDER BY r.createdAt DESC";
+                    $sql = "SELECT *, r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.customerID = c.userID WHERE r.customerID = ".$_SESSION['userID']." AND r.status != 'completed' AND r.status != 'cancelled' ORDER BY r.createdAt DESC";
                     $result = mysqli_query($dbconn, $sql);
                     foreach($result as $row){  echo '<tr>'
                       ?>
@@ -225,7 +225,7 @@
                     <div class="row">
                       <div id="hipGrid2">
                         <?php
-                        $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_customers c ON r.customerID = c.customerID WHERE r.customerID = 1 AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
+                        $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.customerID = c.userID WHERE r.customerID = ".$_SESSION['userID']." AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
                         $result = mysqli_query($dbconn, $sql);
                         foreach($result as $row){ ?>
                           <div class="hip-item">
@@ -339,7 +339,8 @@
                                 <?php if ($row['status'] == 'pending'){ ?>
                                   <small class="text-muted"><?php  echo get_time_ago(strtotime($row['rcreatedAt']));?></small>
                                 <?php } else { ?>
-                                  <small class="text-muted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
+                                  <small class="text-m
+                                  uted"><?php  echo get_time_ago(strtotime($row['updatedAt']));?></small>
                                 <?php } ?>
                               </div>
                             </div>
@@ -352,7 +353,7 @@
 
                   <div class="tab-pane" id="edit-profile">
                     <?php 
-                      $sql = "SELECT * FROM tbl_customers WHERE customerID = ".$_SESSION['userID']."";
+                      $sql = "SELECT * FROM tbl_users WHERE userID = ".$_SESSION['userID']."";
                       $result = mysqli_query($dbconn, $sql);
                       $row = mysqli_fetch_assoc($result);
                     ?>

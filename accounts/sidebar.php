@@ -80,7 +80,7 @@
             </li>
           </li>
 
-
+          <?php if($_SESSION['userType']==2){ ?>
           <li class="nav-header">Owner</li>
           <li class="nav-item">
             <a href="owner-dashboard.php" class="nav-link">
@@ -100,12 +100,13 @@
           </li>
           <li class="nav-item">
             <a href="owner-cars.php" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-cars"></i>
               <p>
-                Account
+                Cars
               </p>
             </a>
           </li>
+        <?php } ?>
 
           <!-- <li class="nav-header">Driver</li>
           <li class="nav-item">
@@ -136,7 +137,7 @@
 
           <li class="nav-header">Exit</li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="../" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Home Page

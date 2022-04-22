@@ -20,9 +20,13 @@
 	$rate = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['rate']));
 	$description = mysqli_real_escape_string($dbconn, $_POST['description']);
 
+	if(isset($_POST['penalty'])){
+		$penalty = 2;
+	} else {
+		$penalty = 1;
+	}
 
 	$sql = "UPDATE  tbl_cars SET
-			ownerID = 1,
 			typeID = '$type',
 			name = '$name',
 			brandID = '$brand',
@@ -37,7 +41,8 @@
 			AC = '$AC',
 			speed = '$speed',
 			rate = '$rate',
-			description = '$description'
+			description = '$description',
+			penalty = '$penalty'
 			WHERE carID = '$carID'";
 
 	if(mysqli_query($dbconn,$sql)){
