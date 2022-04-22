@@ -18,6 +18,7 @@
 	$speed = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['speed']));
 
 	$rate = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['rate']));
+	$description = mysqli_real_escape_string($dbconn, $_POST['description']);
 
 
 	$sql = "UPDATE  tbl_cars SET
@@ -35,7 +36,8 @@
 			compartment = '$compartment',
 			AC = '$AC',
 			speed = '$speed',
-			rate = '$rate'
+			rate = '$rate',
+			description = '$description'
 			WHERE carID = '$carID'";
 
 	if(mysqli_query($dbconn,$sql)){

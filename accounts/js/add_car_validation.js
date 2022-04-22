@@ -70,7 +70,7 @@ $(function () {
               confirmButtonText: 'OK'
             }).then((result) =>{
 
-                  window.location.href = '/accounts/edit-car.php?carID=' + data;
+                  window.location.href = 'edit-car.php?carID=' + data;
                 
             })
           } else if (data=='updated'){

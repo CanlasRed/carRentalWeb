@@ -12,9 +12,10 @@
 </head>
 <body>
     <?php include 'navbar.php'; 
-    $sql = "SELECT c.*, i.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_image i ON c.carID = i.carID INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND i.status = 1  AND c.carID = ".$_GET['carID']."";
-    $result = mysqli_query($dbconn, $sql);
-    $row = mysqli_fetch_assoc($result);
+         $sql = "SELECT c.*, t.name AS type FROM tbl_cars c INNER JOIN tbl_car_types t ON c.typeID = t.typeID WHERE c.status = 1 AND c.carID = ".$_GET['carID']."";
+         $result = mysqli_query($dbconn, $sql);
+        $row = mysqli_fetch_assoc($result);
+    
     ?>
     
     <div class="container mt-4">
@@ -40,10 +41,17 @@
                                 <?php 
                                     $sql = "SELECT * FROM tbl_car_image WHERE status = 1 AND carID = ".$_GET['carID']." ";
                                     $result = mysqli_query($dbconn, $sql);
+                                    if(mysqli_num_rows($result)>0){
                                     foreach($result as $carImage) { ?>
                                     <div class="card m-1 slick-ratio">
                                         <div class="slick-ratio">
                                             <img class="img-fluid align-middle" src="assets/cars/<?php echo $carImage['image'];?>">
+                                        </div>
+                                    </div>
+                                <?php } } else { ?>
+                                    <div class="card m-1 slick-ratio">
+                                        <div class="slick-ratio">
+                                            <img class="img-fluid align-middle" src="assets/cars/Speedy_Full_Logo_Black.png">
                                         </div>
                                     </div>
                                 <?php } ?>

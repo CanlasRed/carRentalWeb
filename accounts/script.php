@@ -67,12 +67,7 @@
       bsCustomFileInput.init();
     });
 
-    $('.ui.rating')
-          .rating({
-            maxRating: 5
-          })
-          .rating('disable');
-        ;
+
 
 
 </script>

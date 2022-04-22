@@ -18,6 +18,9 @@
 
 	$rate = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['rate']));
 
+	$description = mysqli_real_escape_string($dbconn, $_POST['description']);
+
+
 
 	$sql = "INSERT INTO tbl_cars (
 			ownerID,
@@ -34,6 +37,7 @@
 			compartment,
 			AC,
 			speed,
+			description,
 			rate)
 			VALUES (
 			'1',
@@ -50,6 +54,7 @@
 			'$compartment',
 			'$AC',
 			'$speed',
+			'$description',
 			'$rate')";
 
 	if(mysqli_query($dbconn,$sql)){

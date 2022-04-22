@@ -23,7 +23,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>Owner History</h1>
+            <h1 style="font-weight: bold;">Owner History</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->

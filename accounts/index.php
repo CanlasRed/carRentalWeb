@@ -50,7 +50,7 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src="../assets/avatar_2.png"
+                       src="../assets/user-image/<?php echo $row['image']; ?>"
                        alt="User profile picture">
                 </div>
 
@@ -356,17 +356,17 @@
                       $result = mysqli_query($dbconn, $sql);
                       $row = mysqli_fetch_assoc($result);
                     ?>
-                    <form class="form-horizontal">
-
+                    <form class="form-horizontal" id="edit_profile_form" enctype="multipart/form-data">
+                      <input type="text" hidden name="customerID" value="<?php echo $_SESSION['userID']; ?>">
                       <div class="mb-3 row">
                         <div class="col-sm-2">
                           <img width="100" height="100" id="dp_preview" class="profile-user-img img-circle"
-                        src="../assets/avatar_2.png"
+                        src="../assets/user-image/<?php echo $row['image']; ?>"
                         alt="User profile picture">
                         </div>
                         <div class="col-sm-10">
                           <button onclick="triggerProfile()" style="position: relative; top: 50%; transform: translateY(-50%);" type="button" class="btn bg-black">Upload Image</button>
-                          <input type="file" id="profilePic" onchange="displayProfile(this)" hidden>
+                          <input type="file" name="image" id="profilePic" onchange="displayProfile(this)" hidden>
                         </div>
                       </div>
 
@@ -390,19 +390,19 @@
                       <div class="form-group row">
                         <label for="fname" class="col-sm-2 col-form-label">First Name</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="fname" placeholder="First Name" value="<?php echo $row['firstName']; ?>">
+                          <input type="text" class="form-control" name="firstName" id="fname" placeholder="First Name" value="<?php echo $row['firstName']; ?>">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="lname" class="col-sm-2 col-form-label">Last Name</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="lname" placeholder="Last Name" value="<?php echo $row['lastName']; ?>">
+                          <input type="text" class="form-control" name="lastName" id="lname" placeholder="Last Name" value="<?php echo $row['lastName']; ?>">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="phone" class="col-sm-2 col-form-label">Phone No.</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="phone" placeholder="Phone No." value="<?php echo $row['phone']; ?>">
+                          <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone No." value="<?php echo $row['phone']; ?>">
                         </div>
                       </div>
 
@@ -415,7 +415,7 @@
                       
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn bg-black">Save</button>
+                          <button type="submit" form="edit_profile_form" class="btn bg-black">Save</button>
                         </div>
                       </div>
                     </form>
@@ -530,7 +530,7 @@
 </div>
 
 <?php include 'script.php'?>
-
+<script type="text/javascript" src="js/edit_profile.js"></script>
 
 <!-- Page specific script -->
     <script type="text/javascript">
