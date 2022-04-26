@@ -8,7 +8,13 @@
     <link rel="icon" type="icon" href="favicon.ico">
     <?php include 'header.php'; ?>
 
-
+    <style type="text/css">
+      #map {
+        width: 100%;
+        height: 350px;
+        border-radius: 3px;
+      }
+    </style>
 </head>
 <body>
     <?php include 'navbar.php'; 
@@ -537,6 +543,11 @@
                             <i class="mars icon"></i><b>Gender </b><p>Male</p>
                             <i class="sort numeric up icon"></i><b>Age </b><p>23</p>
                             <i class="map marker alternate icon"></i><b>Address </b><p>Olongapo City</p>
+                            <div id="map" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"></div>
+
+                            <textarea name="lat" id="lat" rows="1" cols="25" hidden readonly><?php echo $owner['lat']; ?></textarea>
+                            <textarea name="lng" id="lng" rows="1" cols="25" hidden readonly><?php echo $owner['lng']; ?></textarea>
+
                             <i class="phone icon"></i><b>Phone </b><p>09123456789</p>
                         </div>   
                     </div>
@@ -608,6 +619,9 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
 
+    <!-- GOOGLE MAP API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj63ocr1ydO8iZMLWUH3I0VH64j1rn4dM&callback=initMap"></script>
+
     <!-- Page specific script -->
     <script>
       $(function () {
@@ -636,6 +650,93 @@
             border-bottom:  none !important;
         }
     </style>
+
+    <script type="text/javascript">
+      function placeMarker(location) {
+          var marker = new google.maps.Marker({
+              position: location, 
+              map: map
+          });
+      }
+
+      function initMap() {
+
+        var passlat = document.getElementById("lat").value;
+        var passlng = document.getElementById("lng").value;
+        
+        var zoom_value = 18;
+        var infoWindow_show = "yes";
+
+        if(!passlat || !passlng) {
+          var passlat = 14.56813157888156;
+          var passlng = 120.99907518053136;
+
+          zoom_value = 9;
+          infoWindow_show = "no";
+        }
+
+        //var passlat = 14.837116938622094;
+        //var passlng = 120.27882695818029;
+
+        let newlat = parseFloat(passlat);
+        let newlng = parseFloat(passlng);
+
+        const myLatlng = { lat: newlat, lng: newlng };
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: zoom_value,
+          center: myLatlng,
+        });
+        
+        // Create the initial InfoWindow.
+        let infoWindow = new google.maps.InfoWindow({
+          content: "current location",
+          position: myLatlng,
+        });
+
+        if(passlat != 14.56813157888156 && passlng != 120.99907518053136) {
+          infoWindow.open(map);
+
+          // Configure the click listener.
+          map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+              position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+              //JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
+              JSON.stringify("You click here")
+            );
+            infoWindow.open(map);
+            
+          });
+        }
+        else {
+          map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+              position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+              //JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
+              JSON.stringify("You click here")
+            );
+            infoWindow.open(map);
+            
+          });
+        }
+
+        map.addListener('click', function (locationdata) {
+          document.getElementById("lat").value =locationdata.latLng.lat();
+          document.getElementById("lng").value =locationdata.latLng.lng();
+        });
+          
+      }
+    </script>
 
     <script type="text/javascript">
         var carID = '<?php echo $_GET["carID"]; ?>';
