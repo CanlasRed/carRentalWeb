@@ -49,7 +49,7 @@
               foreach ($result as $cap){ $ctr++; ?>
             <li>
               <div class="ui checkbox">
-                <input type="checkbox" name="capacity" class="common_selector car_capacity" id="capacity<?php echo $ctr;?>">
+                <input type="checkbox" name="capacity" class="common_selector car_capacity" id="capacity<?php echo $ctr;?>" value="<?php echo $cap['capacity'];?>">
                 <label for="capacity<?php echo $ctr;?>"><?php echo $cap['capacity']; ?> Seaters</label>
               </div>
             </li>
@@ -126,15 +126,19 @@
     </h2>
     <div id="panel-color" class="accordion-collapse collapse show" aria-labelledby="heading-color">
       <div class="accordion-body">
-        <ul>
-          <?php for ($i=0;$i<2;$i++) { ?>
+        <ul> 
+              <?php 
+              $sql = "SELECT DISTINCT color FROM tbl_cars";
+              $result = mysqli_query($dbconn, $sql);
+              $ctr = 0;
+              foreach ($result as $color){ $ctr++; ?>
             <li>
-            <div class="ui checkbox">
-              <input type="checkbox" name="example" id="color<?php echo $i; ?>">
-              <label for="color<?php echo $i; ?>">Red</label>
-            </div>
+              <div class="ui checkbox">
+                <input type="checkbox" name="color" class="common_selector car_color" id="color<?php echo $ctr;?>" value="<?php echo $color['color']; ?>">
+                <label for="color<?php echo $ctr;?>"><?php echo $color['color']; ?></label>
+              </div>
             </li>
-          <?php } ?>
+            <?php } ?>
         </ul>
       </div>
     </div>

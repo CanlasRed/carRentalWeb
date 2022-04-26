@@ -63,6 +63,12 @@
 			$sql .= "AND c.capacity IN ('".$trans_filter."') ";
 		}
 
+		if(isset($_POST['color']))
+		{
+			$trans_filter = implode("','", $_POST["color"]);
+			$sql .= "AND c.color IN ('".$trans_filter."') ";
+		}
+
 
 
 		if(isset($_POST['order'])){

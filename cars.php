@@ -77,7 +77,11 @@
                                         <span class="float-end">₱<?php echo $row['rate'];?>/hr</span>
                                     </div>
                                     <div class="">
-                                         <?php echo $row['brandID'];?>  <?php echo $row['model'];?>  <?php echo $row['year'];?>
+                                         <?php 
+                                         $sql = "SELECT * FROM tbl_car_brands WHERE brandID = ".$row['brandID']."";
+                                         $result = mysqli_query($dbconn, $sql);
+                                         $brand = mysqli_fetch_assoc($result);
+                                         echo $brand['brand'];?>  <?php echo $row['model'];?>  <?php echo $row['year'];?>
                                     </div>
                                 </div>
                             </div>
@@ -109,6 +113,11 @@
                                           A/C
                                         </div>
                                     <?php } ?>
+                                    <div class="ui inverted black label my-1" data-tooltip="Color" data-inverted="" data-variation="tiny">
+                                      <i class="palette icon"></i>
+                                      <?php echo $row['color']; ?>
+                                    </div>
+                                    
                                 </div>
                             </div>
 

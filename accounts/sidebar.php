@@ -133,6 +133,33 @@
               </p>
             </a>
           </li> -->
+          <?php if($_SESSION['userType'] == 3){ ?>
+          <li class="nav-header">Admin</li>
+          <li class="nav-item">
+            <a href="../" class="nav-link">
+              <i class="nav-icon fas fa-shuttle-van"></i>
+              <p>
+                Car Types
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../php/logout.php" class="nav-link">
+              <i class="nav-icon fas fa-car"></i>
+              <p>
+                Car Brands
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../php/logout.php" class="nav-link">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>
+                User Verification
+              </p>
+            </a>
+          </li>
+        <?php } ?>
       
 
           <li class="nav-header">Exit</li>

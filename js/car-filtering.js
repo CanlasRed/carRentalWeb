@@ -11,6 +11,7 @@ $(document).ready(function(){
 		var type = get_filter('car_type');
 		var transmission = get_filter('car_transmission');
 		var capacity = get_filter('car_capacity');
+		var color = get_filter('car_color');
 		$.ajax({
 			url: "php/fetch_cars.php",
 			method:"post",
@@ -22,7 +23,8 @@ $(document).ready(function(){
 				type: type,
 				transmission: transmission,
 				capacity: capacity,
-				order: order
+				order: order,
+				color: color
 			},
 			success:function(data){
 				$('#car-list-container').html(data);
