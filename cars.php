@@ -688,53 +688,11 @@
           center: myLatlng,
         });
         
-        // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
-          content: "current location",
+        new google.maps.Marker({
           position: myLatlng,
-        });
-
-        if(passlat != 14.56813157888156 && passlng != 120.99907518053136) {
-          infoWindow.open(map);
-
-          // Configure the click listener.
-          map.addListener("click", (mapsMouseEvent) => {
-            // Close the current InfoWindow.
-            infoWindow.close();
-            // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-              position: mapsMouseEvent.latLng,
-            });
-            infoWindow.setContent(
-              //JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
-              JSON.stringify("You click here")
-            );
-            infoWindow.open(map);
-            
-          });
-        }
-        else {
-          map.addListener("click", (mapsMouseEvent) => {
-            // Close the current InfoWindow.
-            infoWindow.close();
-            // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-              position: mapsMouseEvent.latLng,
-            });
-            infoWindow.setContent(
-              //JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
-              JSON.stringify("You click here")
-            );
-            infoWindow.open(map);
-            
-          });
-        }
-
-        map.addListener('click', function (locationdata) {
-          document.getElementById("lat").value =locationdata.latLng.lat();
-          document.getElementById("lng").value =locationdata.latLng.lng();
-        });
-          
+          map,
+          title: "Hello World!",
+        });   
       }
     </script>
 
