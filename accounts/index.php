@@ -9,6 +9,14 @@
   <!-- SEMANTIC UI -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+
+  <style type="text/css">
+    #map {
+      width: 100%;
+      height: 350px;
+      border-radius: 3px;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
  
@@ -406,6 +414,27 @@
                           <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone No." value="<?php echo $row['phone']; ?>">
                         </div>
                       </div>
+                      <div class="form-group row">
+                        <label for="phone" class="col-sm-2 col-form-label">Address.</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control text-capitalize" name="address" id="address" placeholder="Address." value="<?php echo $row['address']; ?>">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="phone" class="col-sm-2 col-form-label">Map Location.</label>
+                        <div class="col-sm-10">
+                          <div id="map"></div>
+                          
+
+                          
+
+                          <textarea name="lat" id="lat" rows="1" cols="25" hidden readonly><?php echo $row['lat']; ?></textarea>
+                          <textarea name="lng" id="lng" rows="1" cols="25" hidden readonly><?php echo $row['lng']; ?></textarea>
+                          <!--
+                          <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone No." value="<?php echo $row['phone']; ?>">
+                          -->
+                        </div>
+                      </div>
 
                       <!-- <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Confirm Password</label>
@@ -532,9 +561,96 @@
 
 <?php include 'script.php'?>
 <script type="text/javascript" src="js/edit_profile.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj63ocr1ydO8iZMLWUH3I0VH64j1rn4dM&callback=initMap"></script>
 
 <!-- Page specific script -->
     <script type="text/javascript">
+
+      function placeMarker(location) {
+          var marker = new google.maps.Marker({
+              position: location, 
+              map: map
+          });
+      }
+
+      function initMap() {
+
+        var passlat = document.getElementById("lat").value;
+        var passlng = document.getElementById("lng").value;
+        
+        var zoom_value = 18;
+        var infoWindow_show = "yes";
+
+        if(!passlat || !passlng) {
+          var passlat = 14.56813157888156;
+          var passlng = 120.99907518053136;
+
+          zoom_value = 9;
+          infoWindow_show = "no";
+        }
+
+        //var passlat = 14.837116938622094;
+        //var passlng = 120.27882695818029;
+
+        let newlat = parseFloat(passlat);
+        let newlng = parseFloat(passlng);
+
+        const myLatlng = { lat: newlat, lng: newlng };
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: zoom_value,
+          center: myLatlng,
+        });
+        
+        // Create the initial InfoWindow.
+        let infoWindow = new google.maps.InfoWindow({
+          content: "current location",
+          position: myLatlng,
+        });
+
+        if(passlat != 14.56813157888156 && passlng != 120.99907518053136) {
+          infoWindow.open(map);
+
+          // Configure the click listener.
+          map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+              position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+              //JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
+              JSON.stringify("You click here")
+            );
+            infoWindow.open(map);
+            
+          });
+        }
+        else {
+          map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+              position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+              //JSON.stringify("mapsMouseEvent.latLng.toJSON(), null, 2")
+              JSON.stringify("You click here")
+            );
+            infoWindow.open(map);
+            
+          });
+        }
+
+        map.addListener('click', function (locationdata) {
+          document.getElementById("lat").value =locationdata.latLng.lat();
+          document.getElementById("lng").value =locationdata.latLng.lng();
+        });
+          
+      }
+
       $(document).ready(function(){
           $('#hipGrid').hip({
             itemsPerPage: 10,
