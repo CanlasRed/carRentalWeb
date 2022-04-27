@@ -12,13 +12,71 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+        <a class="nav-link" id="click_notification" data-bs-toggle="dropdown" href="#" aria-expanded="false">
           <i class="far fa-bell" style="font-size: 18px;">
-            <span class="badge badge-danger navbar-badge"></span>
+            <span class="badge badge-danger navbar-badge" id="count_notification">
+              <!-- NUMBER OF NOTIFICATION -->
+            </span>
           </i>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">Notifications</span>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list">
+
+          <!--
+          <a href="#" class="dropdown-item">
+
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+
+            <div class="media">
+
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  John Pierce
+                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">I got your message bro</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+
+            <div class="media">
+
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Nora Silvester
+                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">The subject goes here</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+
+          </a>
+          <div class="dropdown-divider"></div>
+        -->
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+
+
+
+
+
+          <!--<span class="dropdown-item dropdown-header">Notifications</span>-->
           <div class="dropdown-divider"></div>
           <?php if ($pendings > 0) { ?>
           <a href="owner-dashboard.php" class="dropdown-item">
