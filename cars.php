@@ -214,7 +214,7 @@
                               </div>
                             </div>
 
-                            <div class="ui list">
+                            <!-- <div class="ui list">
                                 <div class="item">
                                     <i class="map marker alternate icon"></i>
                                     <div class="content">
@@ -224,7 +224,7 @@
                                         </div>
                                     </div>
                                 </div>           
-                            </div>
+                            </div> -->
 
                           </div>
                           <div class="column px-5">
@@ -245,7 +245,7 @@
                               </div>
                             </div>
 
-                            <div class="ui list">
+                            <!-- <div class="ui list">
                                 <div class="item">
                                     <i class="map marker alternate icon"></i>
                                     <div class="content">
@@ -255,12 +255,26 @@
                                         </div>
                                     </div>
                                 </div>           
-                            </div>
+                            </div> -->
 
                           </div>
                         </div>
                       </div>
                 </form>
+                </div>
+
+                <!-- LOCATION SEGMENT -->
+                <div class="ui raised segment">
+                    <div class="row m-0">
+                        <div class="col-12 py-3">
+                            <div class="ui header medium">
+                                Location
+                            </div>
+                            
+                        </div>
+                        <div id="map" class="mt-2" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"></div>
+                    </div>
+                    
                 </div>
 
                 <!-- DRIVER SEGMENT -->
@@ -515,7 +529,7 @@
                     <h4 class="ui header">Owner Info</h4>
                     <div>
                         <img class="ui avatar image" src="assets/user-image/<?php echo $owner['image'];?>">
-                        <span><a href="" data-bs-toggle="modal" data-bs-target="#owner_modal" style="text-decoration: none; color: #fff; font-weight: bold;"><?php echo $owner['firstName'].' '.$owner['lastName'];?></a></span>
+                        <span class="fw-bold"><?php echo $owner['firstName'].' '.$owner['lastName'];?></span>
                     </div>
                     <div class="mt-3 ms-2">
                         <i class="envelope icon"></i>
@@ -525,39 +539,16 @@
                         <i class="phone icon"></i>
                         <?php echo $owner['phone']; ?>
                     </div>
-                </div>
-
-
-                <!-- Modal -->
-                <div class="modal fade" id="owner_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLong">More about owner</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="content text-dark">
-                            <img class="ui avatar image" src="assets/user-image/<?php echo $owner['image'];?>">
-                            <i class="user icon"></i><b>Name </b><p>Juan Dela Cruz</p>
-                            <i class="mars icon"></i><b>Gender </b><p>Male</p>
-                            <i class="sort numeric up icon"></i><b>Age </b><p>23</p>
-                            <i class="map marker alternate icon"></i><b>Address </b><p>Olongapo City</p>
-                            <div id="map" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"></div>
-
-                            <textarea name="lat" id="lat" rows="1" cols="25" hidden readonly><?php echo $owner['lat']; ?></textarea>
-                            <textarea name="lng" id="lng" rows="1" cols="25" hidden readonly><?php echo $owner['lng']; ?></textarea>
-
-                            <i class="phone icon"></i><b>Phone </b><p>09123456789</p>
-                        </div>   
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary clear-text" data-bs-dismiss="modal">Close</button>
+                    <div class="ms-2">
+                        <i class="map marker alternate icon"></i>
+                        <?php echo $owner['address']; ?>
                     </div>
                 </div>
-            </div>
-        </div>
 
+
+            
+                <textarea name="lat" id="lat" rows="1" cols="25" hidden readonly><?php echo $owner['lat']; ?></textarea>
+                <textarea name="lng" id="lng" rows="1" cols="25" hidden readonly><?php echo $owner['lng']; ?></textarea>
 
 
                 <div class="ui inverted raised clearing segment">
@@ -890,7 +881,7 @@
                               data: $form.serialize(),
                               dataType:'JSON',
                               success:function(data){
-                                if(data.length>0){
+                                if(data[0]>=3){
                                     let currency = Intl.NumberFormat('en-US');
                                     $('#rent_hours').html(data[0]);
                                     var rate = $('#rate_fee').val();
@@ -902,10 +893,32 @@
                                     var startDate = moment(data[1] + ' ' + data[2]).format('YYYY-MM-DD HH:mm:ss');
                                     var endDate = moment(data[3] + ' ' + data[4]).format('YYYY-MM-DD HH:mm:ss');
 
-                                    alert(startDate);
+                                    const Toast = Swal.mixin({
+                                      toast: true,
+                                      position: 'bottom-end',
+                                      showConfirmButton: false,
+                                      timer: 3000,
+                                      didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                      icon: 'success',
+                                      title: 'Booking Updated'
+                                  })
 
                                     $('#rental_start').val(startDate);
                                     $('#rental_end').val(endDate);
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Invalid',
+                                        text: 'Rental time must be at least 3 hours',
+                                        confirmButtonColor: '#1b1c1d',
+                                        confirmButtonText: 'OK'
+                                    })
                                 }
                               }
                              

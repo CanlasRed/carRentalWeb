@@ -28,7 +28,7 @@
             <div class="menu">
               <div class="header">
                 <i class="tags icon"></i>
-                Sort By:
+                Sort By:car
               </div>
               <div class="divider"></div>
               <div class="item">

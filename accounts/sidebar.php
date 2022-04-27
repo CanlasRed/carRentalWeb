@@ -194,7 +194,7 @@
           <?php if($_SESSION['userType'] == 3){ ?>
           <li class="nav-header">Admin</li>
           <li class="nav-item">
-            <a href="../" class="nav-link">
+            <a href="car-types.php" class="nav-link">
               <i class="nav-icon fas fa-shuttle-van"></i>
               <p>
                 Car Types
@@ -210,7 +210,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../php/logout.php" class="nav-link">
+            <a href="user-credentials.php" class="nav-link">
               <i class="nav-icon fas fa-id-card"></i>
               <p>
                 User Verification
@@ -230,7 +230,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../php/logout.php" class="nav-link">
+            <a data-bs-toggle="modal" data-bs-target="#confirm-logout" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Logout
@@ -245,5 +245,26 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
+  <!-- Log out Confirmation -->
+  <div class="modal fade" id="confirm-logout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Logout</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure, do you want to logout?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form method="POST" action="../php/logout.php">
+           <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   

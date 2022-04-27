@@ -39,6 +39,12 @@
       display: none !important;
     }
   </style>
+  <style type="text/css">
+    .card_hover:hover {
+      transform: scale(1.01);
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+  </style>
 
 <?php include '../php/connection.php'; ?>
 

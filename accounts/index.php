@@ -64,7 +64,15 @@
 
                 <h3 class="profile-username text-center"><?php echo $row['firstName'].' '.$row['lastName']; ?></h3>
 
-                <p class="text-muted text-center">Owner <i class="fas fa-badge-check"></i></p>
+                <p class="text-muted text-center">
+                  <?php if($row['userType'] == 2){ ?>
+                  Verified  <i class="fas fa-badge-check"></i>
+                  <?php } else if ($row['userType'] == 3){ ?>
+                  Admin
+                  <?php } else { ?>
+                  Unverified
+                  <?php } ?>
+                </p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
@@ -77,14 +85,27 @@
                     <b>Location</b> <p class="float-right">Olongapo City</p>
                   </li>
                 </ul>
+                <?php 
+                  if($row['userType'] == 2){ ?>
+                    <a href="#" class="btn bg-black btn-block"><b><i class="fas fa-badge-check"></i> View Credentials</b></a>
+                  <?php } else if($row['userType'] == 1) { 
 
-                <a href="#" class="btn bg-black btn-block"><b><i class="fas fa-badge-check"></i> Verify Account</b></a>
+                    $sql = "SELECT * FROM tbl_credentials WHERE status = 1 AND userID = ".$row['userID']."";
+                    $result = mysqli_query($dbconn, $sql);
+                    if(mysqli_num_rows($result)>0){ ?>
+                      <button type="button" class="btn bg-black btn-block" disabled><b><i class="fas fa-badge-check"></i> Verification Pending</b></button>
+                    <?php } else { ?>
+                      <a data-bs-toggle="modal" data-bs-target="#verify-modal" class="btn bg-black btn-block"><b><i class="fas fa-badge-check"></i> Verify Account</b></a>
+                  <?php } }?>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
 
           </div>
+
+
+
           <!-- /.col -->
           <div class="col-md-9">
             <div class="card">
@@ -106,7 +127,7 @@
                     foreach($result as $row){  echo '<tr>'
                       ?>
                     <div class="hip-item">
-                    <div class="card bg-light d-flex flex-fill">
+                    <div class="card bg-light d-flex flex-fill card_hover">
                      <?php if ($row['status'] == 'pending'){ ?>
                         <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-warning">
@@ -157,7 +178,7 @@
                         <b>Transaction No: <?php echo $row['rentalID'];?></b>
                        
                       </div>
-                      <div class="card-body pt-0">
+                      <div class="card-body pt-0 card_view"  data-id="<?php echo $row['rentalID'];?>">
                         <div class="row">
                           <div class="col-7">
                              <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
@@ -238,7 +259,7 @@
                         foreach($result as $row){ ?>
                           <div class="hip-item">
                             <!-- RIBBONS -->
-                            <div class="card bg-light d-flex flex-fill">
+                            <div class="card bg-light d-flex flex-fill card_hover">
                               <?php if ($row['status'] == 'pending'){ ?>
                                 <div class="ribbon-wrapper ribbon-lg">
                                   <div class="ribbon bg-warning">
@@ -292,7 +313,7 @@
                               </div>
 
 
-                              <div class="card-body pt-0">
+                              <div class="card-body pt-0 card_view" data-id="<?php echo $row['rentalID'];?>">
                                 <div class="row">
                                   <div class="col-7">
                                     <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
@@ -479,6 +500,26 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- MODAL -->
+<div class="modal fade" id="bookinginfo_Modal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form name="" id="">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-cars"></i> Booking Information</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bookinginfo-body">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ./MODAL -->
+
 <div class="modal fade" id="review_modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal">
     <div class="modal-content">
@@ -559,9 +600,236 @@
   </div>
 </div>
 
+
+<!-- MODAL -->
+<div class="modal fade" id="verify-modal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <form method="POST" enctype="multipart/form-data" action="php/upload_credentials.php" id="upload_credentials">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-cars"></i> Verify Account</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>Upload a Picture of your Driver's License</label>
+          <h4 class="ui horizontal divider">Front</h4>
+
+          <div class="file-upload">
+            <div class="image-upload-wrap">
+              <input class="file-upload-input" name="image" type='file' onchange="readURL(this);" accept="image/*" />
+              <div class="drag-text">
+                <i style="font-size: 35px;" class="fas fa-cloud-upload"></i>
+                <h4>Drag and Drop to Upload an Image</h4>
+              </div>
+            </div>
+
+            <div class="file-upload-content">
+              <img class="file-upload-image" src="#" alt="Front image" />
+              <div class="image-title-wrap">
+                <button type="button" class="btn bg-black" onclick="removeUpload()" class="remove-image">Remove Image</button>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="ui horizontal divider">Back</h4>
+
+          <div class="file-upload2">
+            <div class="image-upload-wrap2">
+              <input class="file-upload-input2" name="image2" type='file' onchange="readURL2(this);" accept="image/*" />
+              <div class="drag-text2">
+                <i style="font-size: 35px;" class="fas fa-cloud-upload"></i>
+                <h4>Drag and Drop to Upload an Image</h4>
+              </div>
+            </div>
+
+            <div class="file-upload-content2">
+              <img class="file-upload-image2" src="#" alt="Back image" />
+              <div class="image-title-wrap2">
+                <button type="button" class="btn bg-black" onclick="removeUpload2()" class="remove-image">Remove Image</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" form="upload_credentials" class="btn btn-info">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+
 <?php include 'script.php'?>
 <script type="text/javascript" src="js/edit_profile.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj63ocr1ydO8iZMLWUH3I0VH64j1rn4dM&callback=initMap"></script>
+
+<script type="text/javascript">
+  $('.card_view').on('click', function(){
+    var userid = $(this).attr('data-Id');
+    const myArray = userid.split("");
+    const rentalID = myArray[0];
+
+    $.ajax({
+      url: 'php/booking_info.php',
+      type: 'post',
+      data: {rentalID: rentalID},
+      success: function(response){ 
+
+        $('.bookinginfo-body').html(response);
+        $('#bookinginfo_Modal').modal('show'); 
+
+      }
+    });
+
+  });
+
+  $('#upload_credentials').on('submit', function(e){
+
+    e.preventDefault();
+    var formData = new FormData(this);
+
+    $.ajax({
+      type: $(this).attr('method'),
+      url: $(this).attr('action'),
+      data: formData,
+      contentType: false,
+      processData: false,
+      success:function(data){
+        if(data == 'success'){
+              Swal.fire({
+                  icon: 'success',
+                  title: 'ID Uploaded',
+                  text: 'Please wait for at least 15 minutes for your ID to be verified',
+                  confirmButtonColor: '#1b1c1d',
+                  confirmButtonText: 'OK'
+              }).then((result) =>{
+                   location.reload();
+                
+              })
+            }
+            else if (data == 'done'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Invalid',
+                text: 'Please Upload Both Images',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else if (data == 'imgfailed'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Saving Image',
+                text: 'An error has occured while saving the image',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else if (data == 'SL'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Image too Large',
+                text: 'Image must be 3MB or less',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else if (data == 'WT'){
+              Swal.fire({
+                icon: 'error',
+                title: 'Invalid Image Format',
+                text: 'Only JPG JPEG and PNG formats are accepted',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+            else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error has occured while inserting the data',
+                confirmButtonColor: '#1b1c1d',
+                confirmButtonText: 'OK'
+              })
+            }
+      }
+    });
+  });
+
+
+
+  function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+    $('.image-upload-wrap').addClass('image-dropping');
+  });
+  $('.image-upload-wrap').bind('dragleave', function () {
+    $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+
+  function readURL2(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap2').hide();
+
+      $('.file-upload-image2').attr('src', e.target.result);
+      $('.file-upload-content2').show();
+
+      $('.image-title2').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload2() {
+  $('.file-upload-input2').replaceWith($('.file-upload-input2').clone());
+  $('.file-upload-content2').hide();
+  $('.image-upload-wrap2').show();
+}
+$('.image-upload-wrap2').bind('dragover', function () {
+    $('.image-upload-wrap2').addClass('image-dropping2');
+  });
+  $('.image-upload-wrap2').bind('dragleave', function () {
+    $('.image-upload-wrap2').removeClass('image-dropping2');
+});
+</script>
 
 <!-- Page specific script -->
     <script type="text/javascript">
