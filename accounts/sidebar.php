@@ -20,56 +20,6 @@
           </i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list">
-
-          <!--
-          <a href="#" class="dropdown-item">
-
-            <div class="media">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-
-            <div class="media">
-
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-
-            <div class="media">
-
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-
-          </a>
-          <div class="dropdown-divider"></div>
-        -->
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
 
 
@@ -266,5 +216,28 @@
       </div>
     </div>
   </div>
+
+  <!-- Notification Details -->
+  <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form name="" id="">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-bell"></i> Notification Details</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body notification-body">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
 
   

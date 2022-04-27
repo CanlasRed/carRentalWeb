@@ -114,7 +114,7 @@
 	    	}
 	    	echo '
 
-	    			<a href="#" class="dropdown-item notification-info" data-bs-toggle="modal" data-id="'. $row['rentalID'] .'*'. $row['userID'] .'*'. $row['status'] .'*'. $row['createdAt'] .'">
+	    			<a href="#" class="dropdown-item notification-info" data-bs-toggle="modal" data-id="'. $row['rentalID'] .'*'. $row['userID'] .'*'. $row['status'] .'*'. $row['createdAt'] .'*'. $row['notificationID'] .'">
 			            <div class="media">
 			              <i class="fas '.$notification_icon.' img-size-50 mr-3 mt-2 '.$color.'" style="font-size: 2.6rem; text-align: center;"></i>
 			              <div class="media-body">
@@ -147,14 +147,14 @@
         const userID = myArray[1];
         const status = myArray[2];
         const createdAt = myArray[3];
+        const notificationID = myArray[4];
 
-        alert(rentalID + " " + userID+ " " + status+ " " + createdAt);
+        //alert(rentalID + " " + userID+ " " + status+ " " + createdAt);
 
-        /*
         $.ajax({
-            url: 'modules/Notification/AJAX-notification-details-show.php',
+            url: 'php/notification_details.php',
             type: 'post',
-            data: {notif_type: notif_type, any_id: any_id, success_or_not:success_or_not, subject:subject},
+            data: {rentalID: rentalID, userID: userID, status:status, createdAt:createdAt, notificationID:notificationID},
             success: function(response){ 
               // Add response in Modal body
               $('.notification-body').html(response);
@@ -164,6 +164,6 @@
 
             }
         });
-        */
+
     });
 </script>
