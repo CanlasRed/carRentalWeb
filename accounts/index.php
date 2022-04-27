@@ -67,7 +67,9 @@
                 <p class="text-muted text-center">
                   <?php if($row['userType'] == 2){ ?>
                   Verified  <i class="fas fa-badge-check"></i>
-                    <?php } else { ?>
+                  <?php } else if ($row['userType'] == 3){ ?>
+                  Admin
+                  <?php } else { ?>
                   Unverified
                   <?php } ?>
                 </p>
@@ -125,7 +127,7 @@
                     foreach($result as $row){  echo '<tr>'
                       ?>
                     <div class="hip-item">
-                    <div class="card bg-light d-flex flex-fill">
+                    <div class="card bg-light d-flex flex-fill card_hover">
                      <?php if ($row['status'] == 'pending'){ ?>
                         <div class="ribbon-wrapper ribbon-lg">
                           <div class="ribbon bg-warning">
@@ -176,7 +178,7 @@
                         <b>Transaction No: <?php echo $row['rentalID'];?></b>
                        
                       </div>
-                      <div class="card-body pt-0">
+                      <div class="card-body pt-0 card_view"  data-id="<?php echo $row['rentalID'];?>">
                         <div class="row">
                           <div class="col-7">
                              <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
@@ -257,7 +259,7 @@
                         foreach($result as $row){ ?>
                           <div class="hip-item">
                             <!-- RIBBONS -->
-                            <div class="card bg-light d-flex flex-fill">
+                            <div class="card bg-light d-flex flex-fill card_hover">
                               <?php if ($row['status'] == 'pending'){ ?>
                                 <div class="ribbon-wrapper ribbon-lg">
                                   <div class="ribbon bg-warning">
@@ -311,7 +313,7 @@
                               </div>
 
 
-                              <div class="card-body pt-0">
+                              <div class="card-body pt-0 card_view" data-id="<?php echo $row['rentalID'];?>">
                                 <div class="row">
                                   <div class="col-7">
                                     <b><a style="color:#1b1c1d" href="../cars.php?car=<?php echo $car['name'];?>&carID=<?php echo $car['carID'];?>"><?php echo $car['name'];?></a></b>
@@ -498,6 +500,26 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- MODAL -->
+<div class="modal fade" id="bookinginfo_Modal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form name="" id="">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-cars"></i> Booking Information</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bookinginfo-body">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ./MODAL -->
+
 <div class="modal fade" id="review_modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal">
     <div class="modal-content">
@@ -647,6 +669,25 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj63ocr1ydO8iZMLWUH3I0VH64j1rn4dM&callback=initMap"></script>
 
 <script type="text/javascript">
+  $('.card_view').on('click', function(){
+    var userid = $(this).attr('data-Id');
+    const myArray = userid.split("");
+    const rentalID = myArray[0];
+
+    $.ajax({
+      url: 'php/booking_info.php',
+      type: 'post',
+      data: {rentalID: rentalID},
+      success: function(response){ 
+
+        $('.bookinginfo-body').html(response);
+        $('#bookinginfo_Modal').modal('show'); 
+
+      }
+    });
+
+  });
+
   $('#upload_credentials').on('submit', function(e){
 
     e.preventDefault();

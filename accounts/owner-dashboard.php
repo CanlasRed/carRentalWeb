@@ -12,12 +12,6 @@ if($_SESSION['userType']!=2){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Account | Speedy</title>
   <?php include 'header.php';?>
-  <style type="text/css">
-    .card_hover:hover {
-      transform: scale(1.01);
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    }
-  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
  
@@ -242,7 +236,7 @@ if($_SESSION['userType']!=2){
                 </div>
 
 
-                <div class="card-body pt-0">
+                <div class="card-body card_view pt-0" data-id="<?php echo $row['rentalID'];?>">
                   <div class="row">
 
 
@@ -402,7 +396,7 @@ if($_SESSION['userType']!=2){
     </script>
 
 <script type="text/javascript">
-  $('.card_hover').on('click', function(){
+  $('.card_view').on('click', function(){
     var userid = $(this).attr('data-Id');
     const myArray = userid.split("");
     const rentalID = myArray[0];
