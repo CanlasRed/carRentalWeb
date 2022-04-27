@@ -23,7 +23,14 @@
 
 		$sql = "INSERT INTO tbl_payment (rentalID, carAmount, driverAmount, deposit) VALUES ('$last_id', '$carAmount', '$driverAmount', '$deposit')";
 		if(mysqli_query($dbconn, $sql)){
-			echo 200;
+
+			$sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$last_id', '$ownerID', 'pending')";
+
+			if(mysqli_query($dbconn, $sql)){
+				echo 200;
+			} else {
+				echo 400;
+			}
 		} else {
 			echo 400;
 		}

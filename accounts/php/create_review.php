@@ -18,6 +18,16 @@
 					if(mysqli_query($dbconn, $sql)){
 						$sql = "UPDATE tbl_payment SET status = 'completed' WHERE rentalID = ".$rentalID."";
 						if(mysqli_query($dbconn, $sql)){
+
+							$sql = "SELECT * FROM tbl_rental WHERE rentalID = ".$rentalID."";
+							$result = mysqli_query($dbconn, $sql);
+							$row = mysqli_fetch_assoc($result);
+
+							$owner = $row['ownerID'];
+
+							$sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$owner', 'completed')";
+							mysqli_query($dbconn, $sql);
+
 							echo 200;
 						} else {
 							echo 'error';

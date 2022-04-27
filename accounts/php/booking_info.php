@@ -20,10 +20,12 @@
 			o.lastName AS owner_lastname, 
 			o.username AS owner_username, 
 			o.phone AS owner_phone,
+			o.address AS owner_address,
 			u.firstName AS customer_firstname, 
 			u.lastName AS customer_lastname, 
 			u.username AS customer_username, 
 			u.phone AS customer_phone,
+			u.address AS customer_address,
 			r.driverID AS rental_driverID,
 			i.image AS car_image
 
@@ -170,6 +172,10 @@
 							   	<td><span class="font-weight-bold">Phone #:</span></td>
 							   	<td>'.$row["owner_phone"].'</td>
 							</tr>
+							<tr>
+							   	<td><span class="font-weight-bold">Address:</span></td>
+							   	<td>'.$row["owner_address"].'</td>
+							</tr>
     					</tbody>
     				</table>
     			</div>
@@ -194,6 +200,10 @@
     						<tr>
 							   	<td><span class="font-weight-bold">Phone #:</span></td>
 							   	<td>'.$row["customer_phone"].'</td>
+							</tr>
+							<tr>
+							   	<td><span class="font-weight-bold">Address:</span></td>
+							   	<td>'.$row["customer_address"].'</td>
 							</tr>
     					</tbody>
     				</table>

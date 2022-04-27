@@ -5,7 +5,7 @@
 	$userID = $_SESSION['userID'];
 
 	$sql = "SELECT * FROM tbl_notification
-			WHERE userID = '$userID'";
+			WHERE userID = '$userID' ORDER BY createdAt DESC LIMIT 5";
     $result = mysqli_query($dbconn, $sql);
     if(mysqli_num_rows($result) > 0) {
     	foreach($result as $row){
@@ -15,6 +15,7 @@
 	    	$description = "";
 	    	$interval = "";
 	    	$color = "";
+	    	$rentalID = $row['rentalID'];
 
 	    	date_default_timezone_set('Asia/Manila');
 	        $notification_date = $row['createdAt'];
@@ -61,7 +62,7 @@
 	    		$notification_icon = "fa-check-circle";
 	    		$title = "Booking Accepted";
 	    		$description = "Your booking has been accepted";
-	    		$color = "text-primary";
+	    		$color = "text-success";
 	    	}
 	    	else if($status == 'cancelled') {
 	    		$notification_icon = "fa-times-circle";
@@ -69,28 +70,46 @@
 	    		$description = "Your booking has been cancelled";
 	    		$color = "text-danger";
 	    	}
+	    	else if($status == 'user_cancelled') {
+	    		$notification_icon = "fa-times-circle";
+	    		$title = "Booking Cancelled";
+	    		$description = "A customer cancelled a booking";
+	    		$color = "text-danger";
+	    	}
 	    	else if($status == 'pending') {
-	    		$notification_icon = "fa-check-circle";
-	    		$title = "Booking Pending";
+	    		$notification_icon = "fa-exclamation-circle";
+	    		$title = "Pending Bookings";
 	    		$description = "You have a pending booking";
-	    		$color = "text-info";
+	    		$color = "text-warning";
 	    	}
 	    	else if($status == 'pickup') {
 	    		$notification_icon = "fa-exclamation-circle";
 	    		$title = "Car Pickup";
 	    		$description = "The car is ready for pickup";
-	    		$color = "text-warning";
+	    		$color = "text-info";
 	    	}
 	    	else if($status == 'dropoff') {
-	    		$notification_icon = "fa-exclamation-circle";
-	    		$title = "Car Dropoff";
-	    		$description = "The car has been dropoff";
-	    		$color = "text-secondary";
+	    		$notification_icon = "fa-info-circle";
+	    		$title = "Car Picked-Up";
+	    		$description = "The car has been picked-up";
+	    		$color = "text-info";
+	    	}
+	    	else if($status == 'review') {
+	    		$notification_icon = "fa-info-circle";
+	    		$title = "Car Dropped-Off";
+	    		$description = "The car has been dropped-off";
+	    		$color = "text-purple";
+	    	}
+	    	else if($status == 'to_review') {
+	    		$notification_icon = "fa-ballot";
+	    		$title = "Review Your Ride";
+	    		$description = "You have a pending review";
+	    		$color = "text-olive";
 	    	}
 	    	else if($status == 'completed') {
 	    		$notification_icon = "fa-check-circle";
 	    		$title = "Booking Completed";
-	    		$description = "Your booking has been completed";
+	    		$description = "Car rental completed and reviewed";
 	    		$color = "text-success";
 	    	}
 	    	echo '

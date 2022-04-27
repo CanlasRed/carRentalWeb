@@ -67,6 +67,7 @@ function getAccountByID($conn, $id) {
                 lastName,
                 phone,
                 username,
+                userType,
                 createdAt
             FROM tbl_users
             WHERE userID = '".$id."'";
