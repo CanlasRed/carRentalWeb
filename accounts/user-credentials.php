@@ -327,6 +327,23 @@ if($_SESSION['userType']!=3){
 </div>
 <!-- ./MODAL -->
 
+<!-- Notification Details -->
+  <div class="modal fade" id="idModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-id-badge"></i> Valid ID</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body id-body">
+          
+        </div>
+    </div>
+  </div>
+</div>
+
 <?php include 'script.php'?>
 <script type="text/javascript">
   $('.card_view').on('click', function(){
