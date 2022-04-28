@@ -35,7 +35,7 @@
               <span class="badge rounded-pill bg-danger" id="count_notification" style="margin-left: -0.6rem;"></span>
             </i>
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list" style="margin-left: -18rem !important;">
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list" style="margin-left: -18rem !important; width: 300px;">
             <!-- NUMBER OF NOTIFICATION -->
           </div>
           
@@ -96,8 +96,8 @@
     <div class="modal-content">
       <form name="" id="">
         <div class="modal-header bg-black">
-          <h5 class="modal-title"><i class="fas fa-bell"></i> Notification Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title text-light"><i class="bell icon"></i> Notification Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body notification-body">
           
