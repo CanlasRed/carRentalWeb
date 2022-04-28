@@ -72,11 +72,11 @@
     		<h3><i class="fas fa-id-badge"></i> Valid ID</h3>
     		<div class="d-grid gap-2 d-md-flex d-flex justify-content-between">
     			<div class="row d-flex justify-content-center credentialID" id="cred-front" data-bs-toggle="modal" data-id="'. $row['credentialID'] .'*front">
-	    			<a href="#"><img width="400" src="../assets/credentials/'.$row["front"].'" alt="front-id" class="img-fluid"></a>
+	    			<a href="#"><img src="../assets/credentials/'.$row["front"].'" alt="front-id" class="img-fluid" style="width: 400px !important; height: 300px !important;"></a>
 	    		</div>
 	  		
 	    		<div class="row d-flex justify-content-center credentialID" id="cred-back" data-bs-toggle="modal" data-id="'. $row['credentialID'] .'*back">
-	    			<a href="#"><img width="400" src="../assets/credentials/'.$row["back"].'" alt="back-id" class="img-fluid"></a>			
+	    			<a href="#"><img src="../assets/credentials/'.$row["back"].'" alt="back-id" class="img-fluid" style="width: 400px !important; height: 300px !important;"></a>			
 	    		</div>
     		</div>
     		
