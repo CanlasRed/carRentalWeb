@@ -1,3 +1,10 @@
+<?php 
+  $userID = $_SESSION['userID']; 
+  $sql = "SELECT * FROM tbl_users WHERE userId = '$userID'";
+  $result = mysqli_query($dbconn, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $userType = $row['userType'];
+?>
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -88,7 +95,7 @@
             </li>
           </li>
 
-          <?php if($_SESSION['userType']==2){ ?>
+          <?php if($userType==2){ ?>
           <li class="nav-header">Owner</li>
           <li class="nav-item">
             <a href="owner-dashboard.php" class="nav-link">
@@ -141,7 +148,7 @@
               </p>
             </a>
           </li> -->
-          <?php if($_SESSION['userType'] == 3){ ?>
+          <?php if($userType == 3){ ?>
           <li class="nav-header">Admin</li>
           <li class="nav-item">
             <a href="car-types.php" class="nav-link">

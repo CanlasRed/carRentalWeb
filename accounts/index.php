@@ -82,7 +82,7 @@
                     <b>Phone No.</b> <p class="float-right"><?php echo $row['phone']?></p>
                   </li>
                   <li class="list-group-item">
-                    <b>Location</b> <p class="float-right">Olongapo City</p>
+                    <b>Location</b> <p class="float-right"><?php echo $row['address']?></p>
                   </li>
                 </ul>
                 <?php 

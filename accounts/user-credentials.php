@@ -88,7 +88,7 @@ if($_SESSION['userType']!=3){
                             </div>
 
 
-                            <div class="card-body pt-0">
+                            <div class="card-body pt-0 card_view" data-id="<?php echo $row['credentialID']; ?>">
                               <div class="row">
 
 
@@ -124,10 +124,10 @@ if($_SESSION['userType']!=3){
                             <div class="card-footer">
                                <small class="text-muted"><?php  echo get_time_ago(strtotime($row['dateCreated']));?></small>
                               <div class="text-right">
-                                <a class="btn btn-sm bg-success">
+                                <a class="btn btn-sm bg-success cred_action" data-action="accept" data-id="<?php echo $row['credentialID'];?>">
                                   <i class="fas fa-check"></i> Approve
                                 </a>
-                                <a class="btn btn-sm btn-danger">
+                                <a class="btn btn-sm btn-danger cred_action" data-action="reject" data-id="<?php echo $row['credentialID'];?>">
                                   <i class="fas fa-ban"></i> Reject
                                 </a>
                               </div>
@@ -282,8 +282,111 @@ if($_SESSION['userType']!=3){
 </div>
 <!-- ./wrapper -->
 
+<!-- MODAL -->
+<div class="modal fade" id="bookinginfo_Modal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form name="" id="">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-cars"></i> User Credentials</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="color: white !important;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bookinginfo-body">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ./MODAL -->
+
 <?php include 'script.php'?>
 <script type="text/javascript">
+  $('.card_view').on('click', function(){
+    var credentialID = $(this).attr('data-id');
+
+
+    $.ajax({
+      url: 'php/credential_info.php',
+      type: 'post',
+      data: {credentialID: credentialID},
+      success: function(response){ 
+
+        $('.bookinginfo-body').html(response);
+        $('#bookinginfo_Modal').modal('show'); 
+
+      }
+    });
+
+  });
+
+  $('.cred_action').on('click', function(){
+    var credentialID = $(this).attr('data-id');
+    var action = $(this).attr('data-action');
+    var displayAction = action.charAt(0).toUpperCase() + action.slice(1)
+
+      Swal.fire({
+        icon: 'question',
+        title: displayAction,
+        text: 'Are you sure you want to ' + action +' user verification?',
+        confirmButtonColor: '#1b1c1d',
+        confirmButtonText: 'OK',
+        showCancelButton: 'true'
+      }).then((result) =>{
+        if (result.isConfirmed){
+          $.ajax({
+            url: 'php/verify_user.php',
+            type: 'post',
+            data:{
+              credentialID: credentialID,
+              action: action
+            },
+            success: function(data){
+              if(data == 'approved'){
+                Swal.fire({
+                  icon: 'success',
+                  title: 'User Verified',
+                  text: 'The user has been verified successfully',
+                  confirmButtonColor: '#1b1c1d',
+                  confirmButtonText: 'OK'
+                }).then((result) =>{
+                  if (result.isConfirmed){
+                   location.reload();
+                 }
+               })
+              }
+              else if(data == 'rejected'){
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Verification Rejected',
+                  text: 'THe user verification has been rejected successfully',
+                  confirmButtonColor: '#1b1c1d',
+                  confirmButtonText: 'OK'
+                }).then((result) =>{
+                  if (result.isConfirmed){
+                   location.reload();
+                 }
+               })
+              }
+              else{
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'An error has occured while updating the data',
+                  confirmButtonColor: '#1b1c1d',
+                  confirmButtonText: 'OK'
+                })
+              }
+            }
+          })
+        }
+      })
+
+  });
+
+
   $(document).ready(function(){
     $('#hipGrid').hip({
       itemsPerPage: 10,
@@ -291,7 +394,7 @@ if($_SESSION['userType']!=3){
               hs: 1,
               sm: 2,
               md: 3,
-              lg: 4
+              lg: 4,
       },
       paginationPos:'right',
       filter:true,
