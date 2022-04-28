@@ -35,7 +35,7 @@
               <span class="badge rounded-pill bg-danger" id="count_notification" style="margin-left: -0.6rem;"></span>
             </i>
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list" style="margin-left: -18rem !important;">
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list" style="margin-left: -18rem !important; width: 300px;">
             <!-- NUMBER OF NOTIFICATION -->
           </div>
           
