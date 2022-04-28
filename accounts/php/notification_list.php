@@ -101,7 +101,7 @@
 	    		$color = "text-purple";
 	    	}
 	    	else if($status == 'to_review') {
-	    		$notification_icon = "fa-ballot";
+	    		$notification_icon = "fa-question-circle";
 	    		$title = "Review Your Ride";
 	    		$description = "You have a pending review";
 	    		$color = "text-olive";

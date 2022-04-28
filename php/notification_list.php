@@ -71,7 +71,7 @@
 	    		$color = "text-danger";
 	    	}
 	    	else if($status == 'user_cancelled') {
-	    		$notification_icon = "fa-times-circle";
+	    		$notification_icon = "times circle icon";
 	    		$title = "Booking Cancelled";
 	    		$description = "A customer cancelled a booking";
 	    		$color = "text-danger";
@@ -95,7 +95,7 @@
 	    		$color = "text-info";
 	    	}
 	    	else if($status == 'review') {
-	    		$notification_icon = "fa-info-circle";
+	    		$notification_icon = "info circle icon";
 	    		$title = "Car Dropped-Off";
 	    		$description = "The car has been dropped-off";
 	    		$color = "text-purple";
