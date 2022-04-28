@@ -94,6 +94,12 @@
 	    		$description = "The car has been picked-up";
 	    		$color = "text-info";
 	    	}
+	    	else if($status == 'to_dropoff') {
+	    		$notification_icon = "exclamation circle icon";
+	    		$title = "Car Drop-Off";
+	    		$description = "You have a car drop-off due today";
+	    		$color = "text-purple";
+	    	}
 	    	else if($status == 'review') {
 	    		$notification_icon = "info circle icon";
 	    		$title = "Car Dropped-Off";

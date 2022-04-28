@@ -84,8 +84,8 @@
 	    	}
 	    	else if($status == 'pickup') {
 	    		$notification_icon = "fa-exclamation-circle";
-	    		$title = "Car Pickup";
-	    		$description = "The car is ready for pickup";
+	    		$title = "Car Pick-Up";
+	    		$description = "You have a car to pick-up due today";
 	    		$color = "text-info";
 	    	}
 	    	else if($status == 'dropoff') {
@@ -93,6 +93,12 @@
 	    		$title = "Car Picked-Up";
 	    		$description = "The car has been picked-up";
 	    		$color = "text-info";
+	    	}
+	    	else if($status == 'to_dropoff') {
+	    		$notification_icon = "fa-exclamation-circle";
+	    		$title = "Car Drop-Off";
+	    		$description = "You have a car drop-off due today";
+	    		$color = "text-purple";
 	    	}
 	    	else if($status == 'review') {
 	    		$notification_icon = "fa-info-circle";
