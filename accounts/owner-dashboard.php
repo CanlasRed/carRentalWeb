@@ -397,9 +397,7 @@ if($_SESSION['userType']!=2){
 
 <script type="text/javascript">
   $('.card_view').on('click', function(){
-    var userid = $(this).attr('data-Id');
-    const myArray = userid.split("");
-    const rentalID = myArray[0];
+    var rentalID = $(this).attr('data-id');
 
     $.ajax({
       url: 'php/booking_info.php',

@@ -59,7 +59,7 @@ if($_SESSION['userType']!=2){
               <div class="row">
                 <div id="hipGrid">
               <?php
-              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.customerID = c.userID WHERE ownerID = ".$_SESSION['userID']." AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
+              $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.ownerID = c.userID WHERE r.ownerID = ".$_SESSION['userID']." AND (status = 'completed' OR status = 'cancelled') ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               foreach($result as $row){ ?>
               <div class="hip-item">
@@ -277,9 +277,7 @@ if($_SESSION['userType']!=2){
 
 <script type="text/javascript">
   $('.card_view').on('click', function(){
-    var userid = $(this).attr('data-Id');
-    const myArray = userid.split("");
-    const rentalID = myArray[0];
+    var rentalID = $(this).attr('data-id');
 
     $.ajax({
       url: 'php/booking_info.php',
