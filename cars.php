@@ -881,7 +881,7 @@
                               data: $form.serialize(),
                               dataType:'JSON',
                               success:function(data){
-                                if(data[0]>=3){
+                                if(data[0]>=3 && data[5]>=2){
                                     let currency = Intl.NumberFormat('en-US');
                                     $('#rent_hours').html(data[0]);
                                     var rate = $('#rate_fee').val();
@@ -911,6 +911,14 @@
 
                                     $('#rental_start').val(startDate);
                                     $('#rental_end').val(endDate);
+                                } else if(data[5]<2) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Invalid',
+                                        text: 'Please allow at least 2 hours before the pick-up time',
+                                        confirmButtonColor: '#1b1c1d',
+                                        confirmButtonText: 'OK'
+                                    })
                                 } else {
                                     Swal.fire({
                                         icon: 'error',

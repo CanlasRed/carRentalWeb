@@ -143,7 +143,7 @@ if($_SESSION['userType']!=2){
                         </li>
                         <li>
                           <?php 
-                          $sql = "SELECT *, SUM(carAmount+deposit+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                          $sql = "SELECT *, SUM(carAmount+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
                           $result=mysqli_query($dbconn, $sql);
                           $amount = mysqli_fetch_assoc($result);
                           setlocale(LC_MONETARY, "en_US");

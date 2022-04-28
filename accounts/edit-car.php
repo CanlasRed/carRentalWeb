@@ -98,7 +98,9 @@
                                 $sql = "SELECT * FROM tbl_car_types";
                                 $result = mysqli_query($dbconn, $sql);
                                 foreach($result as $row){ ?>
-                                  <option value="<?php echo $row['typeID']?>" <?php if ($row['typeID'] == $car['typeID']) echo ' selected="selected"'; ?>>
+                                  <option value="<?php echo $row['typeID']?>" 
+                                    <?php if ($row['typeID'] == $car['typeID']) 
+                                      echo ' selected="selected"'; ?>>
                                     <?php echo $row['name']?>
                                   </option>
                                 <?php } ?>
@@ -206,35 +208,35 @@
 
                     <div class="form-group">
                       <label>Engine</label>
-                      <select class="form-control rounded-pill" name="engine" <?php if ($row['engine'] == $car['engine']) echo ' selected="selected"'; ?>>
-                        <option value="unleaded">Unleaded</option>
-                        <option value="diesel">Diesel</option>
-                        <option value="electric">Electric</option>
+                      <select class="form-control rounded-pill" name="engine">
+                        <option <?php if($car['engine'] == 'unleaded') echo 'selected';?> value="unleaded">Unleaded</option>
+                        <option <?php if($car['engine'] == 'diesel') echo 'selected';?> value="diesel">Diesel</option>
+                        <option <?php if($car['engine'] == 'electric') echo 'selected';?> value="electric">Electric</option>
                       </select>
                     </div>
 
                     <div class="form-group">
                       <label>Transmission</label>
                       <select class="form-control rounded-pill" name="transmission" <?php if ($row['transmission'] == $car['transmission']) echo ' selected="selected"'; ?>>
-                        <option value="automatic">Automatic</option>
-                        <option value="manual">Manual</option>
+                        <option <?php if($car['transmission'] == 'automatic') echo 'selected';?> value="automatic">Automatic</option>
+                        <option <?php if($car['transmission'] == 'manual') echo 'selected';?> value="manual">Manual</option>
                       </select>
                     </div>
 
                     <div class="form-group">
                       <label>Compartment</label>
                       <select class="form-control rounded-pill" name="compartment" <?php if ($row['compartment'] == $car['compartment']) echo ' selected="selected"'; ?>>
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
+                        <option <?php if($car['compartment'] == 'small') echo 'selected';?> value="small">Small</option>
+                        <option <?php if($car['compartment'] == 'medium') echo 'selected';?> value="medium">Medium</option>
+                        <option <?php if($car['compartment'] == 'large') echo 'selected';?> value="large">Large</option>
                       </select>
                     </div>
 
                     <div class="form-group">
                       <label>AC</label>
                       <select class="form-control rounded-pill" name="AC" <?php if ($row['AC'] == $car['AC']) echo ' selected="selected"'; ?>>
-                        <option value="1">Yes</option>
-                        <option value="2">No</option>
+                        <option <?php if($car['AC'] == 1) echo 'selected';?> value="1">Yes</option>
+                        <option <?php if($car['AC'] == 2) echo 'selected';?>  value="2">No</option>
                       </select>
                     </div>
 

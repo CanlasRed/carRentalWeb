@@ -46,10 +46,10 @@
     foreach($result as $row){
 
     	if($row['rental_driverID'] != 0) {
-    		$total = ($row['carAmount'] + $row['driverAmount']) - $row['deposit'];
+    		$total = ($row['carAmount'] + $row['driverAmount']);
     	}
     	else {
-    		$total = $row['carAmount'] - $row['deposit'];
+    		$total = $row['carAmount'];
     	}
 
     	
@@ -137,7 +137,7 @@
 		echo '	
 							<tr>
 							   	<td><span class="">Deposit:</span></td>
-							   	<td>- ₱'.number_format($row['deposit'],2).'</td>
+							   	<td>+- ₱'.number_format($row['deposit'],2).'</td>
 							</tr>
 							<tr>
 							   	<td class="h5"><span class="font-weight-bolder">Total Amount:</span></td>

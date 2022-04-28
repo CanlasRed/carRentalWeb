@@ -52,6 +52,28 @@
   <script type="text/javascript">
     $(document).ready( function () {
 
+      $("body").on("click", ".credentialID", function(event){
+
+        var credential = $(this).attr('data-Id');
+        const myArray = credential.split("*");
+        const credentialID = myArray[0];
+        const frontback = myArray[1];
+
+        //alert(credentialID + "" + frontback);
+        $.ajax({
+          url: 'php/credential_id_show.php',
+          type: 'post',
+          data: {credentialID: credentialID, frontback:frontback},
+          success: function(response){ 
+            // Add response in Modal body
+            $('.id-body').html(response);
+
+            // Display Modal
+            $('#idModal').modal('show'); 
+          }
+        });
+      });
+
 
       // COUNT THE NOTIFICATION
       load_notifcation_count();
@@ -103,7 +125,6 @@
     $(function () {
       bsCustomFileInput.init();
     });
-
 
     check_booking_time();
       setInterval(function(){ check_booking_time(); }, 10000);

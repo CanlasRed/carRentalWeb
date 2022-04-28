@@ -118,6 +118,24 @@
 	    		$description = "Car rental completed and reviewed";
 	    		$color = "text-success";
 	    	}
+	    	else if($status == 'overdue') {
+	    		$notification_icon = "exclamation circle icon";
+	    		$title = "Car Overdue";
+	    		$description = "A rental is overdue";
+	    		$color = "text-purple";
+	    	}
+	    	else if($status == 'expired') {
+	    		$notification_icon = "exclamation circle icon";
+	    		$title = "Booking Expired";
+	    		$description = "A booking request has expired";
+	    		$color = "text-warning";
+	    	}
+	    	else if($status == 'terminated') {
+	    		$notification_icon = "exclamation circle icon";
+	    		$title = "Booking Terminated";
+	    		$description = "A car is not picked-up and is now terminated";
+	    		$color = "text-danger";
+	    	}
 
 	    	/*
 	    	echo '
