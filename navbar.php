@@ -97,7 +97,7 @@
       <form name="" id="">
         <div class="modal-header bg-black">
           <h5 class="modal-title text-light"><i class="bell icon"></i> Notification Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body notification-body">
           
