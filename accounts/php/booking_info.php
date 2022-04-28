@@ -21,11 +21,13 @@
 			o.username AS owner_username, 
 			o.phone AS owner_phone,
 			o.address AS owner_address,
+			o.userType AS owner_type,
 			u.firstName AS customer_firstname, 
 			u.lastName AS customer_lastname, 
 			u.username AS customer_username, 
 			u.phone AS customer_phone,
 			u.address AS customer_address,
+			u.userType AS customer_type,
 			r.driverID AS rental_driverID,
 			i.image AS car_image
 
@@ -46,11 +48,17 @@
     foreach($result as $row){
 
     	if($row['rental_driverID'] != 0) {
-    		$total = ($row['carAmount'] + $row['driverAmount']);
+    		$total = ($row['carAmount'] + $row['driverAmount']+$row['addCharge']);
     	}
     	else {
-    		$total = $row['carAmount'];
+    		$total = $row['carAmount']+$row['addCharge'];
     	}
+
+    	$start = strtotime($row['startDate']);
+	    $end = strtotime($row['endDate']);
+	    $diff = $end-$start;
+	    $hours = $diff/3600;
+	    $hours = round($hours);
 
     	
 
@@ -118,9 +126,19 @@
 							</tr>
     					</thead>
     					<tbody>
+    						<tr>
+							   	<td><span class="">Hourly Rate:</span></td>
+							   	<td> ₱'.number_format($row['rate'],2).'</td>
+							</tr>
+
 							<tr>
-							   	<td><span class="">Car:</span></td>
-							   	<td>+ ₱'.number_format($row['carAmount'],2).'</td>
+							   	<td><span class="">Rental Hours:</span></td>
+							   	<td>x '.$hours.' Hours</td>
+							</tr>
+
+							<tr>
+							   	<td><span class="">Sub Total:</span></td>
+							   	<td>₱'.number_format($row['carAmount'],2).'</td>
 							</tr>
 		';
 
@@ -132,16 +150,27 @@
 							</tr>
 			';
     	}
+
+    	if($row['addCharge']>0){
+    		echo '
+							<tr>
+							   	<td><span class="">Overdue Penalty:</span></td>
+							   	<td>+ ₱'.number_format($row['addCharge'],2).'</td>
+							</tr>
+			';
+    	}
 							
 
 		echo '	
-							<tr>
-							   	<td><span class="">Deposit:</span></td>
-							   	<td>+- ₱'.number_format($row['deposit'],2).'</td>
-							</tr>
+							
 							<tr>
 							   	<td class="h5"><span class="font-weight-bolder">Total Amount:</span></td>
 							   	<td class="font-weight-bolder h5">₱'.number_format($total,2).'</td>
+							</tr>
+
+							<tr>
+							   	<td><span class="">Deposit:</span></td>
+							   	<td>± ₱'.number_format($row['deposit'],2).'</td>
 							</tr>
     					</tbody>
     				</table>
@@ -162,7 +191,11 @@
     					<tbody>
     						<tr>
 							   	<td><span class="font-weight-bold">Name:</span></td>
-							   	<td>'.$row["owner_firstname"].' '.$row["owner_lastname"].'</td>
+							   	<td>'.$row["owner_firstname"].' '.$row["owner_lastname"].' ';
+							   if($row['owner_type']==2){
+							   	echo '<i class="fas fa-badge-check text-muted"></i>';
+							   }
+							echo'</td>
 							</tr>
 							<tr>
 							   	<td><span class="font-weight-bold">Email:</span></td>
@@ -191,7 +224,11 @@
     					<tbody>
     						<tr>
 							   	<td><span class="font-weight-bold">Name:</span></td>
-							   	<td>'.$row["customer_firstname"].' '.$row["customer_lastname"].'</td>
+							   	<td>'.$row["customer_firstname"].' '.$row["customer_lastname"].' ';
+							   if($row['customer_type']==2){
+							   	echo '<i class="fas fa-badge-check text-muted"></i>';
+							   }
+							echo'</td>
 							</tr>
 							<tr>
 							   	<td><span class="font-weight-bold">Email:</span></td>

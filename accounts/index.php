@@ -189,16 +189,24 @@
                               <li class="small"><i class="fas fa-calendar-alt"></i> <?php echo date('M-d-Y h:i a', strtotime($row['startDate']));?></li>
                               <li class="small"><i class="fas fa-calendar-check"></i> <?php echo date('M-d-Y h:i a', strtotime($row['endDate']));?></li>
                               <li class="small"><i class="fas fa-hourglass-half"></i> <?php echo get_time_diff(strtotime($row['startDate']), strtotime($row['endDate'])); ?>
-                              </li>
+                            </li>
+                            <?php 
+                            $sql = "SELECT *, SUM(carAmount+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                            $result=mysqli_query($dbconn, $sql);
+                            $amount = mysqli_fetch_assoc($result);
+                            setlocale(LC_MONETARY, "en_US");
+                            if($amount['addCharge']>0){
+                              ?>
                               <li>
-                               <?php 
-                               $sql = "SELECT *, SUM(carAmount+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
-                               $result=mysqli_query($dbconn, $sql);
-                               $amount = mysqli_fetch_assoc($result);
-                               setlocale(LC_MONETARY, "en_US");
-                               ?>
-                               <b>₱ <?php echo number_format($amount['total']); ?></b>
-                             </li>
+                                <small>₱ <?php echo number_format($amount['carAmount']); ?>
+                              </small>+ <b style="color: red">₱
+                                <?php echo number_format($amount['addCharge']); ?>
+                              </b>
+                            </li>
+                          <?php } ?>
+                          <li>
+                            <b>₱ <?php echo number_format($amount['total']); ?></b>
+                          </li>
                             </ul>
 
                           </div>
@@ -334,15 +342,23 @@
                                       <li class="small">
                                         <i class="fas fa-hourglass-half"></i> <?php echo get_time_diff(strtotime($row['startDate']), strtotime($row['endDate'])); ?>
                                       </li>
+                                      <?php 
+                                      $sql = "SELECT *, SUM(carAmount+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
+                                      $result=mysqli_query($dbconn, $sql);
+                                      $amount = mysqli_fetch_assoc($result);
+                                      setlocale(LC_MONETARY, "en_US");
+                                      if($amount['addCharge']>0){
+                                      ?>
                                       <li>
-                                        <?php 
-                                        $sql = "SELECT *, SUM(carAmount+addCharge) AS total FROM tbl_payment WHERE rentalID = ".$row['rentalID']."";
-                                        $result=mysqli_query($dbconn, $sql);
-                                        $amount = mysqli_fetch_assoc($result);
-                                        setlocale(LC_MONETARY, "en_US");
-                                        ?>
-                                        <b>₱ <?php echo number_format($amount['total']); ?></b>
+                                        <small>₱ <?php echo number_format($amount['carAmount']); ?>
+                                      </small>+ <b style="color: red">
+                                        <?php echo number_format($amount['addCharge']); ?>
+                                      </b>
                                       </li>
+                                    <?php } ?>
+                                    <li>
+                                      <b>₱ <?php echo number_format($amount['total']); ?></b>
+                                    </li>
                                     </ul>
 
                                   </div>

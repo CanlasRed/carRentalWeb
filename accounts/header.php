@@ -115,8 +115,13 @@ foreach($result as $row){
   $rentalID = $row['rentalID'];
   $customer = $row['customerID'];
   $owner = $row['ownerID'];
+  $carID = $row['carID'];
+
   if($row['status']=='dropoff' && $row['endDate']<$date_now){
     $sql = "UPDATE tbl_rental SET status = 'overdue', updatedAt = now() WHERE rentalID = ".$row['rentalID']."";
+    mysqli_query($dbconn, $sql);
+
+    $sql = "UPDATE tbl_payment SET status = 'overdue', updatedAt = now() WHERE rentalID = ".$row['rentalID']."";
     mysqli_query($dbconn, $sql);
 
     $sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$customer', 'overdue')";
@@ -125,8 +130,12 @@ foreach($result as $row){
     $sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$owner', 'overdue')";
     mysqli_query($dbconn, $sql);
   }
+
   if($row['status']=='pending' && $row['startDate']<=$date_now){
     $sql = "UPDATE tbl_rental SET status = 'cancelled', updatedAt = now() WHERE rentalID = ".$row['rentalID']."";
+    mysqli_query($dbconn, $sql);
+
+    $sql = "UPDATE tbl_payment SET status = 'cancelled', updatedAt = now() WHERE rentalID = ".$row['rentalID']."";
     mysqli_query($dbconn, $sql);
 
     $sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$customer', 'expired')";
@@ -135,8 +144,12 @@ foreach($result as $row){
     $sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$owner', 'expired')";
     mysqli_query($dbconn, $sql);
   }
+
   if($row['status']=='pickup' && $row['endDate']<=$date_now){
     $sql = "UPDATE tbl_rental SET status = 'cancelled', updatedAt = now() WHERE rentalID = ".$row['rentalID']."";
+    mysqli_query($dbconn, $sql);
+
+    $sql = "UPDATE tbl_payment SET status = 'cancelled', updatedAt = now() WHERE rentalID = ".$row['rentalID']."";
     mysqli_query($dbconn, $sql);
 
     $sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$customer', 'terminated')";
@@ -145,6 +158,37 @@ foreach($result as $row){
     $sql = "INSERT INTO tbl_notification (rentalID, userID, status) VALUES ('$rentalID', '$owner', 'terminated')";
     mysqli_query($dbconn, $sql);
   }
+
+  if($row['status']=='overdue' && $row['endDate']<$date_now){
+    $endDate = strtotime($row['endDate']);
+    $now = strtotime($date_now);
+
+    $diff = $now - $endDate;
+    $hours = $diff/3600;
+    $hours = (int)$hours;
+
+
+
+    if($hours>0){
+      date_default_timezone_set('Asia/Manila');
+      $sql = "SELECT * FROM tbl_payment WHERE rentalID = '$rentalID'";
+      $result = mysqli_query($dbconn, $sql);
+      $payment = mysqli_fetch_assoc($result);
+
+      $sql = "SELECT * FROM tbl_cars WHERE carID = '$carID'";
+      $result = mysqli_query($dbconn, $sql);
+      $car = mysqli_fetch_assoc($result);
+
+      $charge = $hours*$car['rate'];
+
+      if($payment['addCharge']!=$charge){
+        $sql = "UPDATE tbl_payment SET addCharge = '$charge', updatedAt = now() WHERE rentalID = '$rentalID'";
+        mysqli_query($dbconn, $sql);
+      }
+    }
+  }
+
+
 }
                      
 ?>
