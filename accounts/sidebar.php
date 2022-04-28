@@ -75,7 +75,7 @@
           <img src="../assets/avatar_2.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Juan Dela Cruz</a>
+          <a href="#" class="d-block"><?php echo $row['firstName'].' '.$row['lastName'];?></a>
         </div>
       </div>
 
@@ -150,14 +150,14 @@
           </li> -->
           <?php if($userType == 3){ ?>
           <li class="nav-header">Admin</li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="car-types.php" class="nav-link">
               <i class="nav-icon fas fa-shuttle-van"></i>
               <p>
                 Car Types
               </p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="../php/logout.php" class="nav-link">
               <i class="nav-icon fas fa-car"></i>

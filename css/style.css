@@ -193,3 +193,11 @@ footer ul li a:hover{
   top: 50% !important;
   transform: translateY(-50%) !important;
 }
+
+.text-purple{
+  color: #605ca8 !important;
+}
+
+.text-olive{
+  color: #3d9970 !important;
+}
