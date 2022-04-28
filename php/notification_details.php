@@ -78,10 +78,20 @@
     				</table>
     	';
 
-    	if($row['userType'] == 2 || $row['userType'] == 1) {
+    	if($row['userType'] == 1) {
     		echo '
     				<div class="d-flex justify-content-end">
     					<a href="accounts/index.php" class="btn btn-dark" id="view_dashboard">View</a>
+    				</div>
+    				
+
+    		';
+    	}
+
+    	if($row['userType'] == 2) {
+    		echo '
+    				<div class="d-flex justify-content-end">
+    					<a href="accounts/owner-dashboard.php" class="btn btn-dark" id="view_dashboard">View</a>
     				</div>
     				
 
