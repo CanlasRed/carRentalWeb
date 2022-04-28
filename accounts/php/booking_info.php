@@ -153,7 +153,7 @@
 
     	if($row['addCharge']>0){
     		echo '
-							<tr>
+							<tr style="color: red;">
 							   	<td><span class="">Overdue Penalty:</span></td>
 							   	<td>+ ₱'.number_format($row['addCharge'],2).'</td>
 							</tr>
