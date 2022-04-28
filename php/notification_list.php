@@ -107,7 +107,7 @@
 	    		$color = "text-olive";
 	    	}
 	    	else if($status == 'completed') {
-	    		$notification_icon = "times circle icon";
+	    		$notification_icon = "check circle icon";
 	    		$title = "Booking Completed";
 	    		$description = "Car rental completed and reviewed";
 	    		$color = "text-success";
