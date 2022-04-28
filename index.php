@@ -28,12 +28,12 @@
 							<p style="font-size:1.5rem">Rent a car? with or without driver? want driver only? do you own a car for rent? With Speedy we make all that possible speed and sound</p>
 						</div>
 						<br>
-						<div class="ui vertical animated black button rounded-pill" tabindex="0">
+						<div class="ui vertical animated black button rounded-pill" id="book_now" tabindex="0">
 				            <div class="hidden content">Book Now</div>
 				            <div class="visible content">
 				              Book Now
 				            </div>
-				         </div>
+				        </div>
 					</div>
 				</div>
 

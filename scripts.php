@@ -51,9 +51,10 @@
                   type: 'post',
                   /*
                   success: function(data){ 
-                    $('#count_notification').hide();  
+                    $("#count_notification").html(0);
                   }
                   */
+
                 });
 
                 $.ajax({
@@ -63,6 +64,10 @@
                       $('#load_notification_list').html(data);
                   }
                 });
+              });
+
+              $('#book_now').click(function(){
+                window.location.href = "car-list.php";
               });
         });
 
