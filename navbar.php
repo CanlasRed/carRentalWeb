@@ -32,7 +32,7 @@
         <li class="nav-item dropdown px-3">
           <a class="nav-link dropdown-toggle click_notification" href="#" id="click_notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bell icon" style="font-size: 18px;">
-              <span class="badge rounded-pill bg-danger" id="count_notification"></span>
+              <span class="badge rounded-pill bg-danger" id="count_notification" style="margin-left: -0.6rem;"></span>
             </i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list">
