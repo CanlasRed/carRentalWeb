@@ -6,7 +6,7 @@
 	$action = $_POST['action'];
 
 	if($action == 'accept'){
-		$sql = "UPDATE tbl_credentials SET status = 2 WHERE credentialID = '$credentialID'";
+		$sql = "UPDATE tbl_credentials SET status = 2, updatedAt = now() WHERE credentialID = '$credentialID'";
 		if(mysqli_query($dbconn, $sql)){
 			$sql = "SELECT * FROM tbl_credentials WHERE credentialID = '$credentialID'";
 			if($result = mysqli_query($dbconn, $sql)){
@@ -24,7 +24,7 @@
 			}
 		}
 	} else if ($action == 'reject'){
-		$sql = "UPDATE tbl_credentials SET status = 0 WHERE credentialID = '$credentialID'";
+		$sql = "UPDATE tbl_credentials SET status = 0, updatedAt = now() WHERE credentialID = '$credentialID'";
 		if(mysqli_query($dbconn, $sql)){
 			echo 'rejected';
 		} else {
