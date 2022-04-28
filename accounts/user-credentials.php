@@ -337,7 +337,7 @@ if($_SESSION['userType']!=3){
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body id-body">
+        <div class="modal-body id-body d-flex justify-content-center">
           
         </div>
     </div>
