@@ -180,7 +180,7 @@
 	    echo '<a href="#" class="dropdown-item dropdown-footer text-center">See All Notifications</a>';
     }
     else {
-    	echo '<a href="#" class="dropdown-item dropdown-footer">No Notifications Found</a>';
+    	echo '<a href="#" class="dropdown-item dropdown-footer text-center">No Notifications Found</a>';
     }
 ?>
 
