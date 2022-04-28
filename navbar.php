@@ -29,6 +29,27 @@
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#confirm-logout">Logout</a></li>
           </ul>
         </li>
+        <li class="nav-item dropdown px-3">
+          <a class="nav-link dropdown-toggle click_notification" href="#" id="click_notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bell icon" style="font-size: 18px;">
+              <span class="badge rounded-pill bg-danger" id="count_notification"></span>
+            </i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="load_notification_list">
+            <!-- NUMBER OF NOTIFICATION -->
+          </div>
+          
+          <!--
+          <button type="button" class="btn btn-primary position-relative">
+            Inbox
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              99+
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </button>
+        -->
+          
+        </li>
       <?php } else { ?>
         <li class="nav-item">
           <a href="login.php">
@@ -68,6 +89,23 @@
       </div>
     </div>
   </div>
+
+  <!-- Notification Details -->
+  <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form name="" id="">
+        <div class="modal-header bg-black">
+          <h5 class="modal-title"><i class="fas fa-bell"></i> Notification Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body notification-body">
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <style type="text/css">
   .nav-item a{

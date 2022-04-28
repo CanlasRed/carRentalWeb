@@ -26,7 +26,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
+
+
      <script type="text/javascript">
+        $(document).ready( function () {
+            // COUNT THE NOTIFICATION
+              load_notifcation_count();
+              setInterval(function(){ load_notifcation_count(); }, 10000);
+
+              function load_notifcation_count() { 
+                $.ajax({
+                  url: 'php/notification_count.php',
+                  type: 'post',
+                  success: function(data){ 
+                      var number = data.replace(/[^0-9 ]/g, "");    
+                      $("#count_notification").html(parseInt(number));
+                  }
+                });
+              };
+
+              $('#click_notification').click(function(){
+                $.ajax({
+                  url: 'php/notification_click_notified.php',
+                  type: 'post',
+                  /*
+                  success: function(data){ 
+                    $('#count_notification').hide();  
+                  }
+                  */
+                });
+
+                $.ajax({
+                  url: 'php/notification_list.php',
+                  type: 'post',
+                  success: function(data){ 
+                      $('#load_notification_list').html(data);
+                  }
+                });
+              });
+        });
+
         $('.ui.dropdown').dropdown();
 
         
