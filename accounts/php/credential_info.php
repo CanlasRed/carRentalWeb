@@ -16,7 +16,6 @@
 			FROM tbl_credentials c
 			INNER JOIN tbl_users u ON c.userID = u.userID
 			WHERE c.credentialID = '$credentialID' 
-			AND status = 1
 			ORDER BY c.credentialID
 			LIMIT 1";
     $result = mysqli_query($dbconn, $sql);

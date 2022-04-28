@@ -63,6 +63,7 @@ if($_SESSION['userType']!=3){
                   <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#cars" data-bs-toggle="tab">Pending</a></li>
                     <li class="nav-item"><a class="nav-link" href="#archived" data-bs-toggle="tab">Verified</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#rejected" data-bs-toggle="tab">Rejected</a></li>
                   </ul>
                 </div><!-- /.card-header -->
                 <!-- /.card-header -->
@@ -89,6 +90,11 @@ if($_SESSION['userType']!=3){
 
 
                             <div class="card-body pt-0 card_view" data-id="<?php echo $row['credentialID']; ?>">
+                              <div class="ribbon-wrapper ribbon-lg">
+                                <div class="ribbon bg-warning">
+                                  Pending
+                                </div>
+                              </div>
                               <div class="row">
 
 
@@ -153,6 +159,77 @@ if($_SESSION['userType']!=3){
 
                           <!-- RIBBONS -->
                           <div class="card bg-light d-flex flex-fill card_hover" data-id="<?php echo $row['credentialID'];?>">
+                            <div class="ribbon-wrapper ribbon-lg">
+                              <div class="ribbon bg-success">
+                                Verified
+                              </div>
+                            </div>
+
+                            <div class="card-header border-bottom-0">
+                              <b>Application No: <?php echo $row['credentialID'];?></b>
+                            </div>
+
+
+                            <div class="card-body pt-0 card_view" data-id="<?php echo $row['credentialID']; ?>">
+                              <div class="row">
+
+
+                                <div class="col-7">
+                                  <h2><b><?php echo $row['firstName'].' '.$row['lastName'];?></b></h2>
+
+                                  <ul class="ml-0 mb-0 fa-ul text-muted">
+                                    <li class="small">
+                                      <i class="fas fa-envelope"></i> <?php echo $row['username']; ?>
+                                    </li>
+                                    <li class="small">
+                                      <i class="fas fa-phone"></i> <?php echo $row['phone']; ?>
+                                    </li>
+                                    <li class="small">
+                                      <i class="fas fa-map-marker-alt"></i> <?php echo $row['address']; ?>
+                                    </li>
+                                  </ul>
+
+                                </div>
+
+
+                                <div class="col-5 text-center">
+                                  <img src="../assets/credentials/<?php echo $row['front']; ?>" alt="front-id-image" class="img-fluid">
+                                </div>
+
+
+                              </div>
+                            </div>
+
+
+
+                            <!-- ACTIONS -->
+                            <div class="card-footer">
+                               <small class="text-muted"><?php  echo get_time_ago(strtotime($row['dateAccepted']));?></small>
+                            </div>
+                          </div>
+                        </div>
+                      <?php } ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane" id="rejected">
+                      <div class="row">
+                       <div id="hipGrid3">
+
+                        <?php
+                        $sql = "SELECT *, c.updatedAt AS dateAccepted FROM tbl_credentials c INNER JOIN tbl_users u ON c.userID = u.userID WHERE status = 0 ORDER BY c.credentialID DESC";
+                        $result = mysqli_query($dbconn, $sql);
+                        foreach($result as $row){ ?>
+                         <div class="hip-item">
+
+                          <!-- RIBBONS -->
+                          <div class="card bg-light d-flex flex-fill card_hover" data-id="<?php echo $row['credentialID'];?>">
+                            <div class="ribbon-wrapper ribbon-lg">
+                              <div class="ribbon bg-danger">
+                                Rejected
+                              </div>
+                            </div>
 
                             <div class="card-header border-bottom-0">
                               <b>Application No: <?php echo $row['credentialID'];?></b>
@@ -351,6 +428,20 @@ if($_SESSION['userType']!=3){
     });
 
     $('#hipGrid2').hip({
+      itemsPerPage: 10,
+      dynItemsPerRow: {
+              hs: 1,
+              sm: 2,
+              md: 3,
+              lg: 4,
+      },
+      paginationPos:'right',
+      filter:true,
+      filterPos:"right",
+      filterText:"Search"
+    });
+
+    $('#hipGrid3').hip({
       itemsPerPage: 10,
       dynItemsPerRow: {
               hs: 1,
