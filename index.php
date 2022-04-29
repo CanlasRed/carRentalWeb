@@ -91,38 +91,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card-deck">
-					 <div class="nearby-slick">
-					 	<?php for ($i=0;$i<=5;$i++){ ?>
-						  <div class="card">
-						  	<div class="card-header">
-						  		<div class="container-fluid" style="padding: 0;">
-							  		<div class="row" style="display: flex; padding: 0;">
-								    	<div class="col-sm-6">
-								    		<div class="card-title">Kia Picanto</div>
-								    	</div>
-								    	<div class="col-sm-6">
-								    		<div class="float-end">Kia Logo</div>
-								    	</div>
-									</div>
-								</div>
-							 </div>
-						    <img class="card-img-top" src="assets/car-types/hatchback.png" alt="Card image cap">
-						    <div class="card-body">
-						      <h5 class="card-title">7,000/<small>day</small></h5>
-						      <ul>
-						      	<li>120kph</li>
-						      	<li>4 seater</li>
-						      	<li>Cool AC</li>
-						      	<li>100L compartment</li>
-						      </ul>
-						    </div>
-						    <div class="card-footer">
-						      <small class="text-muted"> <i class="map marker alternate icon"></i> Olongapo City, Zambales</small>
-						    </div>
-						  </div>
-						<?php } ?>
-
-
+						<div class="nearby-slick">
+				
 						</div>
 					 </div>
 				</div>
@@ -210,6 +180,72 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
+
+
+			getLocation();
+
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(showPosition);
+				} else { 
+					console.log("Geolocation is not supported by this browser.");
+				}
+			}
+
+			function showPosition(position) {
+				lat = position.coords.latitude;
+				long = position.coords.longitude;
+				$.ajax({
+					type: 'post',
+					url: 'php/get_nearby_cars.php',
+					data:{
+						lat: lat,
+						long: long
+					},
+					success: function(data){
+						$('.nearby-slick').html(data);
+
+						$('.nearby-slick').slick({
+							infinite: true,
+							speed: 300,
+							slidesToShow: 4,
+							slidesToScroll: 2,
+							autoplay: true,
+							autoplaySpeed: 5000,
+							responsive: [
+							{
+								breakpoint: 1200,
+								settings: {
+									slidesToShow: 3,
+									slidesToScroll: 1,
+									infinite: true,
+									dots: true
+								}
+							},
+							{
+								breakpoint: 992,
+								settings: {
+									slidesToShow: 2,
+									slidesToScroll: 1,
+									infinite: true,
+									dots: true
+								}
+							},
+							{
+								breakpoint: 768,
+								settings: {
+									slidesToShow: 1,
+									slidesToScroll: 1
+								}
+							}
+							]
+						});
+					}
+				});
+			}
+
+
+
 			setTimeout(
 				function ()
 				{
@@ -254,41 +290,7 @@
 				  ]
 			});
 
-			$('.nearby-slick').slick({
-				  infinite: true,
-				  speed: 300,
-				  slidesToShow: 4,
-				  slidesToScroll: 2,
-				  autoplay: true,
-	  			  autoplaySpeed: 5000,
-	  			  responsive: [
-	  			  	{
-				      breakpoint: 1200,
-				      settings: {
-				        slidesToShow: 3,
-				        slidesToScroll: 1,
-				        infinite: true,
-				        dots: true
-				      }
-				    },
-				    {
-				      breakpoint: 992,
-				      settings: {
-				        slidesToShow: 2,
-				        slidesToScroll: 1,
-				        infinite: true,
-				        dots: true
-				      }
-				    },
-				    {
-				      breakpoint: 768,
-				      settings: {
-				        slidesToShow: 1,
-				        slidesToScroll: 1
-				      }
-				    }
-				  ]
-			});
+			
 
 
 		});
