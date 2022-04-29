@@ -136,16 +136,22 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>Plate Number</label>
                             <input type="text" name="plateNumber" class="form-control rounded-pill" placeholder="Plate Number">
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group">
                             <label>Rate/hr</label>
                             <input type="Number" name="rate" class="form-control rounded-pill" placeholder="Rate">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Deposit</label>
+                            <input type="Number" name="deposit" class="form-control rounded-pill" placeholder="Deposit">
                           </div>
                         </div>
                       </div>

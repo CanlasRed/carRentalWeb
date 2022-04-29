@@ -17,6 +17,7 @@
 	$speed = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['speed']));
 
 	$rate = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['rate']));
+	$deposit = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['deposit']));
 
 	$description = mysqli_real_escape_string($dbconn, $_POST['description']);
 
@@ -47,6 +48,7 @@
 			speed,
 			description,
 			penalty,
+			deposit,
 			rate)
 			VALUES (
 			'$ownerID',
@@ -65,6 +67,7 @@
 			'$speed',
 			'$description',
 			'$penalty',
+			'$deposit',
 			'$rate')";
 
 	if(mysqli_query($dbconn,$sql)){

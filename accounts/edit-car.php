@@ -149,16 +149,22 @@
                         </div>
 
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
                               <label>Plate Number</label>
                               <input type="text" name="plateNumber" class="form-control rounded-pill" placeholder="Plate Number" value="<?php echo $car['plateNumber']; ?>">
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
                               <label>Rate/hr</label>
                               <input type="Number" name="rate" class="form-control rounded-pill" placeholder="Rate" value="<?php echo $car['rate']; ?>">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Deposit</label>
+                              <input type="Number" name="deposit" class="form-control rounded-pill" placeholder="Deposit" value="<?php echo $car['deposit']; ?>">
                             </div>
                           </div>
                         </div>

@@ -575,7 +575,7 @@
                     <div>
                         Deposit:
                         <div class="float-end">
-                            1,000
+                            (± <?php echo $row['deposit'];?>)
                         </div>
                     </div>
                     <div class="mt-3 ui header">
@@ -888,7 +888,7 @@
                                     var rentalFee = rate*data[0];
                                     $('#computed_rental').html(currency.format(rentalFee));
                                     $('#carAmount').val(rentalFee);
-                                    $('#grand_total').html(currency.format(rentalFee+1000));
+                                    $('#grand_total').html(currency.format(rentalFee));
 
                                     var startDate = moment(data[1] + ' ' + data[2]).format('YYYY-MM-DD HH:mm:ss');
                                     var endDate = moment(data[3] + ' ' + data[4]).format('YYYY-MM-DD HH:mm:ss');

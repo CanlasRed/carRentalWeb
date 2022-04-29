@@ -26,6 +26,11 @@ $(function () {
         number: true,
         min: 1,
       },
+      deposit: {
+        required: true,
+        number: true,
+        min: 1,
+      },
       capacity: {
         required: true,
         number: true,

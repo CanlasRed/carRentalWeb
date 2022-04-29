@@ -10,7 +10,7 @@
 
 	<input type="number" name="carAmount" id="carAmount" hidden>
 	<input type="number" name="driverAmount" id="driverAmount" value="2000" hidden>
-	<input type="number" name="deposit" id="deposit"value="1000" hidden>
+	<input type="number" name="deposit" id="deposit" value="<?php echo $row['deposit']?>" hidden>
 <?php 
 	if(isset($_SESSION['userID'])){
 		$carID = $_GET['carID'];

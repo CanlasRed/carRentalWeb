@@ -18,6 +18,7 @@
 	$speed = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['speed']));
 
 	$rate = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['rate']));
+	$deposit = mysqli_real_escape_string($dbconn, htmlspecialchars($_POST['deposit']));
 	$description = mysqli_real_escape_string($dbconn, $_POST['description']);
 
 	if(isset($_POST['penalty'])){
@@ -42,7 +43,8 @@
 			speed = '$speed',
 			rate = '$rate',
 			description = '$description',
-			penalty = '$penalty'
+			penalty = '$penalty',
+			deposit = '$deposit'
 			WHERE carID = '$carID'";
 
 	if(mysqli_query($dbconn,$sql)){

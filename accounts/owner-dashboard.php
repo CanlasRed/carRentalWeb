@@ -171,13 +171,17 @@ if($_SESSION['userType']!=2){
               <!-- form start --> 
             <div class="card-body">
               <div class="row">
-                <div id="hipGrid">
+                
               <?php
               $sql = "SELECT *,r.createdAt as rcreatedAt FROM tbl_rental r INNER JOIN tbl_users c ON r.customerID = c.userID WHERE ownerID = ".$_SESSION['userID']." AND status != 'completed' AND status != 'cancelled' ORDER BY r.rentalID DESC";
               $result = mysqli_query($dbconn, $sql);
               if (mysqli_num_rows($result)<=0){ ?>
+                <div>
                   <h4 class="ml-3">No Active Bookings...</h4>
-              <?php }
+                </div>
+              <?php } else { ?>
+                <div id="hipGrid">
+              <?php } 
               foreach($result as $row){ ?>
               <div class="hip-item">
 
