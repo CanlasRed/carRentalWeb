@@ -22,6 +22,31 @@
          $result = mysqli_query($dbconn, $sql);
         $row = mysqli_fetch_assoc($result);
     
+
+    $total = 0;
+    $avgRatings = 0;
+    $sql = "SELECT * FROM tbl_car_review WHERE status = 1 AND carID = ".$_GET['carID']."";
+    if($result = mysqli_query($dbconn, $sql)){
+        $total = mysqli_num_rows($result);
+        $arr = array(0,0,0,0,0);
+        foreach($result as $rate){
+            if($rate['rate']==5){
+                $arr[0]++;
+            } else if ($rate['rate']==4){
+                $arr[1]++;
+            } else if ($rate['rate']==3){
+                $arr[2]++;
+            } else if ($rate['rate']==2){
+                $arr[3]++;
+            } else if ($rate['rate']==1){
+                $arr[4]++;
+            }
+        }
+
+        if($total>0){
+            $avgRatings = ((1*$arr[4])+(2*$arr[3])+(3*$arr[2])+(4*$arr[1])+(5*$arr[0]))/$total;
+        }
+    }
     ?>
     
     <div class="container mt-4">
@@ -165,9 +190,9 @@
                             <div class="row">
                                 <div class="col-12 py-2">
                                     <div class="ui inverted black label my-1">
-                                        4.7
+                                        <?php echo round($avgRatings,1);?>
                                     </div>
-                                    <div class="ui star rating" data-rating="5"></div>
+                                     <div class="ui yellow rating" data-rating="<?php echo round($avgRatings); ?>"></div>
                                 </div>
                             </div>
 
@@ -331,32 +356,7 @@
                 </div> -->
 
 
-                <?php 
-                $total = 0;
-                $avgRatings = 0;
-                $sql = "SELECT * FROM tbl_car_review WHERE status = 1 AND carID = ".$_GET['carID']."";
-                if($result = mysqli_query($dbconn, $sql)){
-                    $total = mysqli_num_rows($result);
-                    $arr = array(0,0,0,0,0);
-                    foreach($result as $row){
-                        if($row['rate']==5){
-                            $arr[0]++;
-                        } else if ($row['rate']==4){
-                            $arr[1]++;
-                        } else if ($row['rate']==3){
-                            $arr[2]++;
-                        } else if ($row['rate']==2){
-                            $arr[3]++;
-                        } else if ($row['rate']==1){
-                            $arr[4]++;
-                        }
-                    }
-
-                    if($total>0){
-                        $avgRatings = ((1*$arr[4])+(2*$arr[3])+(3*$arr[2])+(4*$arr[1])+(5*$arr[0]))/$total;
-                    }
-                }
-        ?>
+                
 
 
 
