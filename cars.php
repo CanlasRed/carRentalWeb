@@ -100,7 +100,7 @@
                                  </div>
                             
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-7 ps-4">
                             <div class="row m-0">
                                 <div class="col-12 mt-1 py-2 px-0">
                                     <div class="ui header large m-0">
@@ -154,6 +154,15 @@
 
                             <div class="row">
                                 <div class="col-12 py-2">
+                                    <div class="ui inverted black label my-1">
+                                        <?php echo round($avgRatings,1);?>
+                                    </div>
+                                     <div class="ui yellow rating" data-rating="<?php echo round($avgRatings); ?>"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 py-2">
                                     <div class="ui header m-0">
                                         Car Details:
                                     </div>
@@ -187,14 +196,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12 py-2">
-                                    <div class="ui inverted black label my-1">
-                                        <?php echo round($avgRatings,1);?>
-                                    </div>
-                                     <div class="ui yellow rating" data-rating="<?php echo round($avgRatings); ?>"></div>
-                                </div>
-                            </div>
+                            
 
                         </div>
                     </div>

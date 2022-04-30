@@ -149,6 +149,14 @@ if($_SESSION['userType']!=2){
                                 <span class="float-start mt-2">
                                   <h3 class="fw-bolder">₱<?php echo $row['rate']?>/hr</h3>
                                 </span>
+                                <?php 
+                                $sql = "SELECT * FROM tbl_rental WHERE status != 'cancelled' AND status != 'completed' AND carID = ".$row['carID']."";
+                                $result = mysqli_query($dbconn, $sql);
+                                if(mysqli_num_rows($result)>0){ ?>
+                                  <span class="float-right">
+                                    <small class="text-muted fw-bold">You cannot edit/delete a car while it is being rented</small>
+                                  </span>
+                                <?php } else { ?>
                                 <span class="float-right">
                                   <a href="edit-car.php?car=<?php echo $row['name'].'&carID='.$row['carID']?>">
                                     <div class="ui vertical animated button secondary rent-btn" tabindex="0">
@@ -175,6 +183,7 @@ if($_SESSION['userType']!=2){
                                     </div>
                                   </a>
                                 </span>
+                              <?php } ?>
                               </div>
                             </div>
                           </div>

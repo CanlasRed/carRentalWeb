@@ -179,11 +179,13 @@ foreach($result as $row){
       $result = mysqli_query($dbconn, $sql);
       $car = mysqli_fetch_assoc($result);
 
-      $charge = $hours*$car['rate'];
+      if($car['penalty']==2){
+        $charge = $hours*$car['rate'];
 
-      if($payment['addCharge']!=$charge){
-        $sql = "UPDATE tbl_payment SET addCharge = '$charge', updatedAt = now() WHERE rentalID = '$rentalID'";
-        mysqli_query($dbconn, $sql);
+        if($payment['addCharge']!=$charge){
+          $sql = "UPDATE tbl_payment SET addCharge = '$charge', updatedAt = now() WHERE rentalID = '$rentalID'";
+          mysqli_query($dbconn, $sql);
+        }
       }
     }
   }
