@@ -15,6 +15,9 @@
         
 <div class="pt-5 col-lg-9 col-md-8 col-sm-12 col-xs-12" style="display: block; width: 100%;">
 
+  <input type="text" id="gettype" value="<?php echo $_GET['typeID'] ?>" hidden readonly>
+
+
     <div class="ui secondary  menu">
       <div class="item" style="width: 400px;">
         <div class="ui fluid icon input large">
@@ -64,9 +67,48 @@
     </div>
    <!--  <?php include 'footer.php' ?> -->
     <?php include 'scripts.php'; ?>
+    <script type="text/javascript">
+      $(document).ready( function () {
+
+
+        var type = document.getElementById("gettype").value;
+        if(type) {
+          if(type == "hatchback") {
+            document.getElementById("checkbox_hatchback").checked = true;
+          }
+          else if(type == "sedan") {
+            document.getElementById("checkbox_sedan").checked = true;
+          }
+          else if(type == "coupe") {
+            document.getElementById("checkbox_coupe").checked = true;
+          }
+          else if(type == "suv") {
+            document.getElementById("checkbox_suv").checked = true;
+          }
+          else if(type == "minivan") {
+            document.getElementById("checkbox_minivan").checked = true;
+          }
+          else if(type == "van") {
+            document.getElementById("checkbox_van").checked = true;
+          }
+          else if(type == "pickup") {
+            document.getElementById("checkbox_pickup").checked = true;
+          }
+          else if(type == "jeep") {
+            document.getElementById("checkbox_jeep").checked = true;
+          }
+          else if(type == "supercar") {
+            document.getElementById("checkbox_supercar").checked = true;
+          }
+        }
+        
+
+      });
+    </script>
+
     <script type="text/javascript" src="js/car-filtering.js"></script>
 
-
+    
 
 </body>
 </html>

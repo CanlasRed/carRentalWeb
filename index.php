@@ -56,15 +56,15 @@
 					<h6 class="bold-text">Categories</h6>
 				</div>
 				<div class="col-6">
-					<h6 class="float-end bold-text"><a class="link-text" href="">View All <i class="arrow right icon"></i></a></h6>
+					<h6 class="float-end bold-text"><a class="link-text" href="car-list.php">View All <i class="arrow right icon"></i></a></h6>
 				</div>
 			</div>
 			<div class="row">
 			 <div class="items">
 			 	<?php foreach($result as $row) { ?>
-			     <div class="car-type" data-img="<?php echo $row['image'];?>" data-id="<?php echo $row['typeID'] ?>">
+			     <a href="car-list.php?typeID=<?php echo $row['name'] ?>" style="text-decoration: none;" class="text-dark">
 			     	<img src="assets/car-types/<?php echo $row['icon'];?>"><?php echo $row['name'];?>
-			     </div>
+			     </a>
 			 	<?php } ?>
 			 </div>
 			</div>
