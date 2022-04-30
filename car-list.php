@@ -14,8 +14,9 @@
         <?php include 'sidebar.php'; ?>
         
 <div class="pt-5 col-lg-9 col-md-8 col-sm-12 col-xs-12" style="display: block; width: 100%;">
-
+  <?php if (isset($_GET['typeID'])){ ?>
   <input type="text" id="gettype" value="<?php echo $_GET['typeID'] ?>" hidden readonly>
+<?php } ?>
 
 
     <div class="ui secondary  menu">
